@@ -360,7 +360,7 @@ abstract class Pngx__Process__Queue extends Pngx__Process__Handler {
 		set_transient( $meta_key, $update_data, DAY_IN_SECONDS );
 
 		if ( ! empty( $data ) ) {
-			update_option( $key, $data );
+			update_option( $key, $data, false );
 		}
 
 		return $this;
@@ -448,8 +448,8 @@ abstract class Pngx__Process__Queue extends Pngx__Process__Handler {
 	 * Here we try to read the database `max_packet_size` setting and use that information
 	 * to avoid overloading the query.
 	 *
-	 * @param       string $key
-	 * @param array $data
+	 * @param string $key
+	 * @param array  $data
 	 *
 	 * @return int The number of fragments the data was split and stored into.
 	 */
@@ -472,7 +472,7 @@ abstract class Pngx__Process__Queue extends Pngx__Process__Handler {
 
 		foreach ( $split_data as $i => $iValue ) {
 			$postfix = 0 === $i ? '' : "_{$i}";
-			update_option( $key . $postfix, $split_data[ $i ] );
+			update_option( $key . $postfix, $split_data[ $i ], false );
 		}
 
 		return count( $split_data );

@@ -19,8 +19,6 @@ use Pngx__Admin__Fields;
 class Repeater {
 
 	public static function display( $field = [], $options = [], $options_id = null, $meta = null, $var = null, $template = null ) {
-		wp_enqueue_script( 'jquery-repeater', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js', [ 'jquery' ], '1.2.1', true );
-
 		$name  = $field['id'];
 		$value = $meta;
 		if ( ! $value && isset( $field['value'] ) ) {

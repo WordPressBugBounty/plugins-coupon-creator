@@ -64,6 +64,20 @@ class Pngx__Admin__Assets {
 		);
 
 		wp_register_script(
+			'pngx-jquery-repeater',
+			Pngx__Main::instance()->vendor_url . 'jquery-repeater/jquery.repeater.min.js',
+			[ 'jquery' ],
+			filemtime( Pngx__Main::instance()->vendor_path . 'jquery-repeater/jquery.repeater.min.js' ),
+			true
+		);
+		wp_register_script(
+			'pngx-sortable',
+			Pngx__Main::instance()->vendor_url . 'sortable/Sortable.min.js',
+			[ 'jquery' ],
+			filemtime( Pngx__Main::instance()->vendor_path . 'sortable/Sortable.min.js' ),
+			true
+		);
+		wp_register_script(
 			'pngx-clipboard',
 			Pngx__Main::instance()->vendor_url . 'clipboard/clipboard.js',
 			[],
@@ -210,6 +224,8 @@ class Pngx__Admin__Assets {
 					'pngx-access-profiles',
 					'pngx-dependency',
 					'pngx-flatpickr',
+					'pngx-jquery-repeater',
+					'pngx-sortable',
 				],
 			filemtime( Pngx__Main::instance()->resource_path . 'js/pngx-admin.js' ),
 			true

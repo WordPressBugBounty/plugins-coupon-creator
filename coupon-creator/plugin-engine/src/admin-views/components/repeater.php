@@ -28,9 +28,10 @@
 use Pngx\Admin\Field\V2\Repeater;
 
 ?>
-<div class="pngx-repeater-container">
-	<div data-repeater-list="<?php echo esc_attr( $name ); ?>">
+<div class="pngx-repeater-container" data-repeater-name="<?php echo esc_attr( $name ); ?>">
+	<div id="<?php echo esc_attr( $name ); ?>-repeater-list" data-repeater-list="<?php echo esc_attr( $name ); ?>">
 		<div data-repeater-item style="display: none;" class="pngx-repeater-item">
+			<div class="pngx-repeater-item-handle">&#9776;</div>
 			<?php foreach ( $repeater_fields as $repeater_field ) : ?>
 				<?php
 				$repeater_field_name  = "{$name}[{{{index}}}][{$repeater_field['id']}]";
@@ -53,6 +54,7 @@ use Pngx\Admin\Field\V2\Repeater;
 		</div>
 		<?php foreach ( $value as $index => $item ) : ?>
 			<div data-repeater-item class="pngx-repeater-item">
+				<div class="pngx-repeater-item-handle">&#9776;</div>
 				<?php foreach ( $repeater_fields as $repeater_field ) : ?>
 					<?php
 					$repeater_field_name  = "{$name}[{$index}][{$repeater_field['id']}]";

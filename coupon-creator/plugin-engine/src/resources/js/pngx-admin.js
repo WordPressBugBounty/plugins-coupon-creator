@@ -183,25 +183,41 @@ var pngx_admin_fields_init = pngx_admin_fields_init || {};
 	 * @since 4.1.0
 	 */
 	obj.init_repeater = function() {
-		$( '.pngx-repeater-container' ).repeater( {
-			initEmpty: false,
-			defaultValues: {},
-			show: function() {
-				$( this ).slideDown( function() {
-					// Remove the 'pngx-dropdown-created' class from the cloned item's select
-					$( this ).find( '.pngx-dropdown' ).removeClass( 'pngx-dropdown-ignore' );
+		$( '.pngx-repeater-container' ).each( function() {
+			var repeaterContainer = $( this );
+			var repeaterName = repeaterContainer.data( 'repeater-name' );
+			var repeaterList = repeaterContainer.find( '[data-repeater-list="' + repeaterName + '"]' );
 
-					// Initialize dropdowns in the new row
-					$( this ).find( '.pngx-dropdown' ).pngx_dropdowns();
+			repeaterContainer.repeater( {
+				initEmpty: false,
+				defaultValues: {},
+				show: function() {
+					$( this ).slideDown( function() {
+						// Remove the 'pngx-dropdown-created' class from the cloned item's select
+						$( this ).find( '.pngx-dropdown' ).removeClass( 'pngx-dropdown-ignore' );
 
-					// Trigger dependencies in the new row
-					$( this ).find( '.pngx-dependency' ).trigger( 'change' );
-					$( document ).trigger( 'pngx.dependencies-run' );
-				} );
-			},
-			hide: function( deleteElement ) {
-				$( this ).slideUp( deleteElement );
-			}
+						// Initialize dropdowns in the new row
+						$( this ).find( '.pngx-dropdown' ).pngx_dropdowns();
+
+						// Trigger dependencies in the new row
+						$( this ).find( '.pngx-dependency' ).trigger( 'change' );
+						$( document ).trigger( 'pngx.dependencies-run' );
+					} );
+				},
+				hide: function( deleteElement ) {
+					$( this ).slideUp( deleteElement );
+				}
+			} );
+
+			// Initialize Sortable for the repeater list
+			new Sortable( repeaterList[ 0 ], {
+				animation: 150,
+				handle: '.pngx-repeater-item-handle',
+				onEnd: function( evt ) {
+					// Optionally, you can perform additional actions after sorting
+					// For example, you can update the order of the items in your server-side storage
+				}
+			} );
 		} );
 	};
 

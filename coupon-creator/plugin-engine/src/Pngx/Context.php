@@ -4,27 +4,10 @@ Use Pngx\Utilities\Arr;
 /**
  * Class Pngx__Context
  *
- * Based off Modern Tribe's Pngx__Context
- *
  * @since 3.0
  *
  */
 class Pngx__Context {
-
-	/**
-	 * Whether the context of the current HTTP request is an AJAX one or not.
-	 *
-	 * @var bool
-	 */
-	protected $doing_ajax;
-
-	/**
-	 * Whether the context of the current HTTP request is a Cron one or not.
-	 *
-	 * @var bool
-	 */
-	protected $doing_cron;
-
 	/**
 	 * Whether we are currently creating a new post, a post of post type(s) or not.
 	 *
@@ -94,13 +77,36 @@ class Pngx__Context {
 	}
 
 	/**
+	 * Whether the current request is for a PHP-rendered initial state or not.
+	 *
+	 * This method is a shortcut to make sure we're not doing an AJAX, REST or Cron request.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return bool Whether the current request is for a PHP-rendered initial state or not.
+	 */
+	public function doing_php_initial_state() {
+		return ! $this->doing_rest() && ! $this->doing_ajax() && ! $this->doing_cron();
+	}
+
+	/**
+	 * Checks whether the current request is a REST API one or not.
+	 *
+	 * @since 4.1.0
+	 *
+	 * @return bool Whether the current request is a REST API one or not.
+	 */
+	public function doing_rest() {
+		return defined( 'REST_REQUEST' ) && REST_REQUEST;
+	}
+
+	/**
 	 * Helper function to indicate whether the current execution context is AJAX.
 	 *
 	 * This method exists to allow us test code that behaves differently depending on the execution
 	 * context.
 	 *
-	 * @since 4.7.12
-	 * @since 4.9.5 Removed the $doing_ajax parameter.
+	 * @since 4.1.0
 	 *
 	 * @return boolean
 	 */
@@ -113,8 +119,7 @@ class Pngx__Context {
 	/**
 	 * Checks whether the context of the current HTTP request is a Cron one or not.
 	 *
-	 * @since 4.7.23
-	 * @since 4.9.5 Removed the $doing_cron parameter.
+	 * @since 4.1.0
 	 *
 	 * @return bool Whether the context of the current HTTP request is a Cron one or not.
 	 */

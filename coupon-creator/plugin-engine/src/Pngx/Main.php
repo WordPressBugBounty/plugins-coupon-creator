@@ -11,7 +11,7 @@ class Pngx__Main {
 	 *
 	 * @var string
 	 */
-	const VERSION = '4.0.0';
+	const VERSION = '4.0.2';
 
 	/**
 	 * Stores the slug for the plugin engine.
@@ -214,7 +214,11 @@ class Pngx__Main {
 	 * Load the plugin engine.
 	 */
 	public function plugins_loaded() {
-		$this->load_text_domain( 'plugin-engine', basename( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) ) . '/plugin-engine/languages/' );
+		add_action('init', function()
+		{
+			$this->load_text_domain( 'plugin-engine', basename( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) ) . '/plugin-engine/languages/' );
+		});
+
 
 		$this->init_autoloading();
 

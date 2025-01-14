@@ -583,6 +583,12 @@ input[type=checkbox].pngx-engine-options-control-password-input__toggle-type {
   word-wrap: normal !important;
 }
 
+.pngx-repeater-item-handle {
+  cursor: move;
+  display: inline-block;
+  margin-right: 10px;
+}
+
 /* ## PNGX Admin Loader
 --------------------------------------------- */
 /* CSS Switch based off https://codepen.io/mallendeo/pen/eLIiG

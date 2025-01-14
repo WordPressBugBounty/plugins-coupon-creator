@@ -258,7 +258,7 @@ if ( ! function_exists( 'pngx_setcookie' ) ) {
 	 *
 	 * @param string  $name     Name of the cookie being set.
 	 * @param string  $value    Value of the cookie.
-	 * @param integer $expire   Expiry of the cookie.
+	 * @param integer|null $expire   Expiry of the cookie.
 	 * @param bool    $secure   Whether the cookie should be served only over https.
 	 * @param bool    $httponly Whether the cookie is only accessible over HTTP, not scripting languages like JavaScript.
 	 */
@@ -268,7 +268,7 @@ if ( ! function_exists( 'pngx_setcookie' ) ) {
 			setcookie(
 				$name,
 				$value,
-				$expire,
+				$expire === null ? 0 : $expire,
 				COOKIEPATH ? COOKIEPATH : '/',
 				COOKIE_DOMAIN,
 				$secure,
