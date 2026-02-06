@@ -67,6 +67,15 @@ abstract class Setup {
 	public $db_version;
 
 	/**
+	 * The saved database version from options.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @var string|false
+	 */
+	public $saved_db_version;
+
+	/**
 	 * The database base class to use for install.
 	 *
 	 * @since 4.0.0

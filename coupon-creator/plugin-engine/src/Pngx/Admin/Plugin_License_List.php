@@ -7,6 +7,15 @@
 class Pngx__Admin__Plugin_License_List {
 	protected $file;
 	protected $plugin_name;
+	protected $basename;
+	protected $license_key;
+	protected $license_info;
+	protected $status_name;
+	protected $options;
+	protected $shop_url;
+	protected $links;
+	protected $deactivate_link;
+	protected $deactivate_msg;
 
 	/**
 	 * Class constructor
