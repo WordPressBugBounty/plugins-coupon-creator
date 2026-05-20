@@ -1,8 +1,7 @@
 <?php
-//If Direct Access Kill the Script
-if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
-	die( 'Access denied.' );
-
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 /*
 * Coupon Creator Print Template Deal
 *
@@ -25,6 +24,6 @@ function cctor_show_terms($coupon_id) {
 	//Run Shortcodes
 	$terms = do_shortcode( $terms );
 	
-	?><div class="cctor-terms"><?php echo strip_tags( $terms, apply_filters( 'cctor_filter_terms_tags', $cctor_terms_tags ) );  ?></div><?php
+	?><div class="cctor-terms"><?php echo wp_kses_post( $terms ); ?></div><?php
 
 }

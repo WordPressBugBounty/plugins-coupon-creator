@@ -2,11 +2,11 @@
 Contributors: brianjessee
 Plugin Name: Coupon Creator
 Plugin URI: http://couponcreatorplugin.com
-Tags: custom post type, coupon, shortcode
+Tags: coupon, shortcode, email marketing, lead generation, list building
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W6FGHL2BUNY2W&lc=US&item_name=Coupon%20Creator&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Requires at least: 6.5
-Tested up to: 6.8.3
-Stable tag: 3.4.3
+Tested up to: 7.0.0
+Stable tag: 3.5.0
 Requires PHP: 7.4
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
@@ -29,18 +29,18 @@ Watch this quick video to see the Coupon Creator in Action:
 
 https://www.youtube.com/watch?v=aGoxJ3TBRhk
 
-<h4>Coupon Creator Add-ons 3.4 Features Include: (included with Pro Business and higher license levels)</h4>
+<h4>Coupon Creator Add-ons 3.5 Features Include: (included with Pro Business and higher license levels)</h4>
+* Email Delivery — send coupons directly to visitors via email with templates for all 6 coupon types
+* Email Gate — require an email address to view a coupon, building your list while distributing deals
+* Email logging with GDPR-compliant anonymization, configurable retention, and deliverability health checks (SPF, blacklist, SMTP)
 * Multiprint to select multiple coupons to print all at once
 * Block Editor Support for couponloop with Vendor and Location Taxonomies
 * Reveal Code & Dynamic Code Feature
 * Vendor and Location Taxonomies
-* Modern Advanced Template
-* Lower Third Advanced Template
-* Highlight Advanced Template
-* Lower Third Advanced Template
+* Modern, Highlight, Lower Third, and Two-Column Advanced Templates
 * Create and Display WooCommerce Coupons from the Coupon Creator Editor
 
-<h4>Coupon Creator Pro 3.4 Features Include:</h4>
+<h4>Coupon Creator Pro 3.5 Features Include:</h4>
 * Block Editor support for couponloop shortcode and all of its attributes
 * [couponloop] shortcode, filter bar, and template system, to give you control over customizations without losing changes on updates
 * Order the filter bar filters and hide any filter per shortcode
@@ -148,6 +148,13 @@ You can add custom css in the options and it will modify both the shortcode coup
 6. Coupon Options
 
 == Changelog ==
+
+= 3.5.0 May 20th 2026 =
+
+* Tweak - Compatible with Coupon Creator Add-ons 3.5: Email Delivery, Email Gate, and deliverability tools for building your email list from your coupons.
+* Security - Improved input sanitization and output escaping across the plugin.
+* Tweak - Improved block editor compatibility and build tooling.
+* Tweak - Updated internal dependencies.
 
 = 3.4.3 November 6th 2025 =
 

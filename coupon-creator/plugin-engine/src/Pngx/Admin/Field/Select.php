@@ -30,7 +30,8 @@ class Pngx__Admin__Field__Select {
 			$selected = $field['value'];
 		}
 
-		$class = isset( $field['class'] ) ? $field['class'] : '';
+		$class       = isset( $field['class'] ) ? $field['class'] : '';
+		$input_class = isset( $field['input_class'] ) ? $field['input_class'] : '';
 
 		if ( $repeat_obj ) {
 			$name = $repeat_obj->get_field_name( $name );
@@ -40,7 +41,7 @@ class Pngx__Admin__Field__Select {
 		<div class="pngx-default-select pngx-default <?php echo esc_attr( $class ); ?>">
 			<select
 				id="<?php echo esc_attr( $field['id'] ); ?>"
-				class="select"
+				class="select <?php echo esc_attr( $input_class ); ?>"
 				name="<?php echo esc_attr( $name ); ?>"
 				<?php echo isset( $field['data'] ) ? Pngx__Admin__Fields::toggle( $field['data'], null ) : ''; ?>
 			>

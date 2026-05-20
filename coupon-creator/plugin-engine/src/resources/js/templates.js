@@ -61,6 +61,9 @@ jQuery( function ( $ ) {
 					//Init Icon Pickers
 					$( $ajax_field + ' .pngx-icon-picker' ).iconpicker();
 
+					// Init Select2 Dropdowns
+					$( $ajax_field + ' .pngx-dropdown' ).not( '.pngx-dropdown-created' ).pngx_dropdowns();
+
 				} else {
 
 					$( $ajax_field ).html( '<h1>' + results.data + '</h1>' );

@@ -1,6 +1,12 @@
 === Plugin Engine ===
 
 == Changelog ==
+
+= 4.2.0 =
+
+* Security - Improved input sanitization and output escaping.
+* Tweak - Updated internal dependencies.
+
 = 4.1.0 May 13th 2024 =
 
 * Feature - Add V2 fields repeater field support.

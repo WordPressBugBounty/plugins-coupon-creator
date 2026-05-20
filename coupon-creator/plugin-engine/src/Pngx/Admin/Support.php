@@ -548,7 +548,8 @@ class Pngx__Admin__Support {
 	 */
 	public function get_user() {
 		if ( function_exists( 'exec' ) ) {
-			return exec( 'whoami' );
+			$user = exec( 'whoami' );
+			return sanitize_text_field( $user );
 		}
 
 		return __( 'Unknown', 'plugin-engine' );
@@ -571,14 +572,14 @@ class Pngx__Admin__Support {
 
 		if ( function_exists( 'exec' ) ) {
 			if ( $os['code'] !== 'WIN' ) {
-				$path = exec( "which $program" );
+				$path = exec( "which $program" ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec -- $program is escaped via escapeshellarg().
 			} else {
-				$path = exec( "where $program" );
+				$path = exec( "where $program" ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec
 			}
 		}
 
 		if ( $path ) {
-			return $path;
+			return sanitize_text_field( $path );
 		} else {
 			return __( 'Not Found', 'plugin-engine' );
 		}
