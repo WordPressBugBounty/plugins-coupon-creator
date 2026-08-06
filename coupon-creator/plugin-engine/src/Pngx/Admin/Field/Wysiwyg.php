@@ -111,7 +111,7 @@ class Pngx__Admin__Field__Wysiwyg {
 		<?php
 
 		if ( isset( $field['desc'] ) && ! empty( $field['desc'] ) ) {
-			echo '<span class="description">' . esc_html( $field['desc'] ) . '</span>';
+			echo '<span class="description">' . wp_kses_post( $field['desc'] ) . '</span>';
 		}
 	}
 }

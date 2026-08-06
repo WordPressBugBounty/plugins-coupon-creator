@@ -1,0 +1,59 @@
+/*
+ * Repeater CSS
+ * -------------------------------------------------------------
+ */
+.pngx-repeater-item {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+	padding: 10px;
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	position: relative;
+}
+
+.pngx-repeater-item > * {
+	margin-right: 10px;
+}
+
+.pngx-repeater-item .pngx-field {
+	flex: 1;
+
+	& + .pngx-field {
+	  margin-top: var(--pngx-spacer-0);
+	}
+}
+
+.pngx-repeater-item [data-repeater-delete] {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background: none;
+	border: none;
+	font-size: 20px;
+	color: #999;
+	cursor: pointer;
+}
+
+.pngx-repeater-item [data-repeater-delete]:hover {
+	color: #ff0000;
+}
+
+.pngx-repeater-item [data-repeater-delete] .screen-reader-text {
+	position: absolute;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	width: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	border: 0;
+	word-wrap: normal !important;
+}
+
+.pngx-repeater-item-handle {
+  cursor: move;
+  display: inline-block;
+  margin-right: 10px;
+}

@@ -64,7 +64,15 @@ class Cctor__Coupon__Blocks__Coupon extends Pngx__Blocks__Abstract {
 		$args['attributes'] = $this->attributes( $attributes );
 
 		if ( empty( $args['attributes']['couponid'] ) ) {
-			return '<p class="pngx-message">' . __( 'Please choose a coupon to display from the block settings.', 'coupon-creator' ) . '</p>';
+			if ( cctor_current_user_can_view_diagnostic() ) {
+				return '<p class="pngx-message cctor-editor-diagnostic" role="status">'
+					. esc_html__( 'Please choose a coupon to display from the block settings.', 'coupon-creator' )
+					. ' <a href="' . esc_url( admin_url( 'post-new.php?post_type=cctor_coupon' ) ) . '">'
+					. esc_html__( 'Create a coupon', 'coupon-creator' )
+					. '</a></p>';
+			}
+
+			return '';
 		}
 
 		if (  class_exists( 'Cctor__Coupon__Pro__Core_Shortcode') ) {
@@ -73,12 +81,12 @@ class Cctor__Coupon__Blocks__Coupon extends Pngx__Blocks__Abstract {
 			$coupon = pngx( 'cctor.shortcode' )->core_shortcode( $attributes );
 		}
 
-		if ( ! $coupon && is_numeric( $args['attributes']['couponid'] ) ) {
+		if ( ! $coupon && is_numeric( $args['attributes']['couponid'] ) && cctor_current_user_can_view_diagnostic( $args['attributes']['couponid'] ) ) {
 			$status = get_post_status( $args['attributes']['couponid'] );
 
-			return '<p class="pngx-message pngx-notice">' . sprintf( '%1s %2s %3s', __( 'This coupon is set to', 'coupon-creator' ), $status, __( ' and will not show on the website.', 'coupon-creator' ) ) . '</p>';
-		} elseif ( ! $coupon ) {
-			return '<p class="pngx-message pngx-notice">' . __( 'No Coupons Found, Please make another selection.', 'coupon-creator' ) . '</p>';
+			return '<p class="pngx-message pngx-notice cctor-editor-diagnostic" role="status">' . esc_html( sprintf( '%1s %2s %3s', __( 'This coupon is set to', 'coupon-creator' ), $status, __( ' and will not show on the website.', 'coupon-creator' ) ) ) . '</p>';
+		} elseif ( ! $coupon && cctor_current_user_can_view_diagnostic() ) {
+			return '<p class="pngx-message pngx-notice cctor-editor-diagnostic" role="status">' . esc_html__( 'No coupons found. Please make another selection.', 'coupon-creator' ) . '</p>';
 		}
 
 		return $coupon;

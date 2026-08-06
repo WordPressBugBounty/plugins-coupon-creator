@@ -62,12 +62,14 @@ class Cctor__Coupon__Meta__Fields {
 		);
 
 		$template_options = array(
-			'default' => __( 'Default', 'coupon-creator' ),
+			'ticket'  => __( 'Modern Ticket', 'coupon-creator' ),
+			'default' => __( 'Classic', 'coupon-creator' ),
 			'image'   => __( 'Image', 'coupon-creator' ),
 		);
 		if ( class_exists( 'Cctor__Coupon__Addons__Main' ) && 1 == cctor_options( 'cctor_advanced_templates', true, 1 ) ) {
 			$template_options = array(
-				'default'     => __( 'Default', 'coupon-creator' ),
+				'ticket'      => __( 'Modern Ticket', 'coupon-creator' ),
+				'default'     => __( 'Classic', 'coupon-creator' ),
 				'image'       => __( 'Image', 'coupon-creator' ),
 				'modern'      => __( 'Modern', 'coupon-creator' ),
 				'two-column'  => __( 'Two Columns', 'coupon-creator' ),
@@ -78,15 +80,17 @@ class Cctor__Coupon__Meta__Fields {
 
 		// Coupon Type
 		$fields[ $prefix . 'coupon_type' ] = array(
-			'label'   => __( 'Coupon Type', 'coupon-creator-pro' ),
-			'desc'    => __( 'Choose a coupon type to use.', 'coupon-creator-pro' ),
+			'label'   => __( 'Coupon Type', 'coupon-creator' ),
+			'desc'    => __( 'Choose a coupon type to use.', 'coupon-creator' ),
 			'id'      => $prefix . 'coupon_type',
 			'data'    => array(
 				'ajax_field'    => '.template-wrap-cctor_coupon_type',
 				'ajax_field_id' => 'cctor_coupon_type',
 				'ajax_action'   => 'pngx_templates',
 			),
-			'value'    => cctor_options( 'cctor_default_template' ),
+			// Same fallback as Admin\Meta::default_template(), so the selected option and
+			// the fields shown beneath it agree on an unsaved site.
+			'value'    => cctor_options( 'cctor_default_template', false, 'ticket' ),
 			'class'   => 'pngx-template-chooser',
 			'type'    => 'select',
 			'choices' => $template_options,
@@ -134,38 +138,17 @@ class Cctor__Coupon__Meta__Fields {
 			'priority' => 80.00,
 		);
 		if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
-			$fields[ $prefix . 'pro_content_features_heading' ] = array(
-				'id'      => $prefix . 'pro_content_features_heading',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'content',
-				'title'   => '',
-				'desc'    => __( 'Pro Content Features', 'coupon-creator' ),
-				'type'    => 'pro_heading',
-				'priority' => 80.01,
-			);
-			$fields[ $prefix . 'pro_content_features' ]         = array(
+			$fields[ $prefix . 'pro_content_features' ] = array(
 				'id'      => $prefix . 'pro_content_features',
 				'section' => 'coupon_creator_meta_box',
 				'tab'     => 'content',
-				'title'   => '',
-				'desc'    => '',
-				'type'    => 'list',
-				'std'     => '',
-				'choices' => array(
-					'0' => __( 'Use the Visual editor to easily style the coupons term\'s' ),
-					'1' => __( 'Give visitors a reason to click on the coupon by only showing the deal in print view or by using the view shortcodes to selectively display content on either view' ),
-					'2' => __( 'Insert columns and rows into the content editor for more unique looking coupons' ),
+				'type'    => 'pro_card',
+				'features' => array(
+					__( 'Style terms with the visual editor.', 'coupon-creator' ),
+					__( 'Control which content appears on screen and in print.', 'coupon-creator' ),
+					__( 'Build richer layouts with columns and rows.', 'coupon-creator' ),
 				),
-				'priority' => 80.02,
-			);
-			$fields[ $prefix . 'pro_feature_content_link' ]     = array(
-				'id'      => $prefix . 'pro_feature_content_link',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'content',
-				'title'   => '', // Not used for headings.
-				'desc'    => __( 'Pro Link', 'coupon-creator' ),
-				'type'    => 'pro_link',
-				'priority' => 80.03,
+				'priority' => 80.01,
 			);
 		}
 
@@ -203,37 +186,16 @@ class Cctor__Coupon__Meta__Fields {
 
 		//Discount
 		if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
-			$fields[ $prefix . 'pro_content_style_heading' ] = array(
-				'id'      => $prefix . 'pro_content_style_heading',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'style',
-				'title'   => '',
-				'desc'    => __( 'Pro Content Features', 'coupon-creator' ),
-				'type'    => 'pro_heading',
-				'priority' => 12.01,
-			);
-			$fields[ $prefix . 'pro_content_style' ]         = array(
+			$fields[ $prefix . 'pro_content_style' ] = array(
 				'id'      => $prefix . 'pro_content_style',
 				'section' => 'coupon_creator_meta_box',
 				'tab'     => 'style',
-				'title'   => '',
-				'desc'    => '',
-				'type'    => 'list',
-				'std'     => '',
-				'choices' => array(
-					'0' => __( 'Use 4 style sections in Pro to create a unique coupon or a standard brand to attract customers' ),
-					'2' => __( 'Choose between 5 different border styles in Pro, including Saw Tooth, Stitched, Dotted, Coupon, and None.<br> <img class="cctor-pro-img" alt="Coupon Creator Pro Border Examples" src="' . esc_url( pngx( 'cctor' )->resource_url ) . 'images/cctor-border-examples.gif"/>' ),
+				'type'    => 'pro_card',
+				'features' => array(
+					__( 'Create reusable branded coupon styles.', 'coupon-creator' ),
+					__( 'Choose additional borders, backgrounds, and layout controls.', 'coupon-creator' ),
 				),
-				'priority' => 12.02,
-			);
-			$fields[ $prefix . 'pro_feature_style_link' ]    = array(
-				'id'      => $prefix . 'pro_feature_style_link',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'style',
-				'title'   => '', // Not used for headings.
-				'desc'    => __( 'Pro Link', 'coupon-creator' ),
-				'type'    => 'pro_link',
-				'priority' => 12.03,
+				'priority' => 12.01,
 			);
 		}
 
@@ -271,7 +233,12 @@ class Cctor__Coupon__Meta__Fields {
 
 		$fields[ $prefix . 'expiration_option' ] = array(
 			'label'    => __( 'Expiration Option', 'coupon-creator' ),
-			'desc'     => __( 'Choose the expiration method for this coupon', 'coupon-creator' ),
+			'desc'     => sprintf(
+				/* translators: 1: opening link tag to the expiration guide, 2: closing link tag. */
+				__( 'Choose the expiration method for this coupon. %1$sSee the guide%2$s.', 'coupon-creator' ),
+				'<a href="' . esc_url( cctor_guide_url( 'coupon-creator-expiration-dates' ) ) . '" target="_blank" rel="noopener">',
+				'</a>'
+			),
 			'id'       => $prefix . 'expiration_option',
 			'value'    => cctor_options( 'cctor_expiration_option' ),
 			'type'     => 'select',
@@ -384,38 +351,17 @@ class Cctor__Coupon__Meta__Fields {
 			'priority' => 16.03,
 		);
 		if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
-			$fields[ $prefix . 'pro_content_expiration_heading' ] = array(
-				'id'      => $prefix . 'pro_content_expiration_heading',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'expiration',
-				'title'   => '',
-				'desc'    => __( 'Pro Content Features', 'coupon-creator' ),
-				'type'    => 'pro_heading',
-				'priority' => 18.00,
-			);
-			$fields[ $prefix . 'pro_expiration_style' ]           = array(
+			$fields[ $prefix . 'pro_expiration_style' ] = array(
 				'id'      => $prefix . 'pro_expiration_style',
 				'section' => 'coupon_creator_meta_box',
 				'tab'     => 'expiration',
-				'title'   => '',
-				'desc'    => '',
-				'type'    => 'list',
-				'std'     => '',
-				'choices' => array(
-					'0' => __( 'Utilize five(5) different expiration options to help promote sales at your business' ),
-					'1' => __( 'Save time by editing multiple coupons expiration and counter fields using Pro\'s Bulk Edits' ),
-					'2' => __( 'Track coupon print views by using the unlimited counter or set a limit to restrict a coupon to a certain amount of customers' ),
+				'type'    => 'pro_card',
+				'features' => array(
+					__( 'Use recurring, range, and X-days expiration.', 'coupon-creator' ),
+					__( 'Bulk edit expiration and counter settings.', 'coupon-creator' ),
+					__( 'Track or limit coupon print views.', 'coupon-creator' ),
 				),
-				'priority' => 18.01,
-			);
-			$fields[ $prefix . 'pro_feature_expiration_link' ]    = array(
-				'id'      => $prefix . 'pro_feature_expiration_link',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'expiration',
-				'title'   => '', // Not used for headings.
-				'desc'    => __( 'Pro Link', 'coupon-creator' ),
-				'type'    => 'pro_link',
-				'priority' => 18.02,
+				'priority' => 18.00,
 			);
 		}
 
@@ -441,37 +387,16 @@ class Cctor__Coupon__Meta__Fields {
 
 		//Links
 		if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
-			$fields[ $prefix . 'pro_content_links_heading' ] = array(
-				'id'      => $prefix . 'pro_content_links_heading',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'links',
-				'title'   => '',
-				'desc'    => __( 'Pro Content Features', 'coupon-creator' ),
-				'type'    => 'pro_heading',
-				'priority' => 21.00,
-			);
-			$fields[ $prefix . 'pro_links_style' ]           = array(
+			$fields[ $prefix . 'pro_links_style' ] = array(
 				'id'      => $prefix . 'pro_links_style',
 				'section' => 'coupon_creator_meta_box',
 				'tab'     => 'links',
-				'title'   => '',
-				'desc'    => '',
-				'type'    => 'list',
-				'std'     => '',
-				'choices' => array(
-					'0' => __( 'Use the custom links and text to promote your affiliate links' ),
-					'1' => __( 'Enable your visitors to print coupons while staying on the same page using the Pop Up Coupon' ),
+				'type'    => 'pro_card',
+				'features' => array(
+					__( 'Use custom links and text for affiliate promotions.', 'coupon-creator' ),
+					__( 'Let visitors print without leaving the page.', 'coupon-creator' ),
 				),
-				'priority' => 21.01,
-			);
-			$fields[ $prefix . 'pro_feature_links_link' ]    = array(
-				'id'      => $prefix . 'pro_feature_links_link',
-				'section' => 'coupon_creator_meta_box',
-				'tab'     => 'links',
-				'title'   => '', // Not used for headings.
-				'desc'    => __( 'Pro Link', 'coupon-creator' ),
-				'type'    => 'pro_link',
-				'priority' => 21.02,
+				'priority' => 21.00,
 			);
 		}
 
@@ -510,9 +435,33 @@ class Cctor__Coupon__Meta__Fields {
 		/**
 		 * Start Default Template
 		 */
+		$fields[ $prefix . 'business_name' ] = array(
+			'label'     => __( 'Business Name', 'coupon-creator' ),
+			'desc'      => __( 'Shown above the deal. Leave blank to hide it.', 'coupon-creator' ),
+			'id'        => $prefix . 'business_name',
+			'type'      => 'text',
+			'alert'     => '',
+			'sanitize'  => 'titles',
+			'section'   => 'coupon_creator_meta_box',
+			'template'  => array( 'ticket' ),
+			'tab'       => 'content',
+			'wrapclass' => 'image-coupon-disable',
+			'display'   => array(
+				'type'  => 'title',
+				'class' => 'cctor-ticket-eyebrow',
+				'wrap'  => 'p',
+			),
+			'priority'  => 30.00,
+		);
+
 		$fields[ $prefix . 'amount' ] = array(
 			'label'     => __( 'Deal', 'coupon-creator' ),
-			'desc'      => __( 'Enter coupon deal - 30% OFF! or Buy One Get One Free, etc...', 'coupon-creator' ),
+			'desc'      => sprintf(
+				/* translators: 1: opening link tag to the creating-a-coupon guide, 2: closing link tag. */
+				__( 'Enter coupon deal - 30%% OFF! or Buy One Get One Free, etc... %1$sSee the guide%2$s.', 'coupon-creator' ),
+				'<a href="' . esc_url( cctor_guide_url( 'coupon-creator-creating-a-coupon' ) ) . '" target="_blank" rel="noopener">',
+				'</a>'
+			),
 			'id'        => $prefix . 'amount',
 			'type'      => 'text',
 			'alert'     => '',
@@ -522,7 +471,7 @@ class Cctor__Coupon__Meta__Fields {
 				'font-color'       => $prefix . 'colorheader',
 				'background-color' => $prefix . 'colordiscount',
 			),
-			'template'  => array( 'default' ),
+			'template'  => array( 'default', 'ticket' ),
 			'tab'       => 'content',
 			'wrapclass' => 'image-coupon-disable deal-display deal-display-both deal-display-hook deal-display-print',
 			'display'   => array(
@@ -562,7 +511,7 @@ class Cctor__Coupon__Meta__Fields {
 			'id'        => $prefix . 'deal_display',
 			'type'      => '',
 			'section'   => 'coupon_creator_meta_box',
-			'template'  => array( 'default' ),
+			'template'  => array( 'default', 'ticket' ),
 			'tab'       => 'content',
 			'wrapclass' => 'image-coupon-disable',
 			'priority' => 30.02,
@@ -575,7 +524,7 @@ class Cctor__Coupon__Meta__Fields {
 			'type'      => 'textarea',
 			'class'     => 'code',
 			'section'   => 'coupon_creator_meta_box',
-			'template'  => array( 'default' ),
+			'template'  => array( 'default', 'ticket' ),
 			'tab'       => 'content',
 			'cols'      => 60,
 			'rows'      => 4,
@@ -594,7 +543,9 @@ class Cctor__Coupon__Meta__Fields {
 			'type'     => '',
 			'alert'    => '',
 			'section'  => 'coupon_creator_meta_box',
-			'template' => array( 'default' ),
+			// 'image' included so the Pro/Add-ons type views render the date on
+			// image coupons too — expiration gates their display either way.
+			'template' => array( 'default', 'image', 'ticket' ),
 			'display'  => array(
 				'type'  => 'expiration',
 				'class' => 'expiration-date',
@@ -634,7 +585,12 @@ class Cctor__Coupon__Meta__Fields {
 
 		$fields[ $prefix . 'image' ] = array(
 			'label'    => __( 'Image Coupon', 'coupon-creator' ),
-			'desc'     => __( 'Upload an image to use as the entire coupon - Current image size is for 390 pixels in width with auto height', 'coupon-creator' ),
+			'desc'     => sprintf(
+				/* translators: 1: opening link tag to the image-coupon guide, 2: closing link tag. */
+				__( 'Upload an image to use as the entire coupon - Current image size is for 390 pixels in width with auto height. %1$sSee the guide%2$s.', 'coupon-creator' ),
+				'<a href="' . esc_url( cctor_guide_url( 'coupon-creator-creating-an-image-coupon' ) ) . '" target="_blank" rel="noopener">',
+				'</a>'
+			),
 			'id'       => $prefix . 'image',
 			'type'     => 'image',
 			'imagemsg' => 'Image Coupon',
@@ -673,7 +629,7 @@ class Cctor__Coupon__Meta__Fields {
 			'priority' => 78.01,
 		);
 		$fields[ $prefix . 'var_counter_msg' ]            = array(
-			'desc'    => __( 'The Counter will display based off the selection in the Expiration / Counter Tab of this Coupon.', 'coupon-creatorn' ),
+			'desc'    => __( 'The Counter will display based off the selection in the Expiration / Counter Tab of this Coupon.', 'coupon-creator' ),
 			'id'      => $prefix . 'expiration',
 			'type'    => 'message',
 			'section' => 'coupon_creator_meta_box',

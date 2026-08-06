@@ -10,6 +10,7 @@
  *
  * @see   Pngx__Service_Providers__Processes for more insight about this class utility.
  */
+#[\AllowDynamicProperties]
 abstract class Pngx__Process__Handler {
 	/**
 	 * The default handler action name.
@@ -257,7 +258,7 @@ abstract class Pngx__Process__Handler {
 	 *
 	 * @return mixed|null The result of the synchronous handling.
 	 */
-	abstract public function sync_handle( array $data_source = null );
+	abstract public function sync_handle( ?array $data_source = null );
 
 	/**
 	 * Returns an array of arguments that will be used to send the POST request.
@@ -357,5 +358,5 @@ abstract class Pngx__Process__Handler {
 	 * @return null|array Depending on the context of the call, cron or async, either the result
 	 *                    of the handling (cron) or nothing (async).
 	 */
-	abstract protected function handle( array $data_source = null );
+	abstract protected function handle( ?array $data_source = null );
 }

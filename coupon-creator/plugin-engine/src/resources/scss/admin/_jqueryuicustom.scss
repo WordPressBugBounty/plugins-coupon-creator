@@ -1,0 +1,95 @@
+/* ==========================================================================
+  jQuery UI CSS
+   ========================================================================== */
+.ui-datepicker.pngx-ui,
+.ui-dialog.pngx-ui {
+	background: #fefefe;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15), /* The top layer shadow */
+	0 8px 0 -5px #eee, /* The second layer */
+	0 8px 1px -4px rgba(0, 0, 0, 0.15), /* The second layer shadow */
+	0 14px 0 -8px #eee, /* The third layer */
+	0 14px 1px -9px rgba(0, 0, 0, 0.15);
+	height: 250px;
+	padding: 10px;
+	z-index: 101; /* The third layer shadow */
+}
+
+.ui-datepicker.pngx-ui {
+	height: auto;
+}
+
+.ui-datepicker.pngx-ui:after,
+.ui-datepicker.pngx-ui:before,
+.ui-dialog.pngx-ui:after,
+.ui-dialog.pngx-ui:before {
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	bottom: 0;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+	content: '';
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: -10;
+}
+
+.pngx-ui .ui-widget-header .ui-dialog-titlebar-close,
+.pngx-ui .ui-widget-header .ui-state-default.ui-dialog-titlebar-close,
+.pngx-ui .ui-widget-header {
+	background: none;
+	border: none;
+	color: #000;
+	font-weight: 700;
+}
+
+.pngx-ui .ui-widget-header .ui-icon {
+	background-image: url("../images/ui-icons_2e83ff_256x240.png");
+}
+
+.pngx-ui .ui-widget-header .ui-dialog-titlebar-close,
+.ui-dialog.pngx-ui .ui-dialog-titlebar-close span.ui-icon-closethick {
+	background-image: url("../images/ui-icons_2e83ff_256x240.png");
+	background-position: -100px -132px;
+	cursor: pointer;
+	height: 9px;
+	margin-left: -3px;
+	margin-top: -14px;
+	width: 9px;
+}
+
+.pngx-ui .ui-dialog-buttonpane button,
+.pngx-ui .ui-state-default,
+.pngx-ui.ui-widget-content .ui-state-default,
+.pngx-ui .ui-widget-header .ui-state-default {
+	background: url("../images/ui-bg_flat_65_2a5a8a_40x100.png") repeat-x scroll 50% 50% #2a5a8a;
+	border: 1px solid #d3d3d3;
+	color: #fff;
+	font-weight: 400;
+}
+.pngx-ui .ui-dialog-buttonpane button {
+	padding: 6px 13px;
+}
+.pngx-ui .ui-widget-header .ui-dialog-titlebar-close:hover,
+.pngx-ui .ui-dialog-buttonpane button:hover,
+.pngx-ui .ui-state-hover,
+.pngx-ui.ui-widget-content .ui-state-hover,
+.pngx-ui .ui-widget-header .ui-state-hover /*.pngx-ui .ui-state-focus,
+.pngx-ui.ui-widget-content .ui-state-focus,
+.pngx-ui .ui-widget-header .ui-state-focus*/
+{
+	filter: alpha(opacity=70);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=70)"; /* for IE8 in IE7 mode; must be before filter below */
+	opacity: 0.7; /* IE6-IE8 */
+}
+
+.ui-dialog.pngx-ui .ui-dialog-content {
+	overflow: hidden;
+}

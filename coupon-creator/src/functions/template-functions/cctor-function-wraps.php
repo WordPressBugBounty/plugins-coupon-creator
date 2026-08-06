@@ -23,6 +23,9 @@ function cctor_return_coupon_categories( $coupon_id ) {
 
 		return $coupon_cat_class;
 	}
+
+	// Uncategorized coupons: return an empty string so callers passing this to esc_html() don't hit a null deprecation.
+	return '';
 }
 
 /*

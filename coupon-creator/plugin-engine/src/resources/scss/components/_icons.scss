@@ -1,0 +1,22 @@
+/* ## PNGX Admin Icons
+--------------------------------------------- */
+
+.pngx-engine-options-control-icon__input {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 18px;
+	z-index: 0;
+}
+
+.pngx-engine-options-control-icon__leading {
+	left: 9px;
+}
+
+.pngx-engine-options-control-icon__trailing {
+	right: 9px;
+}
+
+.pngx-svgicon__svg-fill {
+	fill: var(--pngx-grey-7);
+}

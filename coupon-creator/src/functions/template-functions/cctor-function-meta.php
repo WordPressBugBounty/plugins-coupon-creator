@@ -128,16 +128,16 @@ function cctor_print_stylesheets_and_script() { ?>
 
 	//Get File Time of CSS File so that CSS Updater when changes made
 	$cctor_file  = wp_normalize_path( WP_PLUGIN_DIR );
-	$cctor_file  = $cctor_file . '/coupon-creator/src/resources/css/coupon.css';
+	$cctor_file  = $cctor_file . '/coupon-creator/build/css/coupon.css';
 	$cctor_style = @filemtime( $cctor_file );
 
 	if ( $cctor_style == null ) {
-		$cctor_style = @filemtime( utf8_decode( $cctor_file ) );
+		$cctor_style = @filemtime( mb_convert_encoding( $cctor_file, 'ISO-8859-1', 'UTF-8' ) );
 	}
 
 	?>
 	<link rel='stylesheet' id='coupon-style-css'
-	      href='<?php echo esc_url( $coupon_url_dir ); ?>/coupon-creator/src/resources/css/coupon.css?<?php echo esc_attr( $cctor_style ); ?>'
+	      href='<?php echo esc_url( $coupon_url_dir ); ?>/coupon-creator/build/css/coupon.css?<?php echo esc_attr( $cctor_style ); ?>'
 	      type='text/css' media='all'/>
 
 	<!--Load jQuery for Counter from WordPress Install -->

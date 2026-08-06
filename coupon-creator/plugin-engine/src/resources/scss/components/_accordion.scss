@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Accordion CSS
+   ========================================================================== */
+
+/*
+.pngx-control-accordion__wrapper {
+
+	.pngx-control-accordion__toggle {
+		font-size: 12px;
+		font-weight: 500;
+	}
+
+	.tribe-field-switch-inner-wrap {
+		display: flex;
+		justify-content: space-between;
+		margin: 0 0 var(--tec-spacer-2) 0;
+	}
+}
+*/
+
+.pngx-control-accordion__wrapper {
+	background-color: var(--pngx-color-background);
+	border-radius: rem-calc(8);
+	max-width: 100%;
+
+	.pngx-control-accordion__toggle {
+		background: transparent;
+		border: 1px solid var(--pngx-grey-4);
+		color: var(--pngx-color-text-primary);
+		cursor: pointer;
+		display: flex;
+		font-size: var(--pngx-font-size-2);
+		font-weight: var(--pngx-font-weight-bold);
+		justify-content: space-between;
+		line-height: rem-calc(16);
+		padding: rem-calc(12 14);
+		text-align: left;
+		width: 100%;
+
+		.pngx-control-accordion__icon-caret-svg {
+			transition: 200ms linear all;
+			width: rem-calc(13);
+		}
+
+		&[aria-expanded="true"] {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+
+			.pngx-control-accordion__icon-caret-svg {
+				transform: rotate(-180deg);
+			}
+		}
+	}
+
+	.pngx-control-accordion__contents {
+		border: 1px solid var(--pngx-grey-5);
+		border-top: none;
+		border-bottom-left-radius: rem-calc(8);
+		border-bottom-right-radius: rem-calc(8);
+		display: none;
+		padding: rem-calc(20);
+	}
+}

@@ -7,7 +7,7 @@
 
 namespace Pngx\Ajax;
 
-use Pngx\Volt_Vectors\Plugin;
+use Pngx\Wyregraf\Plugin;
 
 /**
  * Class Abstract_Url
@@ -71,7 +71,7 @@ class Abstract_Url {
 		$service_id = $this->service_id;
 		$nonce  = wp_create_nonce( $this->actions::$add_profile_action );
 
-		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_volt_vectors_ev_{$service_id}_options_add_profile", $nonce, [] );
+		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_wyregraf_ev_{$service_id}_options_add_profile", $nonce, [] );
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Abstract_Url {
 		$service_id = $this->service_id;
 		$nonce  = wp_create_nonce( $this->actions::$save_action );
 
-		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_volt_vectors_ev_{$service_id}_options_save_profile", $nonce, [
+		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_wyregraf_ev_{$service_id}_options_save_profile", $nonce, [
 			'api_key' => $profile_id
 		] );
 	}
@@ -105,7 +105,7 @@ class Abstract_Url {
 		$service_id = $this->service_id;
 		$nonce  = wp_create_nonce( $this->actions::$update_action );
 
-		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_volt_vectors_ev_{$service_id}_options_update_profile", $nonce, [
+		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_wyregraf_ev_{$service_id}_options_update_profile", $nonce, [
 			'api_key' => $profile_id
 		] );
 	}
@@ -123,7 +123,7 @@ class Abstract_Url {
 		$service_id = $this->service_id;
 		$nonce  = wp_create_nonce( $this->actions::$delete_action );
 
-		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_volt_vectors_ev_{$service_id}_options_delete_profile", $nonce, [
+		return $this->get_admin_ajax_url_with_parameters( Plugin::$request_slug, "pngx_wyregraf_ev_{$service_id}_options_delete_profile", $nonce, [
 			'api_key' => $profile_id
 		] );
 	}

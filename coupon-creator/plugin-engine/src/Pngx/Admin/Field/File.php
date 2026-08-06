@@ -73,7 +73,7 @@ class Pngx__Admin__Field__File {
 
 		<?php
 		if ( ! empty( $field['desc'] ) ) {
-			echo '<span class="description">' . esc_html( $field['desc'] ) . '</span>';
+			echo '<span class="description">' . wp_kses_post( $field['desc'] ) . '</span>';
 		}
 
 	}

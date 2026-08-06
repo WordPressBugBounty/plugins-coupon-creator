@@ -402,6 +402,7 @@ pngx.dropdowns = pngx.dropdowns || {};
 			args.ajax.data = function( search, page ) {
 				return {
 					action: 'pngx_dropdown',
+					nonce: 'undefined' !== typeof window.pngx_dropdowns_data ? window.pngx_dropdowns_data.nonce : '',
 					source: source,
 					search: search,
 					page: page,

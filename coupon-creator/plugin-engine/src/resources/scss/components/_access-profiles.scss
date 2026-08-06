@@ -1,0 +1,136 @@
+/*
+ * Profiles CSS
+ * -------------------------------------------------------------
+ */
+
+.pngx-admin-body {
+
+	.notice,
+	div.error,
+	div.updated {
+		padding: var(--pngx-spacer-1) var(--pngx-spacer-2);
+	}
+
+	.pngx-engine-options-items__wrap {
+		margin: var(--pngx-spacer-2) auto var(--pngx-spacer-3);
+	}
+
+	fieldset {
+		padding: 0;
+	}
+
+	label,
+	legend {
+		color: var( --pngx-grey-8 );
+		display: block;
+		font-size: rem-calc(12);
+		font-weight: 400;
+		margin: 0;
+	}
+
+	legend {
+		float: none;
+	}
+
+	.pngx-engine-options-details__read-only-field {
+
+		.pngx-engine-options-details__field-wrap.pngx-field-wrap {
+			line-height: var(--pngx-spacer-7);
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+
+	.pngx-engine-options-details-profiles__last-access-wrap {
+
+		.pngx-engine-options-details__field-wrap.pngx-field-wrap {
+			line-height: var(--pngx-spacer-3);
+		}
+	}
+
+	.pngx-engine-options-details-action__revoke {
+		background: transparent;
+		border: 0;
+		color: var( --pngx-color-accent-primary );
+		cursor: pointer;
+		line-height: var(--pngx-spacer-7);
+		padding: 0;
+
+		&:hover {
+			color: var(--pngx-color-accent-primary-hover);
+		}
+	}
+
+	.pngx-engine-options__add-profile-button .dashicons {
+		margin-top: calc(var(--pngx-spacer-0) + 1px);
+	}
+
+	.pngx-engine-options-profile-panel__wrap {
+		margin: var(--pngx-spacer-1) var(--pngx-spacer-3) var(--pngx-spacer-3);
+	}
+
+	.pngx-engine-options-api-key-title {
+		font-weight: 700;
+		margin: 0 0 var(--pngx-spacer-3);
+	}
+
+	.pngx-engine-options-details-profiles__message-wrap {
+		border-bottom: 1px solid var(--pngx-color-border-default);
+		margin: 0 0 var(--pngx-spacer-3);
+		padding: 0 0 var(--pngx-spacer-3);
+	}
+
+	.pngx-engine-options-profile-action__buttons-wrap {
+		display: flex;
+		gap: rem-calc(8);
+	}
+
+	.pngx-engine-options-details-action__save,
+	.pngx-engine-options-details-action__update {
+		background: var( --pngx-color-accent-primary );
+		border: 1px solid var( --pngx-color-accent-primary );
+		border-radius: rem-calc(8);
+		cursor: pointer;
+		color: var( --pngx-white );
+		font-size: rem-calc(14);
+		line-height: rem-calc(20);
+		padding: rem-calc(10) rem-calc(20);
+
+		&:focus,
+		&:hover {
+			background: var( --pngx-color-accent-primary-hover );
+			border-color: var( --pngx-color-accent-primary-hover );
+			color: var( --pngx-white );
+		}
+	}
+
+	.dashicons {
+		background: transparent;
+		border: 0;
+		color: var(--pngx-color-text-secondary);
+		cursor: pointer;
+		font-family: dashicons;
+		font-size: rem-calc(20);
+		padding: 0;
+
+		&.dashicons-trash {
+			border: 1px solid var( --pngx-error );
+			border-radius: rem-calc(8);
+			color: var( --pngx-error );
+			line-height: rem-calc(20);
+			height: rem-calc(42);
+			width: rem-calc(42);
+
+			&:focus,
+			&:hover {
+				background-color: var( --pngx-error );
+				color: var( --pngx-white );
+			}
+		}
+
+		&:hover {
+			color: var(--pngx-color-text-disabled);
+		}
+	}
+}
+

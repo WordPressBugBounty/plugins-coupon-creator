@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Messages CSS
+   ========================================================================== */
+.pngx-meta-bg {
+	background-color: var( --pngx-color-background );
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+	margin: rem-calc(5 0 15);
+	overflow: hidden;
+	padding: rem-calc(8 12);
+}
+
+.pngx-license-field-msg {
+	padding-left: var( --pngx-spacer-2 );
+}
+
+.success,
+.pngx-success,
+.pngx-message {
+	border-left: 4px solid var( --pngx-success );
+	font-weight: bold;
+}
+
+.pngx-success-msg {
+	color: var( --pngx-success );
+}
+
+.pngx-error {
+	background: var( --pngx-grey-1 );
+	border-left: 4px solid var( --pngx-error );
+	color: var( --pngx-error );
+	margin-bottom: rem-calc(16);
+}
+
+.pngx-error-msg {
+	color: var( --pngx-error );
+}
+
+.pngx-warning {
+	color: #eea236;
+}
+
+.pngx-msg {
+	color: #65676A;
+}
+
+.success {
+	padding: rem-calc(1 12);
+}
+
+.pngx-error {
+	padding: rem-calc(1 12);
+}
+
+.pngx-section-fields .pngx-error {
+	margin: rem-calc(30 0);
+}
+
+.pngx-error div,
+.pngx-message div {
+	float: left;
+	padding: 0 2% 0 0;
+	width: 48%;
+}

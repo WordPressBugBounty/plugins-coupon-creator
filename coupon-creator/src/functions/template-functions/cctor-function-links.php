@@ -10,19 +10,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 function cctor_show_img_coupon( $coupon_id, $couponimage ) {
 	//Build Click to Print Link for the Image - First Check if Option to Hide is Checked
 
-	$nofollow      = cctor_options( 'cctor_nofollow_print_link', true, 1 ) == 1 ? 'rel="nofollow"' : '';
-	$cctor_onclick = ! defined( 'CCTOR_PREVENT_OPEN_IN_NEW_TAB' ) || ! CCTOR_PREVENT_OPEN_IN_NEW_TAB ? "window.open(this.href);return false;" : '';
+	$new_tab = ! defined( 'CCTOR_PREVENT_OPEN_IN_NEW_TAB' ) || ! CCTOR_PREVENT_OPEN_IN_NEW_TAB;
+
+	$rel = array();
+	if ( cctor_options( 'cctor_nofollow_print_link', true, 1 ) == 1 ) {
+		$rel[] = 'nofollow';
+	}
+	if ( $new_tab ) {
+		$rel[] = 'noopener';
+	}
+	$rel_attr    = $rel ? 'rel="' . esc_attr( implode( ' ', $rel ) ) . '"' : '';
+	$target_attr = $new_tab ? 'target="_blank"' : '';
 
 	if ( ! cctor_options( 'cctor_hide_print_link' ) ) {
 
 		//Set Image Link
 		?>
-		<a class="coupon_link" onclick='<?php echo esc_js( $cctor_onclick ); ?>' <?php echo $nofollow; ?> href='<?php echo esc_url( get_permalink( $coupon_id ) ); ?>' title='<?php echo __( 'Click to Open in Print View', 'coupon-creator' ); ?>'>
-		<img class='cctor_coupon_image' src='<?php echo esc_url( $couponimage ); ?>' alt='<?php echo get_the_title( $coupon_id ); ?>' title='<?php echo __( 'Coupon', 'coupon-creator' ); ?> <?php echo get_the_title( $coupon_id ); ?>'>
+		<a class="coupon_link" <?php echo $target_attr; ?> <?php echo $rel_attr; ?> href='<?php echo esc_url( get_permalink( $coupon_id ) ); ?>' title='<?php echo esc_attr__( 'Click to Open in Print View', 'coupon-creator' ); ?>'>
+		<img class='cctor_coupon_image' src='<?php echo esc_url( $couponimage ); ?>' alt='<?php echo esc_attr( get_the_title( $coupon_id ) ); ?>' title='<?php echo esc_attr__( 'Coupon', 'coupon-creator' ); ?> <?php echo esc_attr( get_the_title( $coupon_id ) ); ?>'>
 		</a><?php
 	} else {
 		//No Links for Image Coupon or Click to Print
-		?><img class='cctor_coupon_image' src='<?php echo $couponimage; ?>' alt='<?php echo get_the_title( $coupon_id ); ?>' title='<?php echo get_the_title( $coupon_id ); ?>'><?php
+		?><img class='cctor_coupon_image' src='<?php echo esc_url( $couponimage ); ?>' alt='<?php echo get_the_title( $coupon_id ); ?>' title='<?php echo get_the_title( $coupon_id ); ?>'><?php
 	}
 
 }
@@ -33,16 +42,24 @@ function cctor_show_img_coupon( $coupon_id, $couponimage ) {
 */
 function cctor_show_link( $coupon_id ) {
 
-	$nofollow = cctor_options( 'cctor_nofollow_print_link', true, 1 ) == 1 ? 'rel="nofollow"' : '';
+	$new_tab = ! defined( 'CCTOR_PREVENT_OPEN_IN_NEW_TAB' ) || ! CCTOR_PREVENT_OPEN_IN_NEW_TAB;
 
-	$cctor_onclick = ! defined( 'CCTOR_PREVENT_OPEN_IN_NEW_TAB' ) || ! CCTOR_PREVENT_OPEN_IN_NEW_TAB ? "window.open(this.href);return false;" : '';
+	$rel = array();
+	if ( cctor_options( 'cctor_nofollow_print_link', true, 1 ) == 1 ) {
+		$rel[] = 'nofollow';
+	}
+	if ( $new_tab ) {
+		$rel[] = 'noopener';
+	}
+	$rel_attr    = $rel ? 'rel="' . esc_attr( implode( ' ', $rel ) ) . '"' : '';
+	$target_attr = $new_tab ? 'target="_blank"' : '';
 
 	//Build Click to Print Link For Coupon - First Check if Option to Hide is Checked
 	if ( ! cctor_options( 'cctor_hide_print_link' ) ) {
 
 		?>
 		<div class='cctor_opencoupon cctor-opencoupon'>
-		<a class="print-link" <?php echo $nofollow; ?> href='<?php echo esc_url( get_permalink( $coupon_id ) ); ?>' onclick='<?php echo esc_js( $cctor_onclick ); ?>'><?php echo __( 'Click to Open in Print View', 'coupon-creator' ); ?></a>
+		<a class="print-link" <?php echo $rel_attr; ?> href='<?php echo esc_url( get_permalink( $coupon_id ) ); ?>' <?php echo $target_attr; ?>><?php echo __( 'Click to Open in Print View', 'coupon-creator' ); ?></a>
 		</div><!--end .opencoupon --><?php
 
 	} else {
@@ -58,9 +75,16 @@ function cctor_show_link( $coupon_id ) {
 function cctor_show_print_click( $coupon_id ) {
 	?>
 	<div class="cctor_opencoupon cctor-opencoupon"> <!-- We Need a Click to Print Button -->
-		<a class="print-link" href="javascript:window.print();" rel="nofollow"><?php echo __( 'Click to Print', 'coupon-creator' ); ?></a>
+		<button type="button" class="print-link" data-cctor-print="1" aria-label="<?php esc_attr_e( 'Print this coupon', 'coupon-creator' ); ?>"><?php echo __( 'Click to Print', 'coupon-creator' ); ?></button>
 
 	</div> <!--end .opencoupon -->
+	<script>
+		document.addEventListener( 'click', function ( event ) {
+			if ( event.target.closest( '[data-cctor-print]' ) ) {
+				window.print();
+			}
+		} );
+	</script>
 	<?php
 
 }

@@ -9,12 +9,7 @@ class ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
-            'Psr\\Log\\' => 8,
             'Pngx\\' => 5,
-        ),
-        'M' => 
-        array (
-            'Monolog\\' => 8,
         ),
         'F' => 
         array (
@@ -23,17 +18,9 @@ class ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283
     );
 
     public static $prefixDirsPsr4 = array (
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
         'Pngx\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/Pngx',
-        ),
-        'Monolog\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Firebase\\JWT\\' => 
         array (
@@ -41,25 +28,61 @@ class ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283
         ),
     );
 
-    public static $prefixesPsr0 = array (
-        'x' => 
-        array (
-            'xrstf\\Composer52' => 
-            array (
-                0 => __DIR__ . '/..' . '/xrstf/composer-php52/lib',
-            ),
-        ),
-        't' => 
-        array (
-            'tad_DI52_' => 
-            array (
-                0 => __DIR__ . '/..' . '/lucatume/di52/src',
-            ),
-        ),
-    );
-
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Firebase\\JWT\\BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/BeforeValidException.php',
+        'Firebase\\JWT\\CachedKeySet' => __DIR__ . '/..' . '/firebase/php-jwt/src/CachedKeySet.php',
+        'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
+        'Firebase\\JWT\\JWK' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWK.php',
+        'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
+        'Firebase\\JWT\\Key' => __DIR__ . '/..' . '/firebase/php-jwt/src/Key.php',
+        'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
+        'Pngx\\Admin\\Field\\V2\\Color' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Color.php',
+        'Pngx\\Admin\\Field\\V2\\Date' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Date.php',
+        'Pngx\\Admin\\Field\\V2\\File' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/File.php',
+        'Pngx\\Admin\\Field\\V2\\Image' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Image.php',
+        'Pngx\\Admin\\Field\\V2\\Number' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Number.php',
+        'Pngx\\Admin\\Field\\V2\\Read_Only' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Read_Only.php',
+        'Pngx\\Admin\\Field\\V2\\Repeater' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Repeater.php',
+        'Pngx\\Admin\\Field\\V2\\Switch_Field' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Switch_Field.php',
+        'Pngx\\Admin\\Field\\V2\\Text' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Text.php',
+        'Pngx\\Admin\\Field\\V2\\Textarea' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Textarea.php',
+        'Pngx\\Admin\\Field\\V2\\WYSIWYG' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/WYSIWYG.php',
+        'Pngx\\Admin\\Field\\V2\\Wooselect' => __DIR__ . '/../..' . '/src/Pngx/Admin/Field/V2/Wooselect.php',
+        'Pngx\\Ajax\\Abstract_Url' => __DIR__ . '/../..' . '/src/Pngx/Ajax/Abstract_Url.php',
+        'Pngx\\Ajax\\Actions_Interface' => __DIR__ . '/../..' . '/src/Pngx/Ajax/Actions_Interface.php',
+        'Pngx\\Ajax\\Dropdown' => __DIR__ . '/../..' . '/src/Pngx/Ajax/Dropdown.php',
+        'Pngx\\Ajax\\Operations' => __DIR__ . '/../..' . '/src/Pngx/Ajax/Operations.php',
+        'Pngx\\Carousel\\View' => __DIR__ . '/../..' . '/src/Pngx/Carousel/View.php',
+        'Pngx\\Dialog\\View' => __DIR__ . '/../..' . '/src/Pngx/Dialog/View.php',
+        'Pngx\\Duplicate\\Post_Types' => __DIR__ . '/../..' . '/src/Pngx/Duplicate/Post_Types.php',
+        'Pngx\\Install\\Cron' => __DIR__ . '/../..' . '/src/Pngx/Install/Cron.php',
+        'Pngx\\Install\\Database' => __DIR__ . '/../..' . '/src/Pngx/Install/Database.php',
+        'Pngx\\Install\\Setup' => __DIR__ . '/../..' . '/src/Pngx/Install/Setup.php',
+        'Pngx\\Iterator\\Lazy_CSV_Iterator' => __DIR__ . '/../..' . '/src/Pngx/Iterator/Lazy_CSV_Iterator.php',
+        'Pngx\\Service_Providers\\Carousel' => __DIR__ . '/../..' . '/src/Pngx/Service_Providers/Carousel.php',
+        'Pngx\\Service_Providers\\Dialog' => __DIR__ . '/../..' . '/src/Pngx/Service_Providers/Dialog.php',
+        'Pngx\\Session\\Session_Abstract' => __DIR__ . '/../..' . '/src/Pngx/Session/Session_Abstract.php',
+        'Pngx\\Session\\Session_Cookie_Abstract' => __DIR__ . '/../..' . '/src/Pngx/Session/Session_Cookie_Abstract.php',
+        'Pngx\\Session\\Session_Cookie_Interface' => __DIR__ . '/../..' . '/src/Pngx/Session/Session_Cookie_Interface.php',
+        'Pngx\\Session\\Session_Interface' => __DIR__ . '/../..' . '/src/Pngx/Session/Session_Interface.php',
+        'Pngx\\Template' => __DIR__ . '/../..' . '/src/Pngx/Template.php',
+        'Pngx\\Traits\\Dropdowns' => __DIR__ . '/../..' . '/src/Pngx/Traits/Dropdowns.php',
+        'Pngx\\Traits\\With_AJAX' => __DIR__ . '/../..' . '/src/Pngx/Traits/With_AJAX.php',
+        'Pngx\\Traits\\With_Nonce_Routes' => __DIR__ . '/../..' . '/src/Pngx/Traits/With_Nonce_Routes.php',
+        'Pngx\\Utilities\\Arr' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Arr.php',
+        'Pngx\\Utilities\\Dates\\Date_I18n' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Dates/Date_I18n.php',
+        'Pngx\\Utilities\\Dates\\Date_I18n_Immutable' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Dates/Date_I18n_Immutable.php',
+        'Pngx\\Utilities\\Dates\\Known_Range' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Dates/Known_Range.php',
+        'Pngx\\Utilities\\Dates\\Timezones' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Dates/Timezones.php',
+        'Pngx\\Utilities\\Dates\\Utils' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Dates/Utils.php',
+        'Pngx\\Utilities\\Element_Classes' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Element_Classes.php',
+        'Pngx\\Utilities\\Strings' => __DIR__ . '/../..' . '/src/Pngx/Utilities/Strings.php',
+        'Pngx\\Utils\\Array_Helpers' => __DIR__ . '/../..' . '/src/Pngx/Utils/Array_Helpers.php',
+        'Pngx\\Utils\\Element_Attributes' => __DIR__ . '/../..' . '/src/Pngx/Utils/Element_Attributes.php',
+        'Pngx\\Utils\\Element_Classes' => __DIR__ . '/../..' . '/src/Pngx/Utils/Element_Classes.php',
+        'Pngx\\Utils\\Paths' => __DIR__ . '/../..' . '/src/Pngx/Utils/Paths.php',
+        'Pngx\\Utils\\Strings' => __DIR__ . '/../..' . '/src/Pngx/Utils/Strings.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -67,7 +90,6 @@ class ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283::$prefixesPsr0;
             $loader->classMap = ComposerStaticInite0ab31d11ef782aee91ec1ec2cf5c283::$classMap;
 
         }, null, ClassLoader::class);

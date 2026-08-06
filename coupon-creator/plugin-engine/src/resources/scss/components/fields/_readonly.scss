@@ -1,0 +1,17 @@
+/*
+ * Read Only CSS
+ * -------------------------------------------------------------
+ */
+.pngx-field-read-only .pngx-field-wrap {
+	max-width: 37.5rem;
+}
+
+.pngx-wrapper {
+
+	.pngx-field-read-only {
+
+		.pngx-engine-options-details-field-read-only__value-wrap {
+			border: 1px solid var(--pngx-grey-3);
+		}
+	}
+}

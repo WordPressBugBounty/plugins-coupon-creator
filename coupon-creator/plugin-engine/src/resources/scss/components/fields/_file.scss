@@ -1,0 +1,45 @@
+/*
+ * File CSS
+ * -------------------------------------------------------------
+ */
+
+.pngx-engine-options-control__upload-file-ui-wrap {
+	border: 1px solid var(--pngx-grey-7);
+	border-radius: rem-calc(5);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	display: inline-flex;
+	width: 65%;
+}
+
+.pngx-engine-options-control__upload-file-button {
+	background-color: var(--pngx-grey-7);
+	border: 1px solid  var(--pngx-grey-7);
+	border-radius: 0;
+	color: var(--pngx-white);
+	cursor: pointer;
+	display: inline-block;
+	margin: 0;
+	padding: rem-calc(10) rem-calc(15);
+	transition: all .2s linear;
+
+	&:hover {
+		background-color: var(--pngx-grey-1);
+		color: var(--pngx-grey-7);
+	}
+}
+
+.pngx-file-upload-name {
+    background-color: transparent;
+    border-width: 0;
+    color: var(--pngx-grey-7);
+	padding: rem-calc(10) rem-calc(15);
+	word-break: break-all;
+}
+
+.pngx-engine-options-control__clear-wrap {
+	display: inline;
+
+	.pngx-engine-options-control__upload-clear-button {
+		font-size: rem-calc(12);
+	}
+}

@@ -1,0 +1,21 @@
+[
+  "pngx-common.php",
+  "pngx-autoload.php",
+  "src/**/*",
+  "language/**/*",
+  "README.md",
+  "vendor/autoload.php",
+  "vendor/bootstrap-iconpicker/**/*",
+  "vendor/browser/**/*",
+  "vendor/colorbox/**/*",
+  "vendor/composer/*",
+  "vendor/clipboard/*.js",
+  "vendor/firebase/php-jwt/src/*.php",
+  "vendor/freemius/**/*",
+  "vendor/tooltipster/*",
+  "vendor/lucatume/di52/src/**",
+  "vendor/faction23/a11y-dialog/*",
+  "vendor/xrstf/composer-php52/*",
+  "vendor/psr/log/Psr/Log/*.php",
+  "vendor/wp-color-picker-alpha/**/*"
+]

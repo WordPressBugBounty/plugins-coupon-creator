@@ -1,0 +1,69 @@
+/* = Bumpdown CSS - from Modern Pngx Bumpdown
+=============================================*/
+.wrap .pngx-bumpdown,
+.pngx-bumpdown,
+.pngx-bumpdown-cell.pngx-bumpdown {
+	display: none;
+	margin: rem-calc(16) 0;
+
+	.pngx-bumpdown-content {
+		background: #f1f1f1;
+		padding: rem-calc(10 35 10 10);
+		font-size: rem-calc(12);
+		position: relative;
+	}
+}
+
+.pngx-bumpdown-cell.pngx-bumpdown {
+	padding: 0;
+}
+
+#poststuff .pngx-bumpdown h1,
+#poststuff .pngx-bumpdown h2,
+#poststuff .pngx-bumpdown h3,
+#poststuff .pngx-bumpdown h4,
+.pngx-bumpdown h1,
+.pngx-bumpdown h2,
+.pngx-bumpdown h3,
+.pngx-bumpdown h4 {
+	padding-left: 0;
+	padding-top: 0;
+}
+
+.pngx-bumpdown-arrow {
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: rem-calc(-11);
+	margin-left: rem-calc(-18);
+	border-left: 8px solid transparent;
+	border-right: 8px solid transparent;
+	border-bottom: 11px solid #f1f1f1;
+}
+
+.pngx-bumpdown-close {
+	color: #686868;
+	cursor: pointer;
+	position: absolute;
+	right: rem-calc(8);
+	top: rem-calc(8);
+	z-index: 2;
+}
+
+.pngx-bumpdown-trigger .target {
+	color: #0074a2;
+}
+
+.pngx-bumpdown-trigger {
+	cursor: pointer;
+}
+
+@media screen and (max-width: 782px) {
+	.wrap td.pngx-bumpdown {
+		padding-right: rem-calc(35);
+	}
+
+	.pngx-bumpdown-arrow {
+		margin-left: rem-calc(-15);
+	}
+}

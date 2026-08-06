@@ -1,0 +1,37 @@
+/*
+ * Profiles Grid CSS
+ * -------------------------------------------------------------
+ */
+.pngx-profiles-grid {
+	background-color: var(--pngx-color-background-grey);
+	display: grid;
+	grid-gap: var(--pngx-spacer-2);
+	grid-template-columns: 2fr 2fr 2fr 1fr;
+
+	&:nth-child(even) {
+		background-color: var(--pngx-color-background-secondary);
+	}
+}
+
+.pngx-profiles-grid-header {
+	background-color: var(--pngx-color-background);
+	border: 1px solid var(--pngx-color-border-default);
+	border-bottom: none;
+}
+
+.pngx-engine-grid-row {
+	border: 1px solid var(--pngx-color-border-default);
+}
+
+.pngx-profiles-grid-item {
+	padding: var(--pngx-spacer-2);
+
+	&.disabled {
+		opacity: var(--pngx-opacity-select-highlighted);
+	}
+}
+
+.pngx-engine-grid-full-width {
+	grid-column: 1 / -1;
+}
+

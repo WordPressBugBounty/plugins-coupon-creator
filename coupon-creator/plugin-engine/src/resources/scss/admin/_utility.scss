@@ -1,0 +1,92 @@
+/* ==========================================================================
+   Help CSS
+   ========================================================================== */
+/* Column Classes
+* Modified from these links:
+* Link: http://wpsmith.net/2013/wp/genesis-2-0-drops-fifths-from-column-classes/
+* Link: http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css
+--------------------------------------------- */
+.pngx-row {
+	min-height: 1px;
+	width: 100%;
+}
+
+.pngx-one-fourth,
+.pngx-one-half,
+.pngx-one-third,
+.pngx-one-fifth,
+.pngx-three-fourths,
+.pngx-three-fifths,
+.pngx-two-fifths,
+.pngx-two-fourths,
+.pngx-two-thirds {
+	float: left;
+	margin-left: 2.564102564102564%;
+	min-height: 1px;
+}
+
+.pngx-one-half,
+.pngx-two-fourths {
+	width: 48.717948717948715%;
+}
+
+.pngx-one-third {
+	width: 31.623931623931625%;
+}
+
+.pngx-two-thirds {
+	width: 65.81196581196582%;
+}
+
+.pngx-one-fourth {
+	width: 23.076923076923077%;
+}
+
+.pngx-three-fourths {
+	width: 74.35897435897436%;
+}
+
+.pngx-two-fifths {
+	width: 38.4615384615384616%;
+}
+
+.pngx-one-fifth {
+	width: 17.9487179487179488%;
+}
+
+.pngx-three-fifths {
+	width: 58.9743589743589744%;
+}
+
+.pngx-first {
+	clear: both;
+	margin-left: 0;
+}
+
+@include breakpoint_max('sm') {
+	.pngx-one-fourth,
+	.pngx-one-half,
+	.pngx-one-third,
+	.pngx-one-fifth,
+	.pngx-three-fourths,
+	.pngx-three-fifths,
+	.pngx-two-fifths,
+	.pngx-two-fourths,
+	.pngx-two-thirds {
+		margin: 0;
+		width: 100%;
+	}
+}
+
+.pngx-field-align {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.pngx-field-one-third {
+	width: (calc( 1/3 )-1);
+}
+
+.pngx-field-two-thirds {
+	width: (calc( 2/3 )-1);
+}

@@ -1,0 +1,187 @@
+/* ==========================================================================
+   Tabs CSS
+   ========================================================================== */
+
+.pngx-tabs {
+
+	&.ui-tabs.ui-widget-content {
+		background: none;
+		border: none;
+		padding: 0;
+	}
+
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav {
+		background: none;
+		border: none;
+		height: 100%;
+		margin: rem-calc(20) 0 0;
+		padding: 0;
+	}
+
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav li {
+		margin: 0;
+
+		&:not(:last-child) {
+			margin-right: rem-calc(8);
+		}
+	}
+
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav li.ui-state-default,
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav li.ui-state-active {
+		background: none;
+		border: none;
+		display: inline;
+		outline: none;
+	}
+
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav li a {
+		border-color: transparent;
+		border-style: solid;
+		border-width: 0 0 2px;
+		box-shadow: none;
+		color: #5C5C5C;
+		display: inline-block;
+		font-size: rem-calc(13);
+		font-weight: bold;
+		padding: rem-calc(16);
+		text-decoration: none;
+	}
+
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav li.ui-tabs-selected a,
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav li.ui-state-active a {
+		border-color: var( --pngx-blue );
+		color: var( --pngx-blue );
+	}
+
+	&.ui-tabs .pngx-tabs-nav.ui-tabs-nav li.ui-state-hover:not(.ui-state-active) a {
+		border-color: #323232;
+		color: #323232;
+	}
+
+	.form-table {
+		margin-top: 0;
+	}
+
+	.pngx-tabs-panel {
+		position: relative;
+	}
+
+	.pngx-tabs-panel.ui-tabs-panel.ui-widget-content {
+		background: var( --pngx-grey-1 );
+		box-shadow: 0 0 1px 0 rgba(50, 50, 50, 0.5);
+		clear: both;
+		padding: 2%;
+
+		> h2 {
+			@include breakpoint('sm') {
+				font-size: rem-calc(36);
+				line-height: rem-calc(40);
+			}
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+
+		h4.pngx-fields-heading {
+			.pngx-wrapper & {
+				margin: 0;
+
+				@include breakpoint_max('md') {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+
+	.pngx-tabs-panel.ui-tabs-panel.ui-widget-content h3 {
+		color: var( --pngx-blue );
+		font: italic normal normal 24px/29px Georgia, Times, serif;
+		line-height: rem-calc(35);
+		margin: 0;
+		padding: 0 0 rem-calc(5);
+		text-shadow: 0 1px 0 var( --pngx-white );
+	}
+
+	.pngx-tabs-panel.ui-tabs-panel.ui-widget-content h4 {
+		font-weight: bold;
+		margin: 0;
+
+		@include breakpoint('sm') {
+			font-size: rem-calc(24);
+			line-height: rem-calc(32);
+		}
+
+		@include breakpoint_max('sm') {
+			font-size: rem-calc(17.6);
+		}
+	}
+
+	/* Responsive Tab Mode
+	------------------------------------------------------------ */
+	.pngx-tabs-nav-mobile {
+		background-color: var( --pngx-color-background );
+		border: 1px solid var( --pngx-grey-4 );
+		border-radius: rem-calc(10 10 0 0);
+		cursor: pointer;
+		display: none;
+		font-weight: bold;
+		margin-top: rem-calc(20);
+		padding: rem-calc(20);
+		position: relative;
+
+		@include breakpoint_max('sm') {
+			padding: rem-calc(16);
+		}
+	}
+
+	.pngx-tabs-nav-mobile.show {
+		display: block;
+	}
+
+	.pngx-tabs-nav-mobile:after {
+		content: "\f140";
+		font-family: dashicons;
+		font-size: rem-calc(16);
+		pointer-events: none;
+		position: absolute;
+		right: rem-calc(20);
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 2;
+	}
+
+	.pngx-tabs-nav.ui-tabs-nav.ui-corner-all.pngx-tabs-accordian {
+		background: var( --pngx-color-background );
+		border: 1px solid var(--pngx-grey-4);
+		border-radius: 0;
+		display: none;
+		height: auto;
+		margin: -1px 0 0;
+		padding: rem-calc(16);
+
+		@include breakpoint_max('sm') {
+			padding: rem-calc(12);
+		}
+	}
+
+	.pngx-tabs-nav.ui-tabs-nav.ui-corner-all.pngx-tabs-accordian li:not(:last-child) {
+		margin-right: 0;
+	}
+
+	.pngx-tabs-nav.pngx-tabs-accordian li a.ui-tabs-anchor {
+		border: none;
+		border-radius: 0;
+		display: block;
+		float: none;
+		margin: 0;
+		padding: rem-calc(5);
+		position: relative;
+	}
+
+	.pngx-tabs-nav.pngx-tabs-accordian li.ui-state-default {
+		display: block;
+		float: none;
+		margin-right: 0;
+	}
+}

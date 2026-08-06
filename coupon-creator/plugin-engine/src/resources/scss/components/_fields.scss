@@ -1,0 +1,18 @@
+/*
+ * Fields CSS
+ * -------------------------------------------------------------
+ */
+.pngx-field {
+	&.pngx-dependent {
+		width: 100%;
+	}
+
+	+ .pngx-field {
+		margin-top: var(--pngx-spacer-4);
+	}
+}
+
+.pngx-engine-options-control {
+	position: relative;
+}
+

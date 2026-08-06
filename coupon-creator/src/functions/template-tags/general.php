@@ -10,6 +10,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Cctor__Coupon__Main' ) ) {
 	return;
 }
+
+/**
+ * Build a URL to a guide on the Artifex documentation site.
+ *
+ * Central place for the docs base URL so it can be remapped in one spot (e.g. if the
+ * BetterDocs archive base changes). Guides live at
+ * https://artifexrouting.com/docs/{plugin-slug}-{guide-slug}/, so pass the full namespaced
+ * slug, e.g. cctor_guide_url( 'coupon-creator-getting-started' ).
+ *
+ * @param string $slug Namespaced doc slug (plugin-slug + '-' + guide-slug), no surrounding slashes.
+ *
+ * @return string Absolute URL to the guide, trailing-slashed.
+ */
+function cctor_guide_url( $slug ) {
+	$base = apply_filters( 'cctor_docs_base_url', 'https://artifexrouting.com/docs/' );
+
+	return trailingslashit( trailingslashit( $base ) . ltrim( $slug, '/' ) );
+}
+
 /**
  * Coupon Type Test
  *

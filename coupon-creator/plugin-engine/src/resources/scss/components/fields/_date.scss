@@ -1,0 +1,20 @@
+/*
+ * Date CSS
+ * -------------------------------------------------------------
+ */
+.pngx-tabs,
+.pngx-wrapper {
+	.pngx-engine-options-control__date-wrap {
+		background-color: var( --pngx-white );
+		border-radius: rem-calc(8);
+		width: fit-content;
+
+		.pngx-engine-options-control__date-input {
+			background: transparent;
+			max-width: 100%;
+			position: relative;
+			width: 240px;
+			z-index: 1;
+		}
+	}
+}
