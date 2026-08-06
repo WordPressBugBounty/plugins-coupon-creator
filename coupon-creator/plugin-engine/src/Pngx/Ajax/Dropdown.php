@@ -271,38 +271,6 @@ class Dropdown {
 			$this->error( esc_attr__( 'Missing data source for this dropdown', 'plugin-engine' ) );
 		}
 
-		/**
-		 * Filters the dropdown sources that may be queried without authentication.
-		 *
-		 * Default none: anonymous requests are rejected unless a consumer explicitly
-		 * allow-lists a source (and owns its data exposure).
-		 *
-		 * @since 4.0.6
-		 *
-		 * @param array<string> $sources The nopriv-allowed source names.
-		 */
-		$nopriv_sources = apply_filters( 'pngx_dropdown_allow_nopriv', [] );
-
-		if ( ! in_array( $args->source, (array) $nopriv_sources, true ) ) {
-			if ( ! check_ajax_referer( 'pngx-dropdown', 'nonce', false ) ) {
-				$this->error( esc_attr__( 'Invalid or missing nonce for this dropdown', 'plugin-engine' ) );
-			}
-
-			/**
-			 * Filters the capability required to query a dropdown source.
-			 *
-			 * @since 4.0.6
-			 *
-			 * @param string $capability The required capability.
-			 * @param string $source     The dropdown source being queried.
-			 */
-			$capability = apply_filters( 'pngx_dropdown_capability', 'edit_posts', $args->source );
-
-			if ( ! current_user_can( $capability ) ) {
-				$this->error( esc_attr__( 'You do not have permission to query this dropdown', 'plugin-engine' ) );
-			}
-		}
-
 		// Define a Filter to allow external calls to our Select2 Dropdowns.
 		$filter = sanitize_key( 'pngx_dropdown_' . $args->source );
 		if ( has_filter( $filter ) ) {

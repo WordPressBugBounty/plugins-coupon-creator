@@ -89,7 +89,7 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 			array( $this, 'display_fields' ) // function
 		);
 
-		add_action( 'admin_print_scripts-' . $admin_page, pngx_callback( pngx( 'cctor.assets' ), 'enqueue_admin_assets' ) );
+		add_action( 'admin_print_scripts-' . $admin_page, pngx_callback( pngx( 'cctor.admin.assets' ), 'load_assets' ) );
 
 	}
 
@@ -156,39 +156,14 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 			return;
 		}
 
-		$js_troubleshoot_url = cctor_guide_url( 'coupon-creator-troubleshooting-javascript-errors' );
-		$docs_url            = cctor_guide_url( 'coupon-creator' );
-		$mark_url            = pngx( 'cctor' )->resource_url . 'images/coupon-creator-mark.svg';
+		$js_troubleshoot_url = 'http://cctor.link/R7KRa';
 
-		// Consolidated version string for the header band. Core uses the constant
-		// (always accurate); active tiers append their own via the filter — see
-		// Pro's pro_version() / Add-ons' version(). Renders as
-		// "v3.6.0 · Pro 3.6.0 · Add-ons 3.6.0".
-		$version_parts = apply_filters( 'cctor_options_header_versions', array( 'v' . Cctor__Coupon__Main::VERSION_NUM ) );
-		$version_line  = implode( ' · ', array_filter( (array) $version_parts ) );
+		echo '<div class="icon32" id="icon-options-general"></div>
+		<h2><img class="cctor-options-icon" src="' . pngx( 'cctor' )->resource_url . 'images/cctor-icon.svg"/>  ' . __( 'Coupon Creator Options', 'coupon-creator' ) . '</h2>
 
-		// Artifex header band (A1): plugin mark + Jost wordmark + endorsement,
-		// version + Docs link right-aligned. Replaces the old 40px icon title.
-		echo '<div class="afx-header">
-			<div class="afx-header__brand">
-				<img class="afx-header__mark" src="' . esc_url( $mark_url ) . '" alt="" />
-				<span class="afx-header__names">
-					<span class="afx-header__wordmark">' . esc_html__( 'Coupon Creator', 'coupon-creator' ) . '</span>
-					<span class="afx-header__promise">' . esc_html__( 'Put a real coupon on your site.', 'coupon-creator' ) . '</span>
-					<span class="afx-header__endorse">' . esc_html__( 'By Artifex Routing Co', 'coupon-creator' ) . '</span>
-				</span>
-			</div>
-			<div class="afx-header__meta">';
-		if ( $version_line ) {
-			echo '<span class="afx-header__version">' . esc_html( $version_line ) . '</span>';
-		}
-		echo '<a class="afx-header__docs" href="' . esc_url( $docs_url ) . '" target="_blank" rel="noopener">' . esc_html__( 'Docs', 'coupon-creator' ) . ' &#8599;</a>
-			</div>
-		</div>
+		<div class="javascript-conflict pngx-error"><p>' . sprintf( __( 'There maybe a javascript conflict preventing some features from working.  <a href="%s" target="_blank" >Please check this guide to narrow down the cause.</a>', 'coupon-creator' ), esc_url( $js_troubleshoot_url ) ) . '</p></div>
 
-		<hr class="wp-header-end">
-
-		<div class="javascript-conflict pngx-error"><p>' . sprintf( __( 'There maybe a javascript conflict preventing some features from working.  <a href="%s" target="_blank" >Please check this guide to narrow down the cause.</a>', 'coupon-creator' ), esc_url( $js_troubleshoot_url ) ) . '</p></div>';
+		<h4>Coupon Creator: ' . get_option( Cctor__Coupon__Main::VERSION_KEY ) . '</h4>';
 
 		if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == true ) {
 			echo '<div class="updated fade"><p>' . __( 'Coupon Creator Options updated.', 'coupon-creator' ) . '</p></div>';
@@ -231,14 +206,12 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 			'type'    => 'heading'
 		);
 		$template_options          = array(
-			'ticket'  => __( 'Modern Ticket', 'coupon-creator' ),
-			'default' => __( 'Classic', 'coupon-creator' ),
+			'default' => __( 'Default', 'coupon-creator' ),
 			'image'   => __( 'Image', 'coupon-creator' ),
 		);
 		if ( class_exists( 'Cctor__Coupon__Addons__Main' ) && 1 == cctor_options( 'cctor_advanced_templates', true, 1 ) ) {
 			$template_options = array(
-				'ticket'      => __( 'Modern Ticket', 'coupon-creator' ),
-				'default'     => __( 'Classic', 'coupon-creator' ),
+				'default'     => __( 'Default', 'coupon-creator' ),
 				'image'       => __( 'Image', 'coupon-creator' ),
 				'modern'      => __( 'Modern', 'coupon-creator' ),
 				'two-column'  => __( 'Two Columns', 'coupon-creator' ),
@@ -251,9 +224,7 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 			'section' => 'defaults',
 			'title'   => __( 'Template Option', 'coupon-creator' ),
 			'desc'    => __( 'Choose a default template for new coupons', 'coupon-creator' ),
-			// New coupons default to the ticket. Existing coupons keep whatever
-			// cctor_coupon_type they already have, so nothing on a live site changes.
-			'std'     => 'ticket',
+			'std'     => 'default',
 			'type'    => 'select',
 			'choices' => $template_options,
 		);
@@ -438,7 +409,7 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 		$fields['cctor_hide_print_link']         = array(
 			'section' => 'permalinks',
 			'title'   => __( 'Disable Print View', 'coupon-creator' ),
-			'desc'    => __( 'Check to turn off printing everywhere: the "Click to Open in Print View" links under coupons, custom links, and the Pro popup. Visitors will see coupons but will not be able to open or print them.', 'coupon-creator' ),
+			'desc'    => __( 'This will disable all custom links and the popup option in Pro as well as the "Click to Open in Print View" links under the coupon', 'coupon-creator' ),
 			'type'    => 'checkbox',
 			'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 		);
@@ -508,12 +479,7 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 		//Custom CSS
 		$fields['cctor_custom_css'] = array(
 			'title'   => __( 'Custom Coupon Styles', 'coupon-creator' ),
-			'desc'    => sprintf(
-				/* translators: 1: opening link tag to the customizing guide, 2: closing link tag. */
-				__( 'Enter any custom CSS here to apply to the coupons for the shortcode and the print template (without &#60;style&#62; tags). %1$sSee the customizing guide%2$s.', 'coupon-creator' ),
-				'<a href="' . esc_url( cctor_guide_url( 'coupon-creator-pro-customizing-coupons' ) ) . '" target="_blank" rel="noopener">',
-				'</a>'
-			),
+			'desc'    => __( 'Enter any custom CSS here to apply to the coupons for the shortcode and the print template.(without &#60;style&#62; tags)', 'coupon-creator' ),
 			'std'     => 'e.g. .cctor_coupon_container { width: 000px; }',
 			'type'    => 'textarea',
 			'section' => 'display',
@@ -523,7 +489,7 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 		$fields['cctor_wpautop'] = array(
 			'section' => 'display',
 			'title'   => __( 'Auto P Filter', 'coupon-creator' ),
-			'desc'    => __( 'Check to stop WordPress from adding automatic paragraph tags (<a href="http://codex.wordpress.org/Function_Reference/wpautop" target="_blank">wpautop</a>) to the Coupon Terms field. Uncheck if you want your terms text to keep automatic paragraph spacing.', 'coupon-creator' ),
+			'desc'    => __( 'Check to remove <a href="http://codex.wordpress.org/Function_Reference/wpautop" target="_blank">wpautop filter</a> from Coupon Terms Field', 'coupon-creator' ),
 			'type'    => 'checkbox',
 			'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
 		);
@@ -531,7 +497,7 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 		$fields['cctor_print_base_css'] = array(
 			'section' => 'display',
 			'title'   => __( 'Print View Base CSS', 'coupon-creator' ),
-			'desc'    => __( 'Check to turn off the built-in typography styles on the print view. Leave unchecked to keep the readable default print styling.', 'coupon-creator' ),
+			'desc'    => __( 'Check to disable the base CSS in Print View', 'coupon-creator' ),
 			'type'    => 'checkbox',
 			'std'     => 0 // Set to 1 to be checked by default, 0 to be unchecked by default.
 		);
@@ -549,7 +515,7 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 			'type'    => 'checkbox',
 			'std'     => 0,
 			'class'   => '',
-			'desc'    => __( 'Check to include coupons in WordPress search results. By default, Coupon Creator keeps coupons out of site searches.', 'coupon-creator' )
+			'desc'    => __( 'Check this to prevent the Coupon Creator from modifying the search query to remove the coupon custom post type.', 'coupon-creator' )
 		);
 		if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
 			$fields['pro_feature_display_heading'] = array(
@@ -650,6 +616,15 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 			'desc'    => __( 'Check this box and click "Save Changes" below to reset all coupon creator options to their defaults. This does not change any existing coupon settings or remove your licenses.', 'coupon-creator' )
 		);
 
+		$fields['wisdom_registered_setting'] = array(
+			'section' => '',
+			'title'   => __( 'Wisdom Enabled', 'coupon-creator' ),
+			'type'    => 'checkbox',
+			'std'     => 1,
+			'class'   => '',
+			'desc'    => ''
+		);
+
 		//Filter Option Fields
 		if ( has_filter( 'cctor_option_filter' ) ) {
 			/**
@@ -666,21 +641,44 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 	}
 
 	/*
-	* Coupon Creator Display Review Promo
-	*
-	* One promo card per screen, ever (Artifex A4): the Rate-It card only. The
-	* former MailChimp "Sign Me Up" box is retired — the newsletter lives in the
-	* docs footer now.
+	* Coupon Creator Display Newsletter Sign Up
 	*/
 	public function cctor_newsletter_signup( $slug ) {
 
 		if ( 'coupon-options' == $slug ) {
 
-			echo '<div class="afx-promo">
-					<span class="afx-promo__label">' . esc_html__( 'Enjoying Coupon Creator?', 'coupon-creator' ) . '</span>
-					<span class="afx-promo__body">' . wp_kses_post( __( 'Every time you rate <strong>5 stars</strong>, it shows your support and helps other independents find the Coupon Creator.', 'coupon-creator' ) ) . '</span>
-					<p><a href="https://wordpress.org/support/view/plugin-reviews/coupon-creator?filter=5" target="_blank" rel="noopener" class="afx-btn afx-btn--secondary">' . esc_html__( 'Rate it', 'coupon-creator' ) . ' &#9733;&#9733;&#9733;&#9733;&#9733;</a></p>
+			echo '<div class="pngx-promo-boxes">
+				<div class="pngx-promo-box">
+					<h2>Keep The Coupon Creator Going!</h2>
+					<p>Every time you rate <strong>5 stars</strong>, it shows your support for the Coupon Creator and helps make it better!</p>
+					<p><a href="https://wordpress.org/support/view/plugin-reviews/coupon-creator?filter=5" target="_blank" class="button-primary">Rate It</a></p>
 				</div>';
+
+			echo '<!-- Begin MailChimp Signup Form -->
+				<div id="mc_embed_signup" class="pngx-promo-box">
+					<form action="//CouponCreatorPlugin.us9.list-manage.com/subscribe/post?u=f2b881e89d24e6f424aa25aa5&amp;id=2b82660ba0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+
+						<div id="mc_embed_signup_scroll">
+
+						<h2>Sign Up for Coupon Creator Updater, Tips, and More</h2>
+					<div class="mc-field-group">
+						<input type="email" value="" placeholder="email address" name="EMAIL" class="required email" id="mce-EMAIL">
+					</div>
+
+						<div id="mce-responses">
+							<div class="response" id="mce-error-response" style="display:none"></div>
+							<div class="response" id="mce-success-response" style="display:none"></div>
+						</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+						<div style="position: absolute; left: -5000px;"><input type="text" name="b_f2b881e89d24e6f424aa25aa5_2b82660ba0" tabindex="-1" value=""></div>
+
+
+						<input type="submit" value="Sign Me Up" name="subscribe" id="mc-embedded-subscribe" class="button">
+
+						</div>
+					</form>
+				</div>
+			</div>';
 		}
 	}
 
@@ -779,13 +777,6 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 		}
 
 		$classes .= ' pngx-admin-body';
-
-		// Scope the Artifex admin UI layer to our own Options page only. The
-		// engine's shared settings_page_plugin-engine-options screen is left
-		// unthemed — we don't own its markup.
-		if ( 'cctor_coupon_page_coupon-options' === $screen->id ) {
-			$classes .= ' afx-theme-coupon-creator';
-		}
 
 		return $classes;
 	}

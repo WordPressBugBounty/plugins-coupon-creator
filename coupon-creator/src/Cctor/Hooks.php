@@ -11,7 +11,7 @@ namespace Cctor\Coupon;
 
 use Cctor\Coupon\Templates\Admin_Template;
 use Pngx__Admin__Fields;
-use Pngx\Vendor\lucatume\DI52\ServiceProvider;
+use tad_DI52_ServiceProvider;
 use Pngx\Template;
 
 /**
@@ -21,7 +21,7 @@ use Pngx\Template;
  *
  * @package Cctor\Coupon;
  */
-class Hooks extends ServiceProvider {
+class Hooks extends tad_DI52_ServiceProvider {
 
 	/**
 	 * Binds and sets up implementations.
@@ -43,10 +43,6 @@ class Hooks extends ServiceProvider {
 	 */
 	public function add_filters() {
 		add_filter( 'pngx_template_path_list', [ $this, 'filter_template_path_list' ], 15, 2 );
-
-		// Surface the EDD SL SDK "Manage License" control on the options page
-		// (Licenses tab), for any paid plugin that registers via cctor_sdk_licenses.
-		\Cctor__Coupon__Admin__SDK_License_UI::register();
 	}
 
 	/**

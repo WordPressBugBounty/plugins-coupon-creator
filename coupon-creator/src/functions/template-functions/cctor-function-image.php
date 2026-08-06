@@ -11,21 +11,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 */
 function cctor_get_image_url( $coupon_id, $cctor_img_size = 'full' ) {
 
-	// Memoize per coupon+size: this runs at least twice per coupon in the render loop
-	// (image-class check + the cctor_image_url filter), and each call otherwise re-reads
-	// meta and re-runs wp_get_attachment_image_src().
-	static $cache = array();
-
-	$key = $coupon_id . ':' . $cctor_img_size;
-	if ( isset( $cache[ $key ] ) ) {
-		return $cache[ $key ];
-	}
-
 	$couponimage_id = get_post_meta( $coupon_id, 'cctor_image', true );
 	$couponimage    = wp_get_attachment_image_src( $couponimage_id, $cctor_img_size );
 	$couponimage    = isset( $couponimage[0] ) ? $couponimage[0] : '';
 
-	return $cache[ $key ] = wp_normalize_path( $couponimage );
+	return wp_normalize_path( $couponimage );
 }
 
 /*

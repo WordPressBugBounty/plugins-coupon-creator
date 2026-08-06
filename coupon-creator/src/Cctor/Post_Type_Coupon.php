@@ -76,7 +76,7 @@ class Cctor__Coupon__Post_Type_Coupon {
 		 *
 		 * @var string
 		 */
-		return apply_filters( 'cctor_coupon_slug', sanitize_title( cctor_options( 'cctor_coupon_base', false, $this->post_type ) ) );
+		return apply_filters( 'cctor_coupon_slug', sanitize_title( cctor_options( 'cctor_coupon_base', false, __( $this->post_type, 'slug', $this->text_domain ) ) ) );
 	}
 
 	/**
@@ -182,7 +182,7 @@ class Cctor__Coupon__Post_Type_Coupon {
 		 *
 		 * @var string
 		 */
-		return apply_filters( 'cctor_category_slug', sanitize_title( cctor_options( 'cctor_coupon_category_base', false, 'coupon-category' ) ) );
+		return apply_filters( 'cctor_category_slug', sanitize_title( cctor_options( 'cctor_coupon_category_base', false, __( 'coupon-category', 'slug', $this->text_domain ) ) ) );
 	}
 
 	/**
@@ -230,7 +230,27 @@ class Cctor__Coupon__Post_Type_Coupon {
 				$this->text_domain,
 				array(
 					'supports'  => array( 'title', 'coupon_creator_meta_box' ),
-					'menu_icon' => $this->get_menu_icon(),
+					'menu_icon' => 'data:image/svg+xml;base64,' . base64_encode('
+					<svg
+					    version="1.1"
+					    id="coupon-creator-admin-icon"
+					    xmlns="http://www.w3.org/2000/svg"
+					    x="0px"
+					    y="0px"
+					    viewBox="0 0 25 25"
+					    width="20px"
+					    height="20px"
+					>
+					<g  fill="white">
+						<path d="M0,0v25h25V0H0z M3.5,9.8h2v5.3h-2V9.8z M7.5,21.5h-4v-4h2v2h2V21.5z M7.5,5.5h-2v2h-2v-4h4V5.5z M15.1,21.5H9.8v-2h5.3
+							V21.5z M13,9.8c0-0.2-0.2-0.3-0.4-0.3c-0.3,0-0.4,0.1-0.5,0.3C12,10,12,10.2,12,10.6v3.9c0,0.3,0,0.6,0.1,0.8
+							c0.1,0.2,0.3,0.3,0.5,0.3c0.3,0,0.4-0.1,0.5-0.3c0.1-0.2,0.1-0.4,0.1-0.8v-0.9H15v0.7c0,0.8-0.2,1.4-0.5,1.8
+							c-0.4,0.4-1,0.7-1.9,0.7c-1,0-1.6-0.2-2-0.7C10.2,15.6,10,14.9,10,14v-3c0-0.9,0.2-1.6,0.6-2.1c0.4-0.5,1-0.7,1.9-0.7
+							s1.5,0.2,1.9,0.6c0.4,0.4,0.5,1,0.5,1.8v0.7h-1.8v-0.8C13.1,10.2,13.1,9.9,13,9.8z M15.1,5.5H9.8v-2h5.3V5.5z M21.5,21.5h-4v-2h2
+							v-2h2V21.5z M21.5,15.1h-2V9.8h2V15.1z M21.5,7.5h-2v-2h-2v-2h4V7.5z"/>
+					</g>
+					</svg>
+					')
 				)
 			);
 
@@ -239,25 +259,6 @@ class Cctor__Coupon__Post_Type_Coupon {
 				__( 'Enter Coupon Admin Title', $this->text_domain )
 			);
 			// @formatter:on
-	}
-
-	/**
-	 * Return the WordPress admin menu icon.
-	 *
-	 * @return string
-	 */
-	protected function get_menu_icon() {
-		$icon_path = COUPON_CREATOR_DIR . '/src/resources/images/coupon-creator-mark-mono.svg';
-
-		if ( ! is_readable( $icon_path ) ) {
-			return 'dashicons-tickets-alt';
-		}
-
-		$icon = file_get_contents( $icon_path );
-
-		return false === $icon
-			? 'dashicons-tickets-alt'
-			: 'data:image/svg+xml;base64,' . base64_encode( $icon );
 	}
 
 	/**

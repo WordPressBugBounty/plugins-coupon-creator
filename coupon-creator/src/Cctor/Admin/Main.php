@@ -62,7 +62,7 @@ class Cctor__Coupon__Admin__Main {
 
 			//Show Upgrade to Pro Link
 			if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
-				$plugin_links[] = '<a href="http://cctor.link/Abqoi">' . esc_html__( 'Coupons that expire on their own', 'coupon-creator' ) . '</a>';
+				$plugin_links[] = '<a href="http://cctor.link/Abqoi">Upgrade to Pro!</a>';
 			}
 
 			// add the settings link to the links

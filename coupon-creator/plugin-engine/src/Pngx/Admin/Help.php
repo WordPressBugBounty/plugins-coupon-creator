@@ -103,33 +103,6 @@ class Pngx__Admin__Help {
 				echo '</td></tr><tr valign="top"><td colspan="2">';
 			}
 
-			// Gather the video and link items that belong to this section/tab up front so we
-			// can skip empty blocks (e.g. a tab with no videos should not show an empty box).
-			$video_fields = array();
-			$link_fields  = array();
-			foreach ( $this->fields as $help_field ) {
-				if ( ! isset( $help_field['type'] ) ) {
-					continue;
-				}
-				if ( $section != $help_field['tab'] && $section != $help_field['section'] ) {
-					continue;
-				}
-				if ( 'video' == $help_field['type'] ) {
-					$video_fields[] = $help_field;
-				} elseif ( 'links' == $help_field['type'] ) {
-					$link_fields[] = $help_field;
-				}
-			}
-
-			// Nothing to show for this section — skip the slideout entirely.
-			if ( empty( $video_fields ) && empty( $link_fields ) ) {
-				if ( $page_screen_id == $screen->id ) {
-					echo '</td></tr>';
-				}
-
-				return;
-			}
-
 			echo '<div class="' . esc_html( $class ) . ' pngx-meta-field-wrap pngx-section-help-container">';
 
 			echo '<button aria-expanded="false" class="pngx-section-help-container-toggle" type="button">
@@ -139,31 +112,35 @@ class Pngx__Admin__Help {
 
 			echo '<div class="pngx-section-help-slideout">';
 
-			if ( ! empty( $video_fields ) ) {
-				$video_heading = apply_filters( 'pngx_help_video_heading', __( 'Video Guides', 'plugin-engine' ) );
-				$video_note    = apply_filters( 'pngx_help_video_note', '' );
+			echo '<div class="pngx-meta-field-content video">';
+			echo '<h4>' . __( 'Video Guides', 'plugin-engine' ) . '</h4>';
+			echo '<ul>';
+			foreach ( $this->fields as $help_field ) {
 
-				echo '<div class="pngx-meta-field-content video">';
-				echo '<h4>' . esc_html( $video_heading ) . '</h4>';
-				if ( '' !== $video_note ) {
-					echo '<p class="pngx-help-video-note">' . esc_html( $video_note ) . '</p>';
-				}
-				echo '<ul>';
-				foreach ( $video_fields as $help_field ) {
-					$this->help_fields_switch( $help_field, $section );
-				}
-				echo '</ul></div>';
-			}
+				if ( isset( $help_field['type'] ) && 'video' == $help_field['type'] ) {
 
-			if ( ! empty( $link_fields ) ) {
-				echo '<div class="pngx-meta-field-content text">';
-				echo '<h4>' . esc_html( apply_filters( 'pngx_help_guides_heading', __( 'Guides', 'plugin-engine' ) ) ) . '</h4>';
-				echo '<ul>';
-				foreach ( $link_fields as $help_field ) {
-					$this->help_fields_switch( $help_field, $section );
+					if ( $section == $help_field['tab'] || $section == $help_field['section'] ) {
+						$this->help_fields_switch( $help_field, $section );
+					}
 				}
-				echo '</ul></div>';
+
 			}
+			echo '</ul></div>';
+
+			echo '<div class="pngx-meta-field-content text">';
+			echo '<h4>' . __( 'Guides', 'plugin-engine' ) . '</h4>';
+			echo '<ul>';
+			foreach ( $this->fields as $help_field ) {
+
+				if ( isset( $help_field['type'] ) && 'links' == $help_field['type'] ) {
+
+					if ( $section == $help_field['tab'] || $section == $help_field['section'] ) {
+						$this->help_fields_switch( $help_field, $section );
+					}
+				}
+
+			}
+			echo '</ul></div>';
 
 			echo '</div></div>';
 
@@ -216,9 +193,6 @@ class Pngx__Admin__Help {
 				<li><a class="pngx-support youtube_colorbox"
 				       href="https://www.youtube.com/embed/<?php echo esc_html( $help_field['video_id'] ); ?>?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1"
 				       rel="<?php echo esc_attr( $rel ); ?>"><?php echo esc_html( $help_field['text'] ); ?></a><?php echo $pro; ?>
-					<?php if ( ! empty( $help_field['guide'] ) ) : ?>
-						<span class="pngx-help-video-guide-link"> &rarr; <a class="pngx-support" target="_blank" href="<?php echo esc_url( $help_field['guide'] ); ?>"><?php esc_html_e( 'Read the current text guide', 'plugin-engine' ); ?></a></span>
-					<?php endif; ?>
 				</li>
 
 				<?php break;

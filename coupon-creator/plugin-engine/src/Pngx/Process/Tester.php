@@ -24,7 +24,7 @@ class Pngx__Process__Tester extends Pngx__Process__Handler {
 	 *
 	 * @return mixed
 	 */
-	public function sync_handle( ?array $data_source = null ) {
+	public function sync_handle( array $data_source = null ) {
 		/*
 		 * The purpose of this class is exactly to make sure async processing works
 		 * so it will do nothing if running in synchronous mode.
@@ -80,7 +80,7 @@ class Pngx__Process__Tester extends Pngx__Process__Handler {
 	 *
 	 * @param array|null $data_source Unused.
 	 */
-	protected function handle( ?array $data_source = null ) {
+	protected function handle( array $data_source = null ) {
 		set_transient( self::TRANSIENT_NAME, 1, HOUR_IN_SECONDS );
 	}
 

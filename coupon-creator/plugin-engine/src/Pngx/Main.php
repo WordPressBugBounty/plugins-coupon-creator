@@ -11,7 +11,7 @@ class Pngx__Main {
 	 *
 	 * @var string
 	 */
-	const VERSION = '4.0.7';
+	const VERSION = '4.0.2';
 
 	/**
 	 * Stores the slug for the plugin engine.
@@ -328,96 +328,6 @@ class Pngx__Main {
 
 		add_action( 'plugins_loaded', array( 'Pngx__Admin__Notices', 'instance' ), 1 );
 		add_action( 'plugins_loaded', array( $this, 'pngx_plugins_loaded' ), PHP_INT_MAX );
-		add_action( 'admin_notices', array( $this, 'maybe_notice_engine_version_drift' ) );
-	}
-
-	/**
-	 * Warn when another active plugin bundles a different Plugin Engine version.
-	 *
-	 * Multiple plugins each embed their own `plugin-engine` copy; at runtime the
-	 * highest version wins the `$GLOBALS['plugin-engine-info']` race and serves
-	 * its classes to ALL of them. When the copies drift (e.g. one repo's
-	 * submodule pointer lags), the loser silently runs against a different engine
-	 * — the failure mode that fataled the site on 2026-07-15 (coupon's 4.0.3 beat
-	 * wyregraf's 4.0.2 and served a stale renamed class). Surface it loudly.
-	 *
-	 * Detection is by VERSION constant, so it relies on the convention that every
-	 * engine change bumps VERSION (content changes at the same version won't show).
-	 *
-	 * @since 4.0.5
-	 */
-	public function maybe_notice_engine_version_drift() {
-		if ( ! current_user_can( 'update_plugins' ) ) {
-			return;
-		}
-
-		$mismatches = $this->find_engine_version_mismatches();
-		if ( empty( $mismatches ) ) {
-			return;
-		}
-
-		$copies = array();
-		foreach ( $mismatches as $rel_path => $version ) {
-			$copies[] = sprintf(
-				'<code>%s</code> (%s)',
-				esc_html( $rel_path ),
-				esc_html( $version )
-			);
-		}
-
-		printf(
-			'<div class="notice notice-warning"><p><strong>%s</strong> %s</p><p>%s</p><p>%s</p></div>',
-			esc_html__( 'Plugin Engine version mismatch.', 'plugin-engine' ),
-			sprintf(
-				/* translators: %s: the active Plugin Engine version. */
-				esc_html__( 'Version %s is running, but these active plugins bundle a different copy:', 'plugin-engine' ),
-				esc_html( self::VERSION )
-			),
-			implode( '<br>', $copies ), // Each entry escaped above.
-			esc_html__( 'The highest version wins for every plugin, so a lagging copy runs against the wrong engine. Sync the plugin-engine submodule pointers so all copies match.', 'plugin-engine' )
-		);
-	}
-
-	/**
-	 * Scan active plugins for bundled plugin-engine copies whose VERSION differs
-	 * from the running one. Cached briefly so admin pages don't re-scan the disk.
-	 *
-	 * @since 4.0.5
-	 *
-	 * @return array<string,string> Map of the engine `Main.php` path (relative to
-	 *                              the plugins dir) => version, mismatches only.
-	 */
-	protected function find_engine_version_mismatches() {
-		$cache_key = 'pngx_engine_version_drift_' . self::VERSION;
-		$cached    = get_transient( $cache_key );
-		if ( is_array( $cached ) ) {
-			return $cached;
-		}
-
-		$mismatches  = array();
-		$plugins_dir = defined( 'WP_PLUGIN_DIR' ) ? WP_PLUGIN_DIR : WP_CONTENT_DIR . '/plugins';
-		$engine_mains = glob( trailingslashit( $plugins_dir ) . '*/plugin-engine/src/Pngx/Main.php' );
-
-		if ( is_array( $engine_mains ) ) {
-			foreach ( $engine_mains as $main_file ) {
-				$contents = file_get_contents( $main_file );
-				if ( false === $contents ) {
-					continue;
-				}
-				if ( ! preg_match( "/const\s+VERSION\s*=\s*'([^']+)'/m", $contents, $matches ) ) {
-					continue;
-				}
-				if ( 0 === version_compare( $matches[1], self::VERSION ) ) {
-					continue;
-				}
-				$rel_path                = str_replace( trailingslashit( $plugins_dir ), '', $main_file );
-				$mismatches[ $rel_path ] = $matches[1];
-			}
-		}
-
-		set_transient( $cache_key, $mismatches, 15 * MINUTE_IN_SECONDS );
-
-		return $mismatches;
 	}
 
 	/**

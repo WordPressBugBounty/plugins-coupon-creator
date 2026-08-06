@@ -159,9 +159,6 @@ class Pngx__Admin__Assets {
 			filemtime( Pngx__Main::instance()->resource_path . 'js/dropdowns.js' ),
 			true
 		);
-		wp_localize_script( 'pngx-dropdowns', 'pngx_dropdowns_data', [
-			'nonce' => wp_create_nonce( 'pngx-dropdown' ),
-		] );
 		wp_register_script(
 			'pngx-dependency',
 			Pngx__Main::instance()->resource_url . 'js/dependency.js',

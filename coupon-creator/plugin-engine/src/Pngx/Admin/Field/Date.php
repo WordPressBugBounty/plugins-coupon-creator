@@ -31,7 +31,7 @@ class Pngx__Admin__Field__Date {
 		echo '<input type="text" class="pngx-datepicker ' . esc_attr( $class ) . '"  id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $name ) . $repeating . '" value="' . esc_attr( $value ) . '" size="' . absint( $size ) . '" />';
 
 		if ( isset( $field['desc'] ) && ! empty( $field['desc'] ) ) {
-			echo '<span class="description">' . wp_kses_post( $field['desc'] ) . '</span>';
+			echo '<span class="description">' . esc_html( $field['desc'] ) . '</span>';
 		}
 
 		if ( isset( $field['condition'] ) && 'show_current_date' == $field['condition'] ) {

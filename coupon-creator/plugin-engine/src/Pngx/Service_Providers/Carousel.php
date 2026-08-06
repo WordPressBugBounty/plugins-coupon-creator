@@ -11,7 +11,7 @@ namespace Pngx\Service_Providers;
  *
  * Handles the registration and creation of our async process handlers.
  */
-class Carousel extends \Pngx\Vendor\lucatume\DI52\ServiceProvider {
+class Carousel extends \tad_DI52_ServiceProvider {
 
 	/**
 	 * Binds and sets up implementations.

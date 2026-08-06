@@ -51,21 +51,7 @@ function cctor_show_no_coupon_comment( $coupon_id, $coupon_expiration ) {
 }
 
 /**
- * Whether the current user may see a coupon rendering diagnostic.
- *
- * Diagnostics can appear on public-facing requests, so restrict them to site
- * administrators instead of every role that can edit coupons.
- *
- * @param int $coupon_id Coupon ID, when one can be resolved.
- *
- * @return bool
- */
-function cctor_current_user_can_view_diagnostic( $coupon_id = 0 ) {
-	return current_user_can( 'manage_options' );
-}
-
-/**
- * Display an editor-only expired-coupon diagnostic.
+ * Add expiration date and coupon name to notice in Gutenberg
  *
  * @since 3.0
  *
@@ -80,7 +66,7 @@ function cctor_show_no_coupon_notice_admin( $coupon_id, $coupon_expiration, $cou
 		return false;
 	}
 
-	if ( ! cctor_current_user_can_view_diagnostic( $coupon_id ) ) {
+	if ( ! is_admin() ) {
 		return false;
 	}
 
@@ -88,24 +74,15 @@ function cctor_show_no_coupon_notice_admin( $coupon_id, $coupon_expiration, $cou
 
 	if ( ! empty( $expiration_date ) ) {
 		?>
-		<div id="coupon_creator_<?php echo absint( $coupon_id ); ?>" class="coupon-creator-<?php echo absint( $coupon_id ); ?> type-cctor_coupon cctor_coupon_container coupon-border cctor-editor-diagnostic <?php echo esc_html( $coupon_align ); ?>" role="status">
+		<div id="coupon_creator_<?php echo absint( $coupon_id ); ?>" class="coupon-creator-<?php echo absint( $coupon_id ); ?> type-cctor_coupon cctor_coupon_container coupon-border <?php echo esc_html( $coupon_align ); ?>">
 			<div class="cctor_coupon cctor-coupon">
 				<div class="cctor_coupon_content cctor-coupon-content" style="border-color:#dd3333">
 					<h3 class="cctor-deal" style="background-color:#dd3333; color:#000000;">
-						<?php esc_html_e( 'Coupon Expired', 'coupon-creator' ); ?>
+						<?php echo __( 'Coupon Expired', 'coupon-creator' ); ?>
 					</h3>
 					<div class="cctor-terms">
 						<p style="font-size: 14px;">
-							<?php
-							echo esc_html(
-								sprintf(
-									/* translators: 1: coupon title, 2: expiration date. */
-									__( '%1$s expired on %2$s and is not showing to visitors.', 'coupon-creator' ),
-									get_the_title( $coupon_id ),
-									$expiration_date
-								)
-							);
-							?>
+							<?php echo sprintf( '%1s %2s %3s %4s', get_the_title( $coupon_id ), __( ' expired on ', 'coupon-creator' ), esc_html( $expiration_date ), __( ' and is not showing to your visitors. ', 'coupon-creator' ) ); ?>
 						</p>
 					</div>
 				</div>

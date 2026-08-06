@@ -46,12 +46,6 @@ class Cctor__Coupon__Admin__Fields {
 
 				break;
 
-			case 'pro_card':
-
-				Cctor__Coupon__Admin__Field__Pro_Card::display( $field );
-
-				break;
-
 		}
 
 		//return field so other filters can use it

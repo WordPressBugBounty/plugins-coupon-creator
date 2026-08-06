@@ -76,7 +76,7 @@ class Coupons {
 
 		if (
 			! isset( $_GET['pngx_duplicate_nonce'] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['pngx_duplicate_nonce'] ) ), 'cctor_duplicate_coupon_' . $post_id )
+			! wp_verify_nonce( $_GET['pngx_duplicate_nonce'], 'cctor_duplicate_coupon_' . $post_id )
 		) {
 			return;
 		}

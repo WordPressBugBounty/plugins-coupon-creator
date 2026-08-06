@@ -26,19 +26,7 @@
  * @var array<string,string> $wrap_attrs        Associative array of attributes of the field wrap.
  * @var string               $toggle_label_show The label for the show text input toggle.
  * @var string               $toggle_label_hide The label for the hide text for input toggle.
- * @var bool                 $mask_value        Whether to keep the saved value out of the HTML (default true).
  */
-
-// Never render the stored secret into the page source: show a masked placeholder and an
-// empty value instead. Save handlers must treat an empty submission for a saved field as
-// "keep the existing value". Pass 'mask_value' => false to restore the legacy behavior.
-$mask_value = ! isset( $mask_value ) || $mask_value;
-$has_saved_value = ! empty( $value );
-
-if ( $mask_value && $has_saved_value ) {
-	$placeholder = str_repeat( '•', 12 );
-	$value       = '';
-}
 
 $wrap_classes = [ 'pngx-engine-options-control', 'pngx-engine-options-control__password-wrap' ];
 if ( ! empty( $classes_wrap ) ) {
@@ -72,10 +60,6 @@ if ( ! empty( $classes_input ) ) {
 		name="<?php echo esc_html( $name ); ?>"
 		placeholder="<?php echo esc_html( $placeholder ); ?>"
 		value="<?php echo esc_html( $value ); ?>"
-		<?php if ( $mask_value && $has_saved_value ) : ?>
-		data-pngx-key-saved="1"
-		autocomplete="new-password"
-		<?php endif; ?>
 		<?php pngx_attributes( $attrs ) ?>
 	>
 	<?php if ( ! empty( $toggle_label_show ) && ! empty( $toggle_label_hide ) ) { ?>

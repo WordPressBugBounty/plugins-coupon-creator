@@ -52,7 +52,7 @@ class Cctor__Coupon__Search {
 			 * @param array $searchable_cpt an array of post types to include in search
 			 *
 			 */
-			$searchable_cpt = apply_filters( 'cctor_filter_searchable_post_types', $searchable_cpt );
+			apply_filters( 'cctor_filter_searchable_post_types', $searchable_cpt );
 
 			$query->set( 'post_type', $searchable_cpt );
 

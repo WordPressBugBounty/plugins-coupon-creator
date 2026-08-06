@@ -32,13 +32,11 @@ class Lazy_CSV_Iterator implements Iterator {
 	private $line;
 
 	/**
-	 * The csv file, or null when it could not be opened.
+	 * The csv file.
 	 *
 	 * @since 3.3.0
-	 * @since TBD Nullable — a missing or unreadable file yields an empty
-	 *            iterator instead of an uncaught RuntimeException.
 	 *
-	 * @var SplFileObject|null
+	 * @var SplFileObject
 	 */
 	private $file;
 
@@ -64,16 +62,7 @@ class Lazy_CSV_Iterator implements Iterator {
 	public function __construct( $file_path, $delimiter = ',', $enclosure = '"', $escape = '\\' ) {
 		$this->file_path = $file_path;
 
-		// A deleted upload must degrade to an empty iterator, never fatal a
-		// front-end request — the attachment row can outlive the file on disk.
-		try {
-			$this->file = new \SplFileObject( $this->file_path, 'r' );
-		} catch ( \RuntimeException | \LogicException $exception ) {
-			error_log( "Pngx Lazy_CSV_Iterator: could not open csv file {$this->file_path}: " . $exception->getMessage() );
-
-			return;
-		}
-
+		$this->file = new \SplFileObject( $this->file_path, 'r' );
 		$this->file->setFlags(
 		      \SplFileObject::READ_CSV
 		      | \SplFileObject::READ_AHEAD
@@ -82,17 +71,6 @@ class Lazy_CSV_Iterator implements Iterator {
 	    );
 
 		$this->file->setCsvControl($delimiter, $enclosure, $escape);
-	}
-
-	/**
-	 * Whether the csv file was opened successfully.
-	 *
-	 * @since TBD
-	 *
-	 * @return bool True when the file is open and iterable.
-	 */
-	public function is_readable(): bool {
-		return null !== $this->file;
 	}
 
 	/**
@@ -113,12 +91,7 @@ class Lazy_CSV_Iterator implements Iterator {
 	 * @since 3.3.0
 	 */
 	public function next(): void {
-		if ( null === $this->file ) {
-			return;
-		}
-
-		$this->file->next();
-		$this->line = $this->file->current();
+		$this->line = $this->file->fgetcsv();
 		$this->pointer ++;
 	}
 
@@ -134,7 +107,7 @@ class Lazy_CSV_Iterator implements Iterator {
 	}
 
 	public function valid(): bool {
-		return null !== $this->file && ! empty( $this->line ) && $this->file->valid();
+		return ! empty( $this->line ) && $this->file->valid();
 	}
 
 	/**
@@ -144,15 +117,7 @@ class Lazy_CSV_Iterator implements Iterator {
 	 */
 	public function rewind(): void  {
 		$this->pointer = 0;
-
-		if ( null === $this->file ) {
-			return;
-		}
-
-		// Use the SplFileObject iterator API throughout: mixing seek() with
-		// fgetcsv() skips the first row since PHP 8.0.1 (fgetcsv after seek
-		// returns the line following the sought one).
-		$this->file->rewind();
-		$this->line = $this->file->current();
+		$this->file->seek( 0 );
+		$this->line = $this->file->fgetcsv();
 	}
 }

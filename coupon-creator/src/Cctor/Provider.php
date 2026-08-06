@@ -2,7 +2,7 @@
 
 use Cctor\Coupon\Admin\Duplicate\Coupons;
 
-class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider {
+class Cctor__Coupon__Provider extends tad_DI52_ServiceProvider {
 
 	/**
 	 * Binds and sets up implementations.
@@ -30,7 +30,6 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 		$this->container->singleton( 'cctor.meta.order', 'Cctor__Coupon__Meta__Order' );
 
 		$this->container->singleton( 'cctor.search', 'Cctor__Coupon__Search' );
-		$this->container->singleton( 'cctor.templates', 'Cctor__Coupon__Templates', array( 'hook' ) );
 		$this->container->singleton( 'cctor.shortcode', 'Cctor__Coupon__Shortcode' );
 		$this->container->singleton( 'cctor.images', 'Cctor__Coupon__Images' );
 		$this->container->singleton( 'cctor.print', 'Cctor__Coupon__Print' );
@@ -45,8 +44,6 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 		 */
 		pngx( 'cctor.i18n' );
 		pngx( 'cctor.assets' );
-		// Registers free core's views path so Pro's loader can resolve them too.
-		pngx( 'cctor.templates' );
 	}
 
 	/**
@@ -79,14 +76,6 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 		//Front End
 		add_shortcode( 'coupon', pngx_callback( 'cctor.shortcode', 'core_shortcode' ) );
 		add_action( 'cctor_before_coupon', 'cctor_shortcode_functions', 10 );
-		/*
-		 * Pro's coupon loop views fire `cctor_pro_before_coupon` instead of
-		 * `cctor_before_coupon`, so a coupon rendered by [couponloop] never reached the
-		 * line above. That went unnoticed for as long as every type view was field-driven
-		 * -- none of them needed these handlers. The Modern Ticket renders through the
-		 * shared actions, so without this it draws an empty card inside the loop.
-		 */
-		add_action( 'cctor_pro_before_coupon', 'cctor_shortcode_functions', 10 );
 		add_action( 'init', pngx_callback( 'cctor.images', 'add_image_sizes' ) );
 		add_filter( 'cctor_filter_terms_tags', array( 'Pngx__Allowed_Tags', 'content_no_link' ), 10, 1 );
 		if ( cctor_options( 'cctor_wpautop' ) == 1 ) {
@@ -95,22 +84,6 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 
 		//Print Template
 		add_action( 'cctor_action_print_template', 'cctor_print_template', 10 );
-		/*
-		 * The multiPrint page (Add-ons) renders its own document and fires
-		 * `cctor_action_print_page_template`, which nothing has ever hooked, so the print
-		 * render handlers were never registered there. That went unnoticed for as long as
-		 * every type view was field-driven -- none of them needed these handlers. The
-		 * Modern Ticket renders through the shared print actions, so without this it draws
-		 * an empty card on the multiPrint page.
-		 *
-		 * Registering on `cctor_print_before_coupon` rather than the page-level hook is
-		 * deliberate: it fires inside the body, after `coupon_print_meta` has already run,
-		 * so the head handlers this also attaches (`cctor_print_head_and_meta` emits its
-		 * own <title>) can no longer double up on a page that wrote its own head. Re-running
-		 * on the single print view is harmless -- every call re-adds the same callbacks at
-		 * the same priorities, which WordPress overwrites rather than appends.
-		 */
-		add_action( 'cctor_print_before_coupon', 'cctor_print_template', 10 );
 		add_filter( 'template_include', pngx_callback( 'cctor.print', 'get_coupon_post_type_template' ) );
 		add_action( 'coupon_print_head', pngx_callback( 'cctor.print', 'print_css' ), 20 );
 
@@ -133,12 +106,12 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 
 		$this->container->singleton( 'cctor.admin', 'Cctor__Coupon__Admin__Main' );
 		$this->container->singleton( 'cctor.admin.updates', 'Cctor__Coupon__Admin__Updates' );
+		$this->container->singleton( 'cctor.admin.assets', 'Cctor__Coupon__Admin__Assets' );
 		$this->container->singleton( 'cctor.admin.options', 'Cctor__Coupon__Admin__Options' );
 		$this->container->singleton( 'cctor.admin.upgrades', 'Cctor__Coupon__Admin__Updates' );
 		$this->container->singleton( 'cctor.admin.meta', 'Cctor__Coupon__Admin__Meta' );
 		$this->container->singleton( 'cctor.admin.meta.fields', 'Cctor__Coupon__Admin__Fields' );
 		$this->container->singleton( 'cctor.admin.columns', 'Cctor__Coupon__Admin__Columns' );
-		$this->container->singleton( 'cctor.admin.usability', 'Cctor__Coupon__Admin__Usability', array( 'hook' ) );
 		$this->container->singleton( Coupons::Class, Coupons::Class, [ 'hooks' ] );
 
 		//start up admin
@@ -147,6 +120,9 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 		//Update Version Number
 		add_action( 'admin_init', pngx_callback( 'cctor.admin.updates', 'admin_upgrade_version' ) );
 
+		//Load Admin Assets
+		add_action( 'admin_enqueue_scripts', pngx_callback( 'cctor.admin.assets', 'load_assets' ) );
+
 		//Options
 		add_filter( 'plugin_action_links', pngx_callback( 'cctor.admin', 'plugin_setting_link' ), 10, 2 );
 		add_action( 'admin_menu', pngx_callback( 'cctor.admin.options', 'options_page' ) );
@@ -154,7 +130,6 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 
 		//Meta
 		pngx( 'cctor.admin.columns' );
-		pngx( 'cctor.admin.usability' );
 		add_action( 'admin_init', pngx_callback( 'cctor.admin.meta', 'setup' ) );
 
 		//Core Admin Fields

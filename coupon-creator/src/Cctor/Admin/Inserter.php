@@ -310,7 +310,7 @@ class Cctor__Coupon__Admin__Inserter {
 					<?php
 					//Show Upgrade to Pro Link
 					if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
-						echo '<div class="cctor-inserter-upgrade-pro"><strong>' . esc_html__( 'Coupons that expire on their own.', 'coupon-creator' ) . '</strong> <a href="http://cctor.link/Abqoi" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Explore Coupon Creator Pro', 'coupon-creator' ) . '</a> ' . esc_html__( 'for searchable coupon selection and more.', 'coupon-creator' ) . '</div>';
+						echo '<div class="cctor-inserter-upgrade-pro"><a href="http://cctor.link/Abqoi" target="_blank">Upgrade to Pro</a> and search for Coupons in the Select Box to insert and many more features!</div>';
 					}
 					?>
 					<!--Insert into Editor Button that Calls Script-->

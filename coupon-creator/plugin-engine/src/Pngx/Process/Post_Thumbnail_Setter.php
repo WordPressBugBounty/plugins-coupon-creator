@@ -91,14 +91,14 @@ class Pngx__Process__Post_Thumbnail_Setter extends Pngx__Process__Handler {
 	 *
 	 * @param array|null $data_source An optional source of data.
 	 */
-	protected function handle( ?array $data_source = null ) {
+	protected function handle( array $data_source = null ) {
 		$this->sync_handle( $data_source );
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function sync_handle( ?array $data_source = null ) {
+	public function sync_handle( array $data_source = null ) {
 		/** @var Pngx__Log $logger */
 		$logger  = pngx( 'pngx.logger' );
 		$log_src = 'Featured image setter';

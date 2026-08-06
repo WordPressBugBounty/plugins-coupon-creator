@@ -7,7 +7,6 @@
  * @package Pngx\Admin;
  */
 
-use Pngx\Admin\Field\V2\Color;
 use Pngx\Admin\Field\V2\Date;
 use Pngx\Admin\Field\V2\File;
 use Pngx\Admin\Field\V2\Image;
@@ -309,12 +308,6 @@ class Pngx__Admin__Fields {
 
 		if ( isset( $field['version'] ) && $field['version'] ===  'v2' ) {
 			switch ( $field['type'] ) {
-
-				case 'color':
-
-					Color::display( $field, $options, $options_id, $meta, $repeat_vars, static::$admin_template, $post );
-
-					break;
 
 				case 'date':
 

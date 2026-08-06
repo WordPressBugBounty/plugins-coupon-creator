@@ -486,7 +486,7 @@ class Pngx__Cache implements ArrayAccess {
 		}
 
 		/** @var pngx__Feature_Detection $feature_detection */
-		$feature_detection = pngx( 'pngx.feature-detection' );
+		$feature_detection = pngx( 'feature-detection' );
 		$limit             = $feature_detection->mysql_limit_for_example( 'post_result' );
 
 		/**
@@ -556,7 +556,7 @@ class Pngx__Cache implements ArrayAccess {
 		}
 
 		/** @var pngx__Feature_Detection $feature_detection */
-		$feature_detection = pngx( 'pngx.feature-detection' );
+		$feature_detection = pngx( 'feature-detection' );
 
 		// If the size of the string is above 90% of the database `max_allowed_packet` setting, then it should not be written to the db.
 		return $size > ( $feature_detection->get_mysql_max_packet_size() * .9 );
@@ -636,10 +636,7 @@ class Pngx__Cache implements ArrayAccess {
 
 		$inserted         = [];
 		$serialized_value = maybe_serialize( $value );
-		// str_split() takes an int length; the 0.9 headroom factor makes this a float,
-		// which PHP 8.1+ deprecates converting implicitly. Truncation is the intent,
-		// and the floor guards str_split()'s ValueError on a length below 1.
-		$chunk_size       = max( 1, (int) ( pngx( 'pngx.feature-detection' )->get_mysql_max_packet_size() * 0.9 ) );
+		$chunk_size       = pngx( 'feature-detection' )->get_mysql_max_packet_size() * 0.9;
 		$chunks           = str_split( $serialized_value, $chunk_size );
 		foreach ( $chunks as $i => $chunk ) {
 			$chunk_transient = $transient . '_' . $i;

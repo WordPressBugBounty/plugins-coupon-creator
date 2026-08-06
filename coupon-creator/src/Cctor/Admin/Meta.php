@@ -54,27 +54,8 @@ class Cctor__Coupon__Admin__Meta extends Pngx__Admin__Meta {
 		// Sync derived ignore_expiration value after the engine's meta save loop runs.
 		add_action( 'save_post_cctor_coupon', array( $this, 'sync_ignore_expiration' ), 11 );
 
-		// Scope the Artifex admin UI to our own metaboxes only (never <body>, so
-		// nothing leaks onto the surrounding post-edit chrome or any 3rd-party
-		// overlay mounted in the footer). The class rides on each .postbox.
-		add_filter( 'postbox_classes_cctor_coupon_coupon_creator_meta_box', array( $this, 'add_afx_postbox_class' ) );
-		add_filter( 'postbox_classes_cctor_coupon_coupon_creator_shortcode', array( $this, 'add_afx_postbox_class' ) );
-
 		$this->set_tabs();
 		$this->set_fields();
-	}
-
-	/**
-	 * Add the Artifex theme class to a Coupon Creator metabox wrapper.
-	 *
-	 * @param string[] $classes Existing postbox classes.
-	 *
-	 * @return string[]
-	 */
-	public function add_afx_postbox_class( $classes ) {
-		$classes[] = 'afx-theme-coupon-creator';
-
-		return $classes;
 	}
 
 	/**
@@ -157,11 +138,10 @@ class Cctor__Coupon__Admin__Meta extends Pngx__Admin__Meta {
 	 * @param $post
 	 */
 	public function show_coupon_shortcode( $post ) {
-		?>
-		<p><?php esc_html_e( 'Place this coupon in a post, page, or widget with the shortcode below.', 'coupon-creator' ); ?></p>
-		<?php
-		$usability = pngx( 'cctor.admin.usability' );
-		$usability->display_coupon_actions( $post, true );
+		?><p class="shortcode">
+		<?php esc_html_e( 'Place this coupon in your posts, pages, custom post types, or widgets by using the shortcode below:', 'coupon-creator' ); ?>
+		<br><br><code>[coupon couponid="<?php echo absint( $post->ID ); ?>" name="<?php echo esc_html( $post->post_title ); ?>"]</code>
+		</p><?php
 
 	}
 
@@ -211,11 +191,7 @@ class Cctor__Coupon__Admin__Meta extends Pngx__Admin__Meta {
 	 * @return bool|null
 	 */
 	public function default_template( $template ) {
-		// The third argument is what makes the ticket the default on a site that has never
-		// saved the setting. Without it this returns false, the engine falls back to its own
-		// 'default', and a new coupon opens on Classic no matter what the option field's
-		// `std` says -- `std` only seeds the settings screen, not the value read here.
-		$default = cctor_options( 'cctor_default_template', false, 'ticket' );
+		$default = cctor_options( 'cctor_default_template' );
 
 		if ( $default ) {
 			$template = $default;
@@ -227,11 +203,9 @@ class Cctor__Coupon__Admin__Meta extends Pngx__Admin__Meta {
 	/**
 	 * Sync the derived cctor_ignore_expiration meta from cctor_expiration_option.
 	 *
-	 * ignore_expiration is not a user-editable checkbox; its state is derived from the
-	 * selected expiration_option. This runs on save_post_cctor_coupon, which WordPress
-	 * fires *before* the plugin-engine's save_meta() on save_post — so we cannot rely on
-	 * the engine's nonce/cap check having run first. This write verifies the engine's
-	 * meta nonce and the user's capability itself.
+	 * ignore_expiration is not a user-editable checkbox; its state is determined by the
+	 * selected expiration_option. Runs at priority 11 so the engine's meta save (priority
+	 * 10) has already written whatever the form posted; we then enforce the derived value.
 	 *
 	 * @param int $post_id Coupon post ID.
 	 */
@@ -245,19 +219,6 @@ class Cctor__Coupon__Admin__Meta extends Pngx__Admin__Meta {
 			return;
 		}
 
-		// Verify the engine's meta nonce and the user's capability directly — do not
-		// depend on another save_post callback having gated the request.
-		if (
-			! isset( $_POST['pngx_nonce'] ) ||
-			! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['pngx_nonce'] ) ), 'pngx_save_fields' )
-		) {
-			return;
-		}
-
-		if ( ! current_user_can( 'edit_cctor_coupon', $post_id ) ) {
-			return;
-		}
-
 		$expiration_option = absint( $_POST['cctor_expiration_option'] );
 
 		if ( 1 === $expiration_option ) {
@@ -268,3 +229,4 @@ class Cctor__Coupon__Admin__Meta extends Pngx__Admin__Meta {
 	}
 
 }
+

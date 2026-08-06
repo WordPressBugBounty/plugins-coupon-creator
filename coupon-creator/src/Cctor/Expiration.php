@@ -91,6 +91,10 @@ class Cctor__Coupon__Expiration {
 		$this->coupon_id = $coupon_id;
 		if ( ! $this->coupon_id ) {
 			$this->coupon_id = get_the_id();
+
+			if ( is_object( $this->coupon_id ) ) {
+				echo 'object!';
+			}
 		}
 		$this->expiration_option = get_post_meta( $this->coupon_id, 'cctor_expiration_option', true );
 
@@ -288,11 +292,6 @@ class Cctor__Coupon__Expiration {
 	 * @return bool
 	 */
 	public function is_coupon_current() {
-
-		// Expiration enabled but no date entered: treat as non-expiring rather than hiding the coupon.
-		if ( empty( $this->date_unix ) ) {
-			return true;
-		}
 
 		if ( $this->date_unix >= $this->today_unix ) {
 

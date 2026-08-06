@@ -55,7 +55,7 @@ class Pngx__Admin__Field__Text {
 
 		if ( isset( $field['desc'] ) && ! empty( $field['desc'] ) ) {
 			?>
-			<span class="description"><?php echo wp_kses_post( $field['desc'] ); ?></span>
+			<span class="description"><?php echo esc_html( $field['desc'] ); ?></span>
 			<?php
 		}
 	}

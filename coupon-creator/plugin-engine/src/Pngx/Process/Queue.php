@@ -459,10 +459,8 @@ abstract class Pngx__Process__Queue extends Pngx__Process__Handler {
 		}
 
 		$max_frag_size = $this->get_max_frag_size();
-		// we add a 15% to the size to take the serialization and query overhead into account when fragmenting.
-		// Byte length (not the deprecated utf8_decode() char approximation) — over-estimating
-		// multibyte content just yields slightly smaller fragments, which is safe.
-		$serialized_size = strlen( maybe_serialize( $data ) ) * 1.15;
+		// we add a 15% to the size to take the serialization and query overhead into account when fragmenting
+		$serialized_size = strlen( utf8_decode( maybe_serialize( $data ) ) ) * 1.15;
 		$frags_count     = (int) ceil( $serialized_size / $max_frag_size );
 		$per_frag        = max( (int) floor( count( $data ) / $frags_count ), 1 );
 
@@ -867,7 +865,7 @@ abstract class Pngx__Process__Queue extends Pngx__Process__Handler {
 	 * @param array|null $data_source Unused and kept for compatibility with parent; the queue
 	 *                                data is stored and read from the database.
 	 */
-	protected function handle( ?array $data_source = null ) {
+	protected function handle( array $data_source = null ) {
 		$this->lock_process();
 
 		do {
@@ -1151,7 +1149,7 @@ abstract class Pngx__Process__Queue extends Pngx__Process__Handler {
 	 *
 	 * @return array|mixed|null The synchronous process result.
 	 */
-	public function sync_handle( ?array $data_source = null ) {
+	public function sync_handle( array $data_source = null ) {
 		// In the base implementation the data source is unused and read from the database.
 		return $this->sync_process();
 	}

@@ -8,7 +8,7 @@ namespace Pngx\Duplicate;
  *
  * @package Pngx\Duplicate
  */
-class Post_Types extends \Pngx\Vendor\lucatume\DI52\ServiceProvider {
+class Post_Types extends \tad_DI52_ServiceProvider {
 
 	/**
 	 * Binds and sets up implementations and registers the required filters.
