@@ -17,7 +17,7 @@ Plugin Engine — A shared plugin framework embedded in Coupon Creator that prov
 - Namespace: `Pngx\`
 - Main File: `pngx-common.php`
 - Main Class: `Pngx__Main`
-- Version: 4.0.7
+- Version: 4.0.8
 - Text Domain: `plugin-engine`
 
 ## Architecture

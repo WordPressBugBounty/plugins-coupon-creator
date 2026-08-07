@@ -1,6 +1,6 @@
 === Plugin Engine ===
 
-Common classes and functions to run Wordpress plugins from Jessee Productions
+Common classes and functions to run Wordpress plugins from Artifex Routing Co
 
 Controls CRUD of:
 Settings

@@ -2,14 +2,14 @@
 /*
 PluginName: Plugin Engine
 Description: A plugin framework to be embeded in the core plugin
-Version: 4.0.2
-Author: Jessee Productions, LLC
-Author URI: https://jesseeproductions.com/
+Version: 4.0.7
+Author: Artifex Routing Co
+Author URI: https://artifexrouting.com/
 Text Domain: plugin-engine
 License: GPLv2 or later
 */
 /*
-Copyright 2009-2018 by Jessee Productions, LLC and the contributors
+Copyright 2009-2018 by Artifex Routing Co and the contributors
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2

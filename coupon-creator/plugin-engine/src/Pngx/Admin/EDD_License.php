@@ -163,7 +163,7 @@ class Pngx__Admin__EDD_License {
 			);
 
 			// Call the custom API.
-			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, self::get_update_url() ) ), array(
+			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $this->get_update_url() ) ), array(
 				'timeout'   => 15,
 				'sslverify' => false,
 			) );
@@ -302,8 +302,17 @@ class Pngx__Admin__EDD_License {
 			'url'        => home_url(),
 		);
 
+		// The shop url arrives from the license-list form, so it is browser
+		// supplied: sanitise it, and run it through the same `pngx_update_url`
+		// filter as every other endpoint here. Kept as the filter INPUT rather
+		// than replaced by $this->get_update_url() because one EDD_License
+		// instance per plugin hooks this same ajax action, and a store serving
+		// several plugins from different urls would otherwise get whichever
+		// instance answered first.
+		$shop_url = apply_filters( 'pngx_update_url', esc_url_raw( $license_fields['pngx_shop_url'] ) );
+
 		// Call the custom API.
-		$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $license_fields['pngx_shop_url'] ) ), array(
+		$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $shop_url ) ), array(
 			'timeout'   => 15,
 			'sslverify' => false,
 		) );
@@ -529,7 +538,7 @@ class Pngx__Admin__EDD_License {
 			);
 
 			// Call the custom API.
-			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $this->update_url ) ), array(
+			$response = wp_remote_get( esc_url_raw( add_query_arg( $api_params, $this->get_update_url() ) ), array(
 				'timeout'   => 15,
 				'sslverify' => false,
 			) );

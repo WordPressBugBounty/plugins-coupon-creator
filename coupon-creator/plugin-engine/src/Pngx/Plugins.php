@@ -28,12 +28,12 @@ class Pngx__Plugins {
 		array(
 			'short_name'   => 'Coupon Creator Pro',
 			'class'        => 'Cctor__Coupon__Pro__Main',
-			'thickbox_url' => '//couponcreatorplugin.com/products/wordpress-coupon-creator-pro/?TB_iframe=true',
+			'thickbox_url' => '//artifexrouting.com/wordpress-plugins/coupon-creator/?TB_iframe=true',
 		),
 		array(
 			'short_name'   => 'Coupon Creator Add-ons',
 			'class'        => 'Cctor__Coupon__Addons__Main',
-			'thickbox_url' => '//couponcreatorplugin.com/products/wordpress-coupon-creator-pro/?TB_iframe=true',
+			'thickbox_url' => '//artifexrouting.com/wordpress-plugins/coupon-creator/?TB_iframe=true',
 		),
 	);
 

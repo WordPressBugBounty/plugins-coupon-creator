@@ -135,6 +135,9 @@ class Pngx__Register_Post_Type {
 	 * @param $updates
 	 */
 	public function register_post_types( $post_type, $capability_type, $singular_name, $labels, $slug, $text_domain, $updates ) {
+		// Some callers pass null; substr( null ) is deprecated on PHP 8.1+.
+		$capability_type = (string) $capability_type;
+
 		$singular = $capability_type;
 		if ( substr( $capability_type, - 1 ) === 's' ) {
 			$singular = substr($singular, 0, -1);

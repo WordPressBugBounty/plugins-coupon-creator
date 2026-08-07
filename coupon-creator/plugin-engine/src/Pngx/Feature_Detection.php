@@ -88,13 +88,13 @@ class Pngx__Feature_Detection {
 			$this->lock();
 
 			// Log that we're checking for AJAX-based async process support using the tester.
-			pngx( 'logger' )->log( 'Checking for AJAX-based async processing support triggering a test request.', Pngx__Log::DEBUG );
+			pngx( 'pngx.logger' )->log( 'Checking for AJAX-based async processing support triggering a test request.', Pngx__Log::DEBUG );
 
 			/*
 			 * Build and dispatch the tester: if it works a transient should be set.
 			 */
 			$tester = new Pngx__Process__Tester();
-			pngx( 'logger' )->log( 'Dispatching AJAX-based async processing support test request.', Pngx__Log::DEBUG );
+			pngx( 'pngx.logger' )->log( 'Dispatching AJAX-based async processing support test request.', Pngx__Log::DEBUG );
 			$tester->dispatch();
 
 			$wait_up_to             = 10;
@@ -121,9 +121,9 @@ class Pngx__Feature_Detection {
 			$cached['supports_async_process'] = $supports_async_process;
 
 			if ( $supports_async_process ) {
-				pngx( 'logger' )->log( 'AJAX-based async processing is supported.', Pngx__Log::DEBUG );
+				pngx( 'pngx.logger' )->log( 'AJAX-based async processing is supported.', Pngx__Log::DEBUG );
 			} else {
-				pngx( 'logger' )->log( 'AJAX-based async processing is not supported; background processing will rely on WP Cron.', Pngx__Log::DEBUG );
+				pngx( 'pngx.logger' )->log( 'AJAX-based async processing is not supported; background processing will rely on WP Cron.', Pngx__Log::DEBUG );
 			}
 
 			set_transient( self::$transient, $cached, WEEK_IN_SECONDS );

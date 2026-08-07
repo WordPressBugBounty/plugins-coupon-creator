@@ -22,7 +22,7 @@ class Cctor__Coupon__Admin__Field__Pro_Link {
 				echo '</td></tr><tr valign="top"><td colspan="2">';
 			}
 
-			echo '<div class="cctor-pro-link" ><a target="_blank" href="http://cctor.link/CjZX2">Find out more about the features listed above that you can use from this tab in Pro!</a></div>';
+			echo '<div class="cctor-pro-link"><strong>' . esc_html__( 'Coupons that expire on their own.', 'coupon-creator' ) . '</strong> <a target="_blank" rel="noopener noreferrer" href="http://cctor.link/CjZX2">' . esc_html__( 'See how Coupon Creator Pro handles the features listed above.', 'coupon-creator' ) . '</a></div>';
 		}
 
 	}

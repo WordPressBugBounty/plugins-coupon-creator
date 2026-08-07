@@ -11,7 +11,7 @@ namespace Pngx\Service_Providers;
  *
  * Handles the registration and creation of our async process handlers.
  */
-class Dialog extends \tad_DI52_ServiceProvider {
+class Dialog extends \Pngx\Vendor\lucatume\DI52\ServiceProvider {
 
 	/**
 	 * Binds and sets up implementations.
@@ -85,7 +85,10 @@ class Dialog extends \tad_DI52_ServiceProvider {
 		pngx_asset(
 			$main,
 			'mt-a11y-dialog',
-			'vendor/faction23/a11y-dialog/a11y-dialog.js',
+			// Served from tracked resources: the vendored faction23 minified
+			// build is corrupt (unescaped line breaks) and vendor/ is not
+			// shipped in the repo.
+			'a11y-dialog.js',
 			[],
 			[],
 			[ 'groups' => 'pngx-dialog' ]

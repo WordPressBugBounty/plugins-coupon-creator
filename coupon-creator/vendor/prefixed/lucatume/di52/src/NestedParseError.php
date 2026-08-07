@@ -6,7 +6,7 @@
  * @package Pngx\Vendor\lucatume\DI52;
  *
  * @license GPL-3.0
- * Modified by Jessee Productions using {@see https://github.com/BrianHenryIE/strauss}.
+ * Modified by Artifex Routing Co using {@see https://github.com/BrianHenryIE/strauss}.
  */
 
 namespace Pngx\Vendor\lucatume\DI52;

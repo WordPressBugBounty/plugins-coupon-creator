@@ -1,36 +1,43 @@
 === Coupon Creator ===
-Contributors: brianjessee
+Contributors: artifexrouting brianjessee
 Plugin Name: Coupon Creator
-Plugin URI: http://couponcreatorplugin.com
-Tags: coupon, shortcode, email marketing, lead generation, list building
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W6FGHL2BUNY2W&lc=US&item_name=Coupon%20Creator&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
+Plugin URI: https://artifexrouting.com/wordpress-plugins/coupon-creator/
+Tags: coupon, shortcode, print, lead generation, marketing
 Requires at least: 6.5
-Tested up to: 7.0.0
-Stable tag: 3.5.0
-Requires PHP: 7.4
+Tested up to: 7.0.2
+Stable tag: 3.6.1
+Requires PHP: 8.2
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
-Create coupons to display on your site by using a shortcode.
+Designed, printable promo coupons — build one in WordPress or upload an image, set an expiration, print. Displays offers; not a store-discount engine.
 
 == Description ==
+
+Coupon Creator makes designed, printable coupons you can drop on any page with a block or a shortcode. Build one in WordPress or upload your own image. Maintained on WordPress since 2012.
+
+<strong>Maintained and shipping on WordPress since 2012.</strong>
 
 > <strong>Support on WordPress.org</strong> is for troubleshooting bugs and related issues. The forums are monitored and replied to within one week's time.
 >
 > If you are looking for direct support please check out [Coupon Creator Pro](http://cctor.link/JIGHR)
 
-<strong>Coupon Creator now includes a Coupon Block to display single coupons or a loop of coupons with options to align and order them.</strong>
+<strong>Put a real coupon on your site.</strong>
 
-Create your own coupon with the Coupon Creator for WordPress or upload an image of a coupon instead.
+Create a designed coupon in WordPress or upload your own image, then display it with the Coupon Creator block or shortcode.
+
+<strong>What Coupon Creator does:</strong> it makes designed, printable promotional coupons. Build one in WordPress with your own text, colors, and borders — or upload an image of a coupon you already have, like a newspaper ad, and give it an expiration date. Drop it on any page with the Coupon Block or a shortcode, let visitors print it, and with the Add-ons let them click to reveal or copy a code.
+
+<strong>What it does not do:</strong> Coupon Creator does not create or apply discount codes in your store's checkout by itself. If you need a code that changes prices in a WooCommerce cart, that code lives in WooCommerce — and Coupon Creator Add-ons connects the two: create the matching WooCommerce coupon from the same editor, keep both expiration dates in sync, and show your visitors a designed coupon whose code actually works at checkout.
 
 [Check out a demo gallery of Coupon Creator Features!](http://cctor.link/IjIV1)
 
 Watch this quick video to see the Coupon Creator in Action:
 
-https://www.youtube.com/watch?v=aGoxJ3TBRhk
+https://www.youtube.com/watch?v=gz6e3AHNF28
 
 <h4>Coupon Creator Add-ons 3.5 Features Include: (included with Pro Business and higher license levels)</h4>
-* Email Delivery — send coupons directly to visitors via email with templates for all 6 coupon types
+* Email Delivery — send coupons directly to visitors via email with templates for all 7 coupon types
 * Email Gate — require an email address to view a coupon, building your list while distributing deals
 * Email logging with GDPR-compliant anonymization, configurable retention, and deliverability health checks (SPF, blacklist, SMTP)
 * Multiprint to select multiple coupons to print all at once
@@ -140,14 +147,42 @@ You can add custom css in the options and it will modify both the shortcode coup
 
 == Screenshots ==
 
-1. Coupon Examples
-2. Expiration Tab in Coupon Editor
-3. Coupon Editor
-4. Coupon List
-5. Coupon Inserter
-6. Coupon Options
+1. Coupons displayed on a page
+2. The Coupon Creator block in the editor
+3. Coupon editor - content and design
+4. Coupon editor - expiration
+5. Coupon list with shortcodes
+6. Coupon Creator options
 
 == Changelog ==
+
+= 3.6.1 August 7th 2026 =
+
+* Fix - Sites running an older Coupon Creator Pro or Add-ons alongside Coupon Creator 3.6 could stop loading entirely. Out-of-date extensions are now switched off with a notice telling you which one to update, and the site keeps working. Your coupons and settings are untouched.
+* Fix - Restored the Coupons menu on sites where it was missing. Installs set up by a database migration, a staging clone, or by copying the plugin files into place never received the coupon permissions, which hid the Coupons menu and left the Options screen unstyled.
+* Fix - Resolved a fatal error that could occur during scheduled tasks and background requests.
+* Security - Hardened the store address submitted from the licence screen before it is used to contact the licensing server.
+* Update - Updated the bundled Plugin Engine to 4.0.8. Licence checks and plugin update checks now both follow the same store address, so the store can move without needing a new release first.
+
+= 3.6.0 August 6th 2026 =
+
+* Feature - A new coupon design, Modern Ticket, with a perforated ticket stub, a business name line, and colors that pick their own readable text. It is the default for new coupons; your existing coupons keep the design they have, now named Classic.
+* Security - Hardened coupon saving and duplication with additional nonce and capability checks.
+* Fix - Bundled translations now load correctly, so your coupons and settings display in your language.
+* Fix - Coupons set to expire but with no date entered now display as intended instead of silently disappearing.
+* Fix - Removed stray front-end debug output and resolved PHP 8 deprecation notices for cleaner error logs.
+* Tweak - Refreshed the admin experience with the new Artifex Routing Co interface across the Options screen, coupon editor, and coupon list, including a redesigned Coupons menu icon and branded block placeholder.
+* Tweak - Improved keyboard accessibility with a visible focus ring on editor tabs, plus a responsive tab layout and loading indicator.
+* Tweak - Faster coupon display: a bare [coupon] shortcode now shows a sensible number of coupons by default (filterable), with more efficient rendering on pages with many coupons.
+* Tweak - Added optional, opt-in usage tracking to help guide future improvements.
+* Update - Licensing has moved to Easy Digital Downloads Software Licensing, so the activation process is different. Manage your Coupon Creator Pro and Add-ons licenses from the Coupon Creator settings page with the new Manage License control.
+* Update - Updated the bundled Plugin Engine to 4.0.7.
+* Update - Modernized build tooling and confirmed compatibility with WordPress 7.0.2.
+
+= 3.5.1 May 20th 2026 =
+
+* Tweak - Prefix the bundled di52 container library (lucatume/di52) under the Pngx\Vendor\ namespace via Strauss to prevent global class collisions with The Events Calendar, Event Tickets, and other plugins that ship their own scoped di52.
+* Tweak - Upgrade lucatume/di52 from v2 to v3 (modern PSR-4 namespace).
 
 = 3.5.0 May 20th 2026 =
 
@@ -430,12 +465,21 @@ You can add custom css in the options and it will modify both the shortcode coup
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
+= 3.6.1 =
+Coupon Creator 3.6 requires Coupon Creator Pro and Add-ons 3.6 or later. Please update those too. If they are older they will be switched off with a notice until you do, so your site keeps working. Your coupons and settings are not affected.
+
 = 3.0 =
 Coupon Creator 3.0 adds Block Editor support, refactors the code base, and increases the minimum PHP version to 5.6 and WordPress 4.9. If you have Pro or Add-ons please update those to 3.0 for them to continue to work.
 
 == Frequently Asked Questions ==
+<h4>Does Coupon Creator create discount codes for my WooCommerce store?</h4>
+Not by itself — Coupon Creator makes the designed coupon your visitors see, not the checkout discount. Coupon Creator Add-ons bridges the two: it creates a linked WooCommerce coupon from the coupon editor and keeps the code and expiration in sync. If you only need cart discount rules (BOGO, bulk codes, auto-apply), a WooCommerce coupon manager is the right tool instead.
+
+<h4>Can I use an existing coupon image, like a newspaper ad?</h4>
+Yes, and it's free: choose the Image template, upload your JPG or PNG, and set an expiration date. The image displays as the coupon and stops showing when it expires.
+
 <h4>What if I have support questions?</h4>
-Please ask on the [Coupon Creator Support Forum](http://wordpress.org/support/plugin/coupon-creator) on WordPress. For Pro users, please visit [Coupon Creator Pro](http://cctor.link/JIGHR). On CouponCreatorPlugin.com there are documentation on the css and hooks of the coupon creator as well as more answers to questions and premium tutorials as well.
+Please ask on the [Coupon Creator Support Forum](http://wordpress.org/support/plugin/coupon-creator) on WordPress. For Pro users, please visit [Coupon Creator Pro](http://cctor.link/JIGHR). The [Coupon Creator documentation](https://artifexrouting.com/docs/coupon-creator/) covers the css and hooks of the coupon creator as well as more answers to questions and premium tutorials as well.
 
 <h4>The Coupon Inserter, Image Uploader, the Expiration Date Picker, or the Color Pickers are not working, what is wrong?</h4>
 Most likely this is a JavaScript error and could be caused by another plugin or your theme. Please check the Developer Console for your browser and see if there is an error. If you post the error on the support forum I maybe able to help. Otherwise, try disabling plugins and changing themes to try and find the sources as well.
@@ -464,7 +508,7 @@ By default the coupons are excluded from search. However, if you add coding to s
 There are two sizes, but the image uploaded should be 400 pixels by 200 pixels to display correctly.
 
 Does the Coupon Creator have custom capabilities for WordPress users?
-Yes, with version 1.90 custom capabilities have been added. See Documentation at CouponCreatorPlugin.com for more information.
+Yes, with version 1.90 custom capabilities have been added. See the [Coupon Creator documentation](https://artifexrouting.com/docs/coupon-creator/) for more information.
 
 <h4>Can I change cctor_coupon in the print view permalink? </h4>
 With version 1.70 you can change the slug of the permalink in the Options section of the plugin. Coupon > Options > Permalink Tab

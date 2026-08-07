@@ -42,6 +42,37 @@ if ( have_posts() ) while ( have_posts() ) : the_post();
 		//Check to show the Coupon
 	if ( $coupon_expiration->check_expiration() ) {
 
+			/**
+			 * Coupon types backed by a view file render through the template loader,
+			 * looking for `type/<type>-print.php` first and falling back to the shared
+			 * `type/<type>.php`. `default` and `image` keep the legacy chain below.
+			 */
+			$coupon_print_type = get_post_meta( $coupon_id, 'cctor_coupon_type', true );
+
+			if (
+				! in_array( $coupon_print_type, array( '', 'default', 'image' ), true )
+				// A coupon carrying an image has always printed as an image
+				// regardless of the selected type. Keep that precedence.
+				&& ! apply_filters( 'cctor_print_image_url', $coupon_id, 'print_coupon' )
+				&& Cctor__Coupon__Templates::type_has_view( $coupon_print_type )
+			) {
+
+				cctor_core_get_template_part(
+					'type/' . $coupon_print_type,
+					'print',
+					array(
+						'coupon_id'         => $coupon_id,
+						'coupon_expiration' => $coupon_expiration,
+						'is_print_view'     => true,
+						'fields'            => pngx( 'cctor.meta.order' )->get_ordered_template_fields( array() ),
+					)
+				);
+
+				do_action( 'cctor_print_after_coupon', $coupon_id );
+
+				continue;
+			}
+
 			$outer_print_coupon_wrap  = apply_filters( 'cctor_print_outer_content_wrap' , $coupon_id  );
 
 			echo $outer_print_coupon_wrap['start_wrap'];
@@ -52,6 +83,8 @@ if ( have_posts() ) while ( have_posts() ) : the_post();
 				if ($couponimage) {
 
 					do_action( 'cctor_print_image_coupon' ,  $coupon_id, $couponimage );
+
+					do_action( 'cctor_print_coupon_expiration', $coupon_id , $coupon_expiration );
 
 				} else {
 

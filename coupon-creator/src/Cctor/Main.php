@@ -41,23 +41,36 @@ class Cctor__Coupon__Main {
 	*
 	* @since 4.10
 	*/
-	protected $min_php = '7.4';
+	protected $min_php = '8.2';
 
 	const VERSION_KEY              = 'cctor_coupon_version';
-	const VERSION_NUM              = '3.5.0';
-	const MIN_PNGX_VERSION         = '4.0.0';
+	const VERSION_NUM              = '3.6.1';
+	const MIN_PNGX_VERSION         = '4.0.2';
+	// Minimum add-on versions this core is compatible with — enforced by
+	// gate_outdated_extensions(), which unhooks anything below them rather than
+	// letting it run mixed code and fatal.
+	//
+	// These track the last release that CHANGED what core provides its siblings,
+	// not the current release number: 3.6.0 moved to the Strauss-prefixed di52 v3
+	// and dropped the global tad_DI52_* classes that every pre-3.6 provider
+	// extends. Pro/Add-ons 3.6.0 remain compatible with later 3.6.x cores, so a
+	// core patch must not drag them forward. Raise these only when a release
+	// breaks that contract again — verify with `bash bin/compat-smoke.sh core`.
+	const MIN_PRO_VERSION          = '3.6.0';
+	const MIN_ADDONS_VERSION       = '3.6.0';
 	const WP_PLUGIN_URL            = 'https://wordpress.org/plugins/coupon-creator/';
-	const COUPON_CREATOR_STORE_URL = 'https://couponcreatorplugin.com/edd-api/';
+	// Legacy Pngx EDD endpoint. Only reached on pre-3.0 dependency-failure paths;
+	// the live path is the EDD SL SDK in Pro/Add-ons. Kept pointed at the current
+	// store so the dormant fallback isn't aimed at a retired domain.
+	const COUPON_CREATOR_STORE_URL = 'https://artifexrouting.com/edd-api/';
 	const OPTIONS_ID               = 'coupon_creator_options';
 
 	public $VERSION_KEY              = 'cctor_coupon_version';
-	public $VERSION_NUM              = '3.5.0';
-	public $MIN_PNGX_VERSION         = '4.0.0';
+	public $VERSION_NUM              = '3.6.1';
+	public $MIN_PNGX_VERSION         = '4.0.2';
 	public $WP_PLUGIN_URL            = 'https://wordpress.org/plugins/coupon-creator/';
-	public $COUPON_CREATOR_STORE_URL = 'https://couponcreatorplugin.com/edd-api/';
+	public $COUPON_CREATOR_STORE_URL = 'https://artifexrouting.com/edd-api/';
 	public $OPTIONS_ID               = 'coupon_creator_options';
-
-	public $cctorUrl = 'https://couponcreatorplugin.com/';
 
 	/**
 	 * @var bool Prevent autoload initialization
@@ -93,6 +106,15 @@ class Cctor__Coupon__Main {
 	 * @var Cctor__Coupon__Plugin_Register
 	 */
 	protected $registered;
+
+	/**
+	 * Extensions switched off by gate_outdated_extensions(), as name => version.
+	 *
+	 * @since 3.6.1
+	 *
+	 * @var array<string,string>
+	 */
+	protected $outdated_extensions = array();
 
 	/**
 	 * Get (and instantiate, if necessary) the instance of the class
@@ -151,6 +173,8 @@ class Cctor__Coupon__Main {
 		// Use Instance to call method to setup cpt
 		new Cctor__Coupon__Post_Type_Coupon( self::POSTTYPE, self::TAXONOMY, self::TEXT_DOMAIN );
 
+		self::maybe_create_sample_coupon();
+
 		/**
 		 * Fires on Activation of Coupon Creator
 		 *
@@ -187,6 +211,54 @@ class Cctor__Coupon__Main {
 	}
 
 	/**
+	 * Create a draft sample coupon on first activation.
+	 *
+	 * Gives a new install something real to open from the getting-started
+	 * panel instead of an empty list. Runs once: skipped when any coupon
+	 * already exists or a sample was created before.
+	 *
+	 * @since 3.6.1
+	 */
+	public static function maybe_create_sample_coupon() {
+		if ( get_option( 'cctor_sample_coupon_id' ) ) {
+			return;
+		}
+
+		$existing = get_posts(
+			array(
+				'post_type'   => self::POSTTYPE,
+				'post_status' => 'any',
+				'numberposts' => 1,
+				'fields'      => 'ids',
+			)
+		);
+
+		if ( ! empty( $existing ) ) {
+			return;
+		}
+
+		$sample_id = wp_insert_post(
+			array(
+				'post_type'   => self::POSTTYPE,
+				'post_status' => 'draft',
+				'post_title'  => __( 'Sample Coupon: 20% Off Your First Visit', 'coupon-creator' ),
+			)
+		);
+
+		if ( ! $sample_id || is_wp_error( $sample_id ) ) {
+			return;
+		}
+
+		update_post_meta( $sample_id, 'cctor_coupon_type', 'default' );
+		update_post_meta( $sample_id, 'cctor_amount', __( '20% OFF Your First Visit!', 'coupon-creator' ) );
+		update_post_meta( $sample_id, 'cctor_description', __( 'Valid for new customers. Present this coupon at checkout. One per customer.', 'coupon-creator' ) );
+		update_post_meta( $sample_id, 'cctor_expiration_option', '1' );
+		update_post_meta( $sample_id, 'cctor_ignore_expiration', 'on' );
+
+		update_option( 'cctor_sample_coupon_id', $sample_id );
+	}
+
+	/**
 	 * Load Plugin.
 	 *
 	 * @since 3.0.0
@@ -210,6 +282,10 @@ class Cctor__Coupon__Main {
 		Pngx__Main::instance();
 
 		add_action( 'pngx_engine_loaded', array( $this, 'bootstrap' ), 0 );
+
+		// Stop a 3.x Pro/Add-ons older than this core from booting. Priority 7 sits
+		// between the extensions' own registration (5) and their init (10).
+		add_action( 'pngx_engine_loaded', array( $this, 'gate_outdated_extensions' ), 7 );
 
 		//Disable Older Versions of Pro to prevent fatal errors
 		if ( function_exists( 'Coupon_Pro_Load' ) ) {
@@ -256,6 +332,113 @@ class Cctor__Coupon__Main {
 	}
 
 	/**
+	 * Prevent an out-of-date Pro or Add-ons from booting against this core.
+	 *
+	 * MIN_PRO_VERSION / MIN_ADDONS_VERSION are declared to Pngx__Dependency by
+	 * Cctor__Coupon__Plugin_Register, but that only gates extensions that ask
+	 * whether they may run. Pro and Add-ons through 3.5.x do not ask — they call
+	 * pngx_register_provider() unconditionally from their own init — so the
+	 * declaration alone cannot stop them. It has to be enforced here.
+	 *
+	 * Without this, a customer who updates core ahead of its paid siblings gets a
+	 * white screen rather than a notice: core 3.6.0 moved the DI container to the
+	 * Strauss-prefixed \Pngx\Vendor\lucatume\DI52 and dropped the global di52 v2
+	 * classes, and every 3.x-through-3.5 provider extends tad_DI52_ServiceProvider,
+	 * so building one throws "class tad_DI52_ServiceProvider not found" on init.
+	 *
+	 * Unhooking coupon_creator_{pro,addons}_init is the extensions' own
+	 * self-disable idiom, so the site keeps rendering with core alone.
+	 *
+	 * MUST NOT translate anything. This runs on pngx_engine_loaded, i.e. during
+	 * plugins_loaded — calling __() here makes WordPress load the text domain
+	 * before init and emit a _load_textdomain_just_in_time notice. Extension
+	 * names are recorded untranslated and localised by outdated_extension_msg(),
+	 * which runs on admin_notices, long after init.
+	 *
+	 * @since 3.6.1
+	 */
+	public function gate_outdated_extensions() {
+
+		$extensions = array(
+			'Cctor__Coupon__Pro__Main'    => array(
+				'min'    => self::MIN_PRO_VERSION,
+				'action' => 'coupon_creator_pro_init',
+			),
+			'Cctor__Coupon__Addons__Main' => array(
+				'min'    => self::MIN_ADDONS_VERSION,
+				'action' => 'coupon_creator_addons_init',
+			),
+		);
+
+		$dependency = Pngx__Dependency::instance();
+
+		foreach ( $extensions as $main_class => $extension ) {
+
+			// Not installed, or already disabled by its own dependency check.
+			if ( ! has_action( 'pngx_engine_loaded', $extension['action'] ) ) {
+				continue;
+			}
+
+			// Every 3.x release registers itself at priority 5, so a version is on
+			// record by now. An absent one means something older still hooked here;
+			// gate it rather than let it build a provider against this container.
+			$version = $dependency->get_registered_plugin_version( $main_class );
+
+			if ( ! empty( $version ) && version_compare( $version, $extension['min'], '>=' ) ) {
+				continue;
+			}
+
+			remove_action( 'pngx_engine_loaded', $extension['action'], 10 );
+
+			// Keyed by main class, not by name — the label is a display concern and
+			// cannot be resolved this early. See the note above.
+			$this->outdated_extensions[ $main_class ] = $version;
+		}
+
+		if ( empty( $this->outdated_extensions ) ) {
+			return;
+		}
+
+		add_action( 'admin_notices', array( $this, 'outdated_extension_msg' ), 50 );
+		add_action( 'network_admin_notices', array( $this, 'outdated_extension_msg' ), 50 );
+	}
+
+	/**
+	 * Tell the admin which extension to update, and that it is switched off meanwhile.
+	 *
+	 * @since 3.6.1
+	 */
+	public function outdated_extension_msg() {
+
+		if ( ! current_user_can( 'activate_plugins' ) ) {
+			return;
+		}
+
+		// Safe to translate here: admin_notices fires well after init.
+		$names = array(
+			'Cctor__Coupon__Pro__Main'    => __( 'Coupon Creator Pro', 'coupon-creator' ),
+			'Cctor__Coupon__Addons__Main' => __( 'Coupon Creator Add-ons', 'coupon-creator' ),
+		);
+
+		foreach ( $this->outdated_extensions as $main_class => $version ) {
+
+			$name = isset( $names[ $main_class ] ) ? $names[ $main_class ] : $main_class;
+
+			echo '<div class="notice notice-error"><p>';
+
+			printf(
+				/* translators: 1: extension name, 2: the installed extension version, 3: this core version. */
+				esc_html__( '%1$s has been switched off because it is out of date. Update it to keep using its features — version %2$s cannot run alongside Coupon Creator %3$s. Your coupons and settings are untouched.', 'coupon-creator' ),
+				'<strong>' . esc_html( $name ) . '</strong>',
+				esc_html( $version ? $version : __( 'installed', 'coupon-creator' ) ),
+				esc_html( self::VERSION_NUM )
+			);
+
+			echo '</p></div>';
+		}
+	}
+
+	/**
 	 * Bootstrap Plugin
 	 *
 	 * @since 3.0
@@ -267,8 +450,17 @@ class Cctor__Coupon__Main {
 		 */
 		add_action('init', function()
 		{
-			Pngx__Main::instance()->load_text_domain( self::TEXT_DOMAIN , $this->plugin_dir . 'lang/' );
+			Pngx__Main::instance()->load_text_domain( self::TEXT_DOMAIN , $this->plugin_dir . 'languages/' );
 		});
+
+		// Configure the stellarwp/assets library before any Asset is registered. Compiled
+		// assets live under build/ (built by @wordpress/scripts); the library inserts the
+		// js/ or css/ sub-directory by type, so assets are added by bare filename, e.g.
+		// Asset::add( $handle, 'blocks.js' ) resolves to build/js/blocks.js.
+		\Pngx\Vendor\StellarWP\Assets\Config::set_hook_prefix( 'coupon-creator' );
+		\Pngx\Vendor\StellarWP\Assets\Config::set_path( $this->plugin_path );
+		\Pngx\Vendor\StellarWP\Assets\Config::set_version( self::VERSION_NUM );
+		\Pngx\Vendor\StellarWP\Assets\Config::set_relative_asset_path( 'build/' );
 
 		pngx_register_provider( 'Cctor__Coupon__Provider' );
 		pngx_register_provider( Hooks::class );
@@ -297,11 +489,6 @@ class Cctor__Coupon__Main {
 		$autoloader = $this->get_autoloader_instance();
 		$this->register_plugin_autoload_paths();
 
-		// deprecated classes are registered in a class to path fashion
-		foreach ( glob( $this->plugin_path . 'src/deprecated/*.php' ) as $file ) {
-			$class_name = str_replace( '.php', '', basename( $file ) );
-			$autoloader->register_class( $class_name, $file );
-		}
 		$autoloader->register_autoloader();
 	}
 
@@ -437,9 +624,11 @@ class Cctor__Coupon__Main {
 	 */
 	public function not_supported_error() {
 		if ( ! self::supported_version( 'wordpress' ) ) {
+			/* translators: %s: minimum required WordPress version. */
 			echo '<div class="error"><p>' . esc_html( sprintf( __( 'Sorry, Coupon Creator requires WordPress %s or higher. Please upgrade your WordPress install.', 'coupon-creator' ), $this->min_wordpress ) ) . '</p></div>';
 		}
 		if ( ! self::supported_version( 'php' ) ) {
+			/* translators: %s: minimum required PHP version. */
 			echo '<div class="error"><p>' . esc_html( sprintf( __( 'Sorry, Coupon Creator requires PHP %s or higher. Talk to your Web host about moving you to a newer version of PHP.', 'coupon-creator' ), $this->min_php ) ) . '</p></div>';
 		}
 	}
@@ -453,11 +642,10 @@ class Cctor__Coupon__Main {
 
 		//Core Functions
 		require_once $this->plugin_path . 'src/functions/template-tags/general.php';
-
-		//Deprecated Functions
-		require_once $this->plugin_path . 'src/deprecated/deprecated.php';
+		require_once $this->plugin_path . 'src/functions/template-tags/templates.php';
 
 		//Load Template Functions
+		require_once $this->plugin_path . 'src/functions/template-functions/cctor-function-tokens.php';
 		require_once $this->plugin_path . 'src/functions/template-functions/cctor-function-meta.php';
 		require_once $this->plugin_path . 'src/functions/template-functions/cctor-function-expiration.php';
 		require_once $this->plugin_path . 'src/functions/template-functions/cctor-function-wraps.php';
@@ -594,6 +782,7 @@ class Cctor__Coupon__Main {
 		echo '<div class="error"><p>';
 
 		printf(
+			/* translators: 1: opening link tag to the plugin download, 2: link text ("the latest version"), 3: closing link tag. */
 			esc_html__( 'Your version of Coupon Creator Pro is incompatible with Coupon Creator 3.0 and later. To continue using Coupon Creator Pro, please install and activate %1$s%2$s%3$s or downgrade to Coupon Creator 2.5.6 or earlier.', 'coupon-creator' ),
 			'<a href="http://cctor.link/sMsY2" title="' . $title . '" target="_blank">',
 			$link_text,
@@ -629,7 +818,8 @@ class Cctor__Coupon__Main {
 		echo '<div class="error"><p>';
 
 		printf(
-			esc_html__( 'Your version of Coupon Creator Add-ons is incompatible with Coupon Creator 3.0 and later. To continue using Coupon Creator Add-ons, please install and activate %1$s%2$s%3$s or downgrade to Coupon Creator 2.5.6 or earlier.', 'coupon-creator-add-ons' ),
+			/* translators: 1: opening link tag to the plugin download, 2: link text ("the latest version"), 3: closing link tag. */
+			esc_html__( 'Your version of Coupon Creator Add-ons is incompatible with Coupon Creator 3.0 and later. To continue using Coupon Creator Add-ons, please install and activate %1$s%2$s%3$s or downgrade to Coupon Creator 2.5.6 or earlier.', 'coupon-creator' ),
 			'<a href="http://cctor.link/sMsY2" title="' . $title . '" target="_blank">',
 			$link_text,
 			'</a>'

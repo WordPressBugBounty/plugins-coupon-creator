@@ -1,7 +1,7 @@
 {
   "name": "plugin-engine",
   "version": "4.0.0",
-  "repository": "git@github.com:jesseeproductions/plugin-engine.git",
+  "repository": "git@github.com:artifexrouting/plugin-engine.git",
   "_resourcepath": "src/resources",
   "_domainPath": "languages",
   "_textDomain": "plugin-engine",
@@ -82,7 +82,7 @@
     "zero-fill": "^2.2.3"
   },
   "devDependencies": {
-    "product-taskmaster": "git+https://github.com/jesseeproductions/coupon-product-taskmaster.git",
+    "product-taskmaster": "git+https://github.com/artifexrouting/coupon-product-taskmaster.git",
     "@wordpress/hooks": "^1.3.2",
     "babel-jest": "^27.0.6",
     "cross-env": "^5.2.0",

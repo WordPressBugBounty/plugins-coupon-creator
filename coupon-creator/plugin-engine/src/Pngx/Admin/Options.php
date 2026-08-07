@@ -464,7 +464,7 @@ class Pngx__Admin__Options {
 	 * Option Footer Fields
 	 */
 	public function display_options_footer() {
-		echo '<p style="text-align:right;">&copy; ' . date( "Y" ) . ' Jessee Productions, LLC</p>';
+		echo '<p style="text-align:right;">&copy; ' . date( "Y" ) . ' Artifex Routing Co</p>';
 	}
 
 	/**

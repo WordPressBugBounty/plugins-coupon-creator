@@ -233,7 +233,7 @@ class Pngx__Log__Admin {
 	 * @return Pngx__Log
 	 */
 	protected function log_manager() {
-		return pngx( 'logger' );
+		return pngx( 'pngx.logger' );
 	}
 
 	/**
@@ -243,6 +243,6 @@ class Pngx__Log__Admin {
 	 * @return Pngx__Log__Logger|null
 	 */
 	protected function current_logger() {
-		return pngx( 'logger' )->get_current_logger();
+		return pngx( 'pngx.logger' )->get_current_logger();
 	}
 }

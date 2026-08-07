@@ -18,6 +18,10 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 
 	/**
 	 * Array of All Help Fields
+	 *
+	 * Every entry is a plain guide link (the archived help videos were retired
+	 * in 3.6 — the text guides at artifexrouting.com/docs are the maintained
+	 * reference), so the engine renders a single "Guides" list per help panel.
 	 */
 	protected function set_help_fields() {
 
@@ -28,96 +32,88 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'Coupon Content',
 			'type'    => 'heading'
 		);
-/*		$this->fields['video_creating_coupon']        = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'Overview of Creating a Coupon',
-			'video_id' => 'I1v9HxdIsSE',
-			'type'     => 'video'
-		);*/
-		$this->fields['video_creating_templates_coupon25']        = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'Standard and Default Templates',
-			'video_id' => 'hoVwCWe3qO8',
-			'type'     => 'video'
+		$this->fields['link_creating_templates']      = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'Standard and Default Templates',
+			'link'    => cctor_guide_url( 'coupon-creator-creating-a-coupon' ),
+			'type'    => 'links'
 		);
-		$this->fields['video_creating_image_coupon25']        = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'Overview of Creating an Image Coupon',
-			'video_id' => 'S14cK04phZI',
-			'type'     => 'video'
+		$this->fields['link_creating_image_coupon']   = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'Overview of Creating an Image Coupon',
+			'link'    => cctor_guide_url( 'coupon-creator-creating-an-image-coupon' ),
+			'type'    => 'links'
 		);
-		$this->fields['video_click_reveal_coupon25']        = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'How to use the Click Reveal',
-			'video_id' => 'n-dXdLCj0SU',
-			'pro'      => 'Add-ons',
-			'type'     => 'video'
+		$this->fields['link_click_reveal']            = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'How to use the Click Reveal',
+			'link'    => cctor_guide_url( 'coupon-creator-add-ons-click-reveal' ),
+			'pro'     => 'Add-ons',
+			'type'    => 'links'
 		);
-		$this->fields['video_dynamic_coupon25']        = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'How to use the Dynamic Code',
-			'video_id' => 'O2hPg9EnkK4',
-			'pro'      => 'Add-ons',
-			'type'     => 'video'
+		$this->fields['link_dynamic_code']            = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'How to use the Dynamic Code',
+			'link'    => cctor_guide_url( 'coupon-creator-add-ons-dynamic-code' ),
+			'pro'     => 'Add-ons',
+			'type'    => 'links'
 		);
-		$this->fields['video_expiration_display_coupon25']        = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'How to use the Expiration Display',
-			'video_id' => 'DsU7pDDV_qs',
-			'pro'      => 'Add-ons',
-			'type'     => 'video'
+		$this->fields['link_expiration_display']      = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'How to use the Expiration Display',
+			'link'    => cctor_guide_url( 'coupon-creator-add-ons-expiration-display' ),
+			'pro'     => 'Add-ons',
+			'type'    => 'links'
 		);
-		$this->fields['video_pro_columns_rows']       = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'Using Columns and Rows in the Visual Editor',
-			'video_id' => 'w67yqCZXF6I',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_pro_columns_rows']        = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'Using Columns and Rows in the Visual Editor',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-creating-a-pro-coupon' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
-		$this->fields['video_pro_view_shortcode']     = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'How to use the View Shortcodes and Deal Display Options',
-			'video_id' => 'h0YVXi2vq3g',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_pro_view_shortcode']      = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'How to use the View Shortcodes and Deal Display Options',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-coupon-loop-filter-bar' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
-		$this->fields['video_inserting_coupon']       = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'Inserter and Aligning Coupons',
-			'video_id' => 'sozW-J-g3Ts',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_inserting_coupon']        = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'Inserter and Aligning Coupons',
+			'link'    => cctor_guide_url( 'coupon-creator-displaying-coupons' ),
+			'type'    => 'links'
 		);
-		$this->fields['video_print_only']       = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'Print Only Field',
-			'video_id' => 'uAFMy4DwCYE',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_print_only']              = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'How to use the Print Only Field',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-print-features' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
-		$this->fields['video_multiprint_addons']       = array(
-			'section'  => '',
-			'tab'      => 'content',
-			'text'     => 'Multiprint Feature',
-			'video_id' => 'KKa2-1O3yks',
-			'pro'      => 'Add-ons',
-			'type'     => 'video'
+		$this->fields['link_multiprint_addons']       = array(
+			'section' => '',
+			'tab'     => 'content',
+			'text'    => 'Multiprint Feature',
+			'link'    => cctor_guide_url( 'coupon-creator-add-ons-multiprint' ),
+			'pro'     => 'Add-ons',
+			'type'    => 'links'
 		);
 		$this->fields['link_pro_hide_deal']           = array(
 			'section' => '',
 			'tab'     => 'content',
 			'text'    => 'How to Hide the Deal in any Coupon View',
-			'link'    => 'http://cctor.link/Ihoro',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-pro-options' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -125,30 +121,22 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'section' => '',
 			'tab'     => 'content',
 			'text'    => 'Where does the shortcode go?',
-			'link'    => 'http://cctor.link/YZ6mK',
+			'link'    => cctor_guide_url( 'coupon-creator-where-does-the-shortcode-go' ),
 			'type'    => 'links'
 		);
 		$this->fields['link_pro_shortcode_sidebar']   = array(
 			'section' => '',
 			'tab'     => 'content',
 			'text'    => 'How can I display coupons using the shortcode in a sidebar text widget?',
-			'link'    => 'http://cctor.link/CKv4w',
+			'link'    => cctor_guide_url( 'coupon-creator-shortcode-in-sidebar-widget' ),
 			'type'    => 'links'
 		);
-		$this->fields['link_pro_image_size']             = array(
+		$this->fields['link_pro_image_size']          = array(
 			'section' => '',
 			'tab'     => 'content',
 			'text'    => 'What is the size of the image coupon?',
-			'link'    => 'http://cctor.link/cYn4L',
+			'link'    => cctor_guide_url( 'coupon-creator-image-coupon-size' ),
 			'type'    => 'links'
-		);
-		$this->fields['video_pro_print_only']             = array(
-			'section' => '',
-			'tab'     => 'content',
-			'text'    => 'How to use the Print Only Field?',
-			'video_id' => 'uAFMy4DwCYE',
-			'pro'      => 'Pro',
-			'type'     => 'video'
 		);
 		$this->fields['video_end_list_content']       = array(
 			'section' => '',
@@ -163,27 +151,11 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'Style Guides',
 			'type'    => 'heading'
 		);
-		$this->fields['video_pro_border_styles']   = array(
-			'section'  => '',
-			'tab'      => 'style',
-			'text'     => 'How to use the Border Styles',
-			'video_id' => 'EQRv8g2nmuE',
-			'pro'      => 'Pro',
-			'type'     => 'video'
-		);
-		$this->fields['video_pro_background_img']  = array(
-			'section'  => '',
-			'tab'      => 'style',
-			'text'     => 'Using the Background Image',
-			'video_id' => 'vmViVkoQB0M?',
-			'pro'      => 'Pro',
-			'type'     => 'video'
-		);
 		$this->fields['link_pro_border_styles']    = array(
 			'section' => '',
 			'tab'     => 'style',
 			'text'    => 'How to use different Coupon Borders',
-			'link'    => 'http://cctor.link/Ew7eZ',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-customizing-coupons' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -191,7 +163,7 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'section' => '',
 			'tab'     => 'style',
 			'text'    => 'Using the Background Image',
-			'link'    => 'http://cctor.link/ykQml',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-customizing-coupons' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -208,44 +180,36 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'Expiration Options',
 			'type'    => 'heading'
 		);
-		$this->fields['video_expiration_features']      = array(
-			'section'  => '',
-			'tab'      => 'expiration',
-			'text'     => 'How to use the Expiration and Counter Features',
-			'video_id' => 'QBRCoFEezWY',
-			'type'     => 'video'
+		$this->fields['link_expiration_features']       = array(
+			'section' => '',
+			'tab'     => 'expiration',
+			'text'    => 'How to use the Expiration and Counter Features',
+			'link'    => cctor_guide_url( 'coupon-creator-expiration-dates' ),
+			'type'    => 'links'
 		);
 		$this->fields['link_pro_recurring_expiration']  = array(
 			'section' => '',
 			'tab'     => 'expiration',
 			'text'    => 'How to setup or troubleshoot the Recurring Expiration in Pro',
-			'link'    => 'http://cctor.link/Ih8Uc',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-expiration-recurring' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
-		);
-		$this->fields['video_pro_counter']              = array(
-			'section'  => '',
-			'tab'      => 'expiration',
-			'text'     => 'Using the Counter',
-			'video_id' => 'aVkwq8cIgB0',
-			'pro'      => 'Pro',
-			'type'     => 'video'
 		);
 		$this->fields['link_pro_counter']               = array(
 			'section' => '',
 			'tab'     => 'expiration',
-			'text'    => 'Using the Counter Guide',
-			'link'    => 'http://cctor.link/BpJhV',
+			'text'    => 'Using the Counter',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-coupon-counter' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
-		$this->fields['video_expiration_bulk_edit']     = array(
-			'section'  => '',
-			'tab'      => 'expiration',
-			'text'     => 'How to Bulk or Quick Edit the Expiration or Counter Fields',
-			'video_id' => 'IZDV5Mv5iGM',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_expiration_bulk_edit']      = array(
+			'section' => '',
+			'tab'     => 'expiration',
+			'text'    => 'How to Bulk or Quick Edit the Expiration or Counter Fields',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-coupon-counter' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
 		$this->fields['video_end_list_expiration']      = array(
 			'section' => '',
@@ -260,19 +224,11 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'Coupon Link Attributes',
 			'type'    => 'heading'
 		);
-		$this->fields['video_pro_popup']           = array(
-			'section'  => '',
-			'tab'      => 'links',
-			'text'     => 'How to use the Popup Print View Feature',
-			'video_id' => 'iThKkEgYBDE',
-			'pro'      => 'Pro',
-			'type'     => 'video'
-		);
 		$this->fields['link_pro_popup']            = array(
 			'section' => '',
 			'tab'     => 'links',
 			'text'    => 'How to Open the Print Template in a Pop Up Box',
-			'link'    => 'http://cctor.link/aZexm',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-print-features' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -290,13 +246,13 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'WooCommerce Coupons',
 			'type'    => 'heading'
 		);
-		$this->fields['video_pro_woocommerce25']   = array(
-			'section'  => '',
-			'tab'      => 'cctor_woocommerce',
-			'text'     => 'How to Create a WooCommerce Coupon',
-			'video_id' => 'WQUsCo5faT8',
-			'pro'      => 'Add-ons',
-			'type'     => 'video'
+		$this->fields['link_woocommerce']        = array(
+			'section' => '',
+			'tab'     => 'cctor_woocommerce',
+			'text'    => 'How to Create a WooCommerce Coupon',
+			'link'    => cctor_guide_url( 'coupon-creator-add-ons-woocommerce-coupons' ),
+			'pro'     => 'Add-ons',
+			'type'    => 'links'
 		);
 		$this->fields['video_end_list_woo']      = array(
 			'section' => '',
@@ -305,39 +261,32 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 		);
 
 		//Option Defaults
-		$this->fields['header_video_guides_defaults']  = array(
+		$this->fields['header_video_guides_defaults'] = array(
 			'section' => 'defaults',
 			'tab'     => '',
 			'text'    => 'Coupon Defaults',
 			'type'    => 'heading'
 		);
-		$this->fields['video_coupon_options_overview'] = array(
-			'section'  => 'defaults',
-			'tab'      => '',
-			'text'     => 'An Overview of Coupon Creator Options',
-			'video_id' => 'zq2dUCY6yQk',
-			'type'     => 'video'
+		$this->fields['link_coupon_options_overview']  = array(
+			'section' => 'defaults',
+			'tab'     => '',
+			'text'    => 'An Overview of Coupon Creator Options',
+			'link'    => cctor_guide_url( 'coupon-creator-coupon-options' ),
+			'type'    => 'links'
 		);
-		$this->fields['video_coupon_defaults']         = array(
-			'section'  => 'defaults',
-			'tab'      => '',
-			'text'     => 'An Overview of Default Options',
-			'video_id' => 'mjIy7L0YLmY',
-			'type'     => 'video'
-		);
-		$this->fields['video_defaults_bulk_edit']      = array(
-			'section'  => 'defaults',
-			'tab'      => '',
-			'text'     => 'How to Bulk or Quick Edit the Expiration or Counter Fields',
-			'video_id' => 'IZDV5Mv5iGM',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_defaults_bulk_edit']       = array(
+			'section' => 'defaults',
+			'tab'     => '',
+			'text'    => 'How to Bulk or Quick Edit the Expiration or Counter Fields',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-coupon-counter' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
 		$this->fields['link_option_defaults']          = array(
 			'section' => 'defaults',
 			'tab'     => '',
 			'text'    => 'A Guide to the Default Options',
-			'link'    => 'http://cctor.link/r1MzQ',
+			'link'    => cctor_guide_url( 'coupon-creator-coupon-options' ),
 			'type'    => 'links'
 		);
 		$this->fields['video_end_list_defaults']       = array(
@@ -353,18 +302,18 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'Links Attributes / Permalinks Options',
 			'type'    => 'heading'
 		);
-		$this->fields['video_link_options']             = array(
-			'section'  => 'permalinks',
-			'tab'      => '',
-			'text'     => 'An Overview of the Link Options',
-			'video_id' => '0uuFEjUaKII',
-			'type'     => 'video'
+		$this->fields['link_link_options']              = array(
+			'section' => 'permalinks',
+			'tab'     => '',
+			'text'    => 'An Overview of the Link Options',
+			'link'    => cctor_guide_url( 'coupon-creator-change-print-view-permalink' ),
+			'type'    => 'links'
 		);
 		$this->fields['link_pro_google']                = array(
 			'section' => 'permalinks',
 			'tab'     => '',
 			'text'    => 'Setup Google Analytics for Print View',
-			'link'    => 'http://cctor.link/iq81i',
+			'link'    => cctor_guide_url( 'coupon-creator-google-analytics-print-view' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -381,42 +330,42 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'Display Options',
 			'type'    => 'heading'
 		);
-		$this->fields['video_display_options']       = array(
-			'section'  => 'display',
-			'tab'      => '',
-			'text'     => 'An Overview of the Display Options',
-			'video_id' => 'H26w4NmCuSw',
-			'type'     => 'video'
+		$this->fields['link_display_options']        = array(
+			'section' => 'display',
+			'tab'     => '',
+			'text'    => 'An Overview of the Display Options',
+			'link'    => cctor_guide_url( 'coupon-creator-displaying-coupons' ),
+			'type'    => 'links'
 		);
-		$this->fields['video_pro_text-overrides']    = array(
-			'section'  => 'display',
-			'tab'      => '',
-			'text'     => 'Using the Text Overrides',
-			'video_id' => 'pFnp5VsfwUE',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_pro_text_overrides']     = array(
+			'section' => 'display',
+			'tab'     => '',
+			'text'    => 'Using the Text Overrides',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-pro-options' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
 		$this->fields['link_pro_wpautop']            = array(
 			'section' => 'display',
 			'tab'     => '',
 			'text'    => 'How to turn on wpautop in the Coupon Creator',
-			'link'    => 'http://cctor.link/iZTss',
+			'link'    => cctor_guide_url( 'coupon-creator-enable-wpautop' ),
 			'type'    => 'links'
 		);
 		$this->fields['link_pro_search_results']     = array(
 			'section' => 'display',
 			'tab'     => '',
 			'text'    => 'How can I prevent coupons from appearing in a site search?',
-			'link'    => 'http://cctor.link/xyCL8',
+			'link'    => cctor_guide_url( 'coupon-creator-hide-coupons-from-search' ),
 			'type'    => 'links'
 		);
-		$this->fields['video_pro_multiprint']    = array(
-			'section'  => 'display',
-			'tab'      => '',
-			'text'     => 'How to use the Multi-Print Feature',
-			'video_id' => 'KKa2-1O3yks',
-			'pro'      => 'Add-ons',
-			'type'     => 'video'
+		$this->fields['link_pro_multiprint']         = array(
+			'section' => 'display',
+			'tab'     => '',
+			'text'    => 'How to use the Multi-Print Feature',
+			'link'    => cctor_guide_url( 'coupon-creator-add-ons-multiprint' ),
+			'pro'     => 'Add-ons',
+			'type'    => 'links'
 		);
 		$this->fields['video_end_list_display']      = array(
 			'section' => 'display',
@@ -425,53 +374,53 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 		);
 
 		//Option Templating
-		$this->fields['header_video_guides_templating']     = array(
+		$this->fields['header_video_guides_templating']    = array(
 			'section' => 'templating',
 			'tab'     => '',
 			'text'    => 'Templating Options',
 			'type'    => 'heading'
 		);
-		$this->fields['video_pro_tempalate_overview']       = array(
-			'section'  => 'templating',
-			'tab'      => '',
-			'text'     => 'An Overview of Template Options ',
-			'video_id' => 'U014Ok9_TTY',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_template_overview']            = array(
+			'section' => 'templating',
+			'tab'     => '',
+			'text'    => 'An Overview of Template Options',
+			'link'    => cctor_guide_url( 'coupon-creator-add-ons-advanced-templates' ),
+			'pro'     => 'Add-ons',
+			'type'    => 'links'
 		);
-		$this->fields['video_pro_dimension']                = array(
-			'section'  => 'templating',
-			'tab'      => '',
-			'text'     => 'Using the Dimension Options',
-			'video_id' => 'b3cV8gVf4lU',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_pro_dimension']                = array(
+			'section' => 'templating',
+			'tab'     => '',
+			'text'    => 'Using the Dimension Options',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-customizing-coupons' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
-		$this->fields['video_pro_shortcode_filter_options'] = array(
-			'section'  => 'templating',
-			'tab'      => '',
-			'text'     => 'Pro\'s couponloop shortcode, filter bar, and template system to manage coupons',
-			'video_id' => 'L9uf9q9JRtc',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_pro_shortcode_filter_options'] = array(
+			'section' => 'templating',
+			'tab'     => '',
+			'text'    => 'Pro\'s couponloop shortcode, filter bar, and template system to manage coupons',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-coupon-loop-filter-bar' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
-		$this->fields['link_pro_themers_guide']             = array(
+		$this->fields['link_pro_themers_guide']            = array(
 			'section' => 'templating',
 			'tab'     => '',
 			'text'    => 'Pro\'s Themer\'s Guide',
-			'link'    => 'http://cctor.link/wudM6',
+			'link'    => cctor_guide_url( 'coupon-creator-themers-guide' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
-		$this->fields['link_pro_category_template']         = array(
+		$this->fields['link_pro_category_template']        = array(
 			'section' => 'templating',
 			'tab'     => '',
 			'text'    => 'Pro\'s Coupon Category Templates',
-			'link'    => 'http://cctor.link/NNAh1',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-customizing-coupons' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
-		$this->fields['video_end_list_templating']          = array(
+		$this->fields['video_end_list_templating']         = array(
 			'section' => 'templating',
 			'tab'     => '',
 			'type'    => 'end_list'
@@ -484,19 +433,19 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'License Options',
 			'type'    => 'heading'
 		);
-		$this->fields['video_pro_license']           = array(
-			'section'  => 'license',
-			'tab'      => '',
-			'text'     => 'How to Activate Your License',
-			'video_id' => 'soynAHmFmzs',
-			'pro'      => 'Pro',
-			'type'     => 'video'
+		$this->fields['link_pro_license']            = array(
+			'section' => 'license',
+			'tab'     => '',
+			'text'    => 'How to Activate Your License',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-activate-your-license' ),
+			'pro'     => 'Pro',
+			'type'    => 'links'
 		);
 		$this->fields['link_pro_where_license']      = array(
 			'section' => 'license',
 			'tab'     => '',
 			'text'    => 'Where is my license key in my account?',
-			'link'    => 'http://cctor.link/KSxc8',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-find-your-license-key' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -504,7 +453,7 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'section' => 'license',
 			'tab'     => '',
 			'text'    => 'Where do I add my license key?',
-			'link'    => 'http://cctor.link/jh2dR',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-add-your-license-key' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -512,7 +461,7 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'section' => 'license',
 			'tab'     => '',
 			'text'    => 'How to Upgrade Your License',
-			'link'    => 'http://cctor.link/EJrIr',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-upgrade-your-license' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -520,7 +469,7 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'section' => 'license',
 			'tab'     => '',
 			'text'    => 'How do I renew my license for the Coupon Creator Pro?',
-			'link'    => 'http://cctor.link/HIzXP',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-renew-your-license' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -528,7 +477,7 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'section' => 'license',
 			'tab'     => '',
 			'text'    => 'How do I transfer my license key to another site?',
-			'link'    => 'http://cctor.link/6ux1M',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-transfer-your-license' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -536,7 +485,7 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'section' => 'license',
 			'tab'     => '',
 			'text'    => 'How do I manually update or downgrade a plugin?',
-			'link'    => 'http://cctor.link/gvPQf',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-manual-update-downgrade' ),
 			'pro'     => 'Pro',
 			'type'    => 'links'
 		);
@@ -553,39 +502,41 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 			'text'    => 'Resources',
 			'type'    => 'heading'
 		);
-		$this->fields['video_pro_themeresguide']       = array(
-			'section'  => '',
-			'tab'      => '',
-			'text'     => 'Intro to Pro\'s Themer\'s Guide',
-			'video_id' => 'xEOdVUMFqg8',
-			'type'     => 'video'
+		$this->fields['link_pro_themersguide_intro']   = array(
+			'section' => '',
+			'tab'     => '',
+			'text'    => 'Intro to Pro\'s Themer\'s Guide',
+			'link'    => cctor_guide_url( 'coupon-creator-themers-guide' ),
+			'type'    => 'links'
 		);
 		$this->fields['video_pro_documentation']       = array(
 			'section' => '',
 			'tab'     => '',
 			'text'    => 'Documentation - Overview of CSS Selectors, Actions, Filters, Capabilities, and Post Types',
-			'link'    => 'http://cctor.link/EsQPX',
+			'link'    => cctor_guide_url( 'coupon-creator-actions-filters' ),
 			'type'    => 'links'
 		);
 		$this->fields['video_faq']                     = array(
 			'section' => '',
 			'tab'     => '',
 			'text'    => 'Frequently Asked Question - Pre Sales, License, Requirements, and Setup Information',
-			'link'    => 'http://cctor.link/UzIZB"',
+			'link'    => cctor_guide_url( 'coupon-creator-getting-started' ),
 			'type'    => 'links'
 		);
 		$this->fields['video_pro_troubleshooting']     = array(
 			'section' => '',
 			'tab'     => '',
 			'text'    => 'Guides - User Guides and Troubleshooting Guides',
-			'link'    => 'http://cctor.link/eQAEC',
+			// The free conflicts guide publishes under the -plugin-conflicts slug
+			// (unlike Pro/Add-ons, whose guides use -troubleshooting-conflicts).
+			'link'    => cctor_guide_url( 'coupon-creator-troubleshooting-plugin-conflicts' ),
 			'type'    => 'links'
 		);
 		$this->fields['video_pro_tutorials']           = array(
 			'section' => '',
 			'tab'     => '',
 			'text'    => 'Tutorials - Customization Tutorials and More',
-			'link'    => 'http://cctor.link/loHtW',
+			'link'    => cctor_guide_url( 'coupon-creator-pro-customizing-coupons' ),
 			'type'    => 'links'
 		);
 		$this->fields['video_end_list_resources']      = array(
@@ -605,30 +556,42 @@ class Cctor__Coupon__Admin__Help extends Pngx__Admin__Help {
 	public function get_cctor_support_core_contact() {
 
 		if ( class_exists( 'Cctor__Coupon__Pro__Main' ) ) {
+			// Support form is a product/support page, not a doc — repointed via the cctor.link redirect.
+			$support_url = 'http://cctor.link/pro-support';
+			$url_404     = esc_url( cctor_guide_url( 'coupon-creator-pro-troubleshooting-404-errors' ) );
+			$url_tc      = esc_url( cctor_guide_url( 'coupon-creator-pro-troubleshooting-conflicts' ) );
+			$url_jscon   = esc_url( cctor_guide_url( 'coupon-creator-pro-troubleshooting-javascript-errors' ) );
+
 			$support_html = '
 				<h4 class="pngx-fields-heading">How to Contact Support</h4>
 					<ul>
-						<li>For Coupon Creator Pro users please use the <a class="pngx-support" target="_blank" href="http://cctor.link/pro-support">Support Form on CouponCreatorPlugin.com</a> to get direct support.</li>
+						<li>For Coupon Creator Pro users please use the <a class="pngx-support" target="_blank" href="' . esc_url( $support_url ) . '">Support Form on ArtifexRouting.com</a> to get direct support.</li>
 
 						<li><br>Before contacting support please try to narrow or solve your issue by using one or all of these troubleshooting guides:
 							<ul>
-							<li><br><a class="pngx-support" target="_blank" href="http://cctor.link/pro-404">Troubleshooting 404 Errors</a></li>
-							<li><a class="pngx-support" target="_blank" href="http://cctor.link/pro-tc">Troubleshooting Conflicts</a></li>
-							<li><a class="pngx-support" target="_blank" href="http://cctor.link/pro-jscon">Troubleshooting Javascript Errors</a></li>
+							<li><br><a class="pngx-support" target="_blank" href="' . $url_404 . '">Troubleshooting 404 Errors</a></li>
+							<li><a class="pngx-support" target="_blank" href="' . $url_tc . '">Troubleshooting Conflicts</a></li>
+							<li><a class="pngx-support" target="_blank" href="' . $url_jscon . '">Troubleshooting Javascript Errors</a></li>
 							</ul>
 						</li>
 
 					</ul>';
 		} else {
+			// WordPress.org support forum is not a doc — repointed via the cctor.link redirect.
+			$forum_url = 'http://cctor.link/ZlQvh';
+			$url_404   = esc_url( cctor_guide_url( 'coupon-creator-troubleshooting-404-errors' ) );
+			$url_tc    = esc_url( cctor_guide_url( 'coupon-creator-troubleshooting-plugin-conflicts' ) );
+			$url_jscon = esc_url( cctor_guide_url( 'coupon-creator-troubleshooting-javascript-errors' ) );
+
 			$support_html = '
 			<h4 class="pngx-fields-heading">How to Contact Support</h4>
 			<ul>
-				<li>Please use the <a target="_blank" class="pngx-support" href="http://cctor.link/ZlQvh">WordPress.org Support Forum for the Coupon Creator</a>.</li>
+				<li>Please use the <a target="_blank" class="pngx-support" href="' . esc_url( $forum_url ) . '">WordPress.org Support Forum for the Coupon Creator</a>.</li>
 				<li><br>Before contacting support please try to narrow or solve your issue by using one or all of these troubleshooting guides:
 					<ul>
-					<li><br><a class="pngx-support" target="_blank" href="http://cctor.link/RgewD">Troubleshooting 404 Errors</a></li>
-					<li><a class="pngx-support" target="_blank" href="http://cctor.link/4rMqT">Troubleshooting Conflicts</a></li>
-					<li><a class="pngx-support" target="_blank" href="http://cctor.link/R7KRa">Troubleshooting Javascript Errors</a></li>
+					<li><br><a class="pngx-support" target="_blank" href="' . $url_404 . '">Troubleshooting 404 Errors</a></li>
+					<li><a class="pngx-support" target="_blank" href="' . $url_tc . '">Troubleshooting Conflicts</a></li>
+					<li><a class="pngx-support" target="_blank" href="' . $url_jscon . '">Troubleshooting Javascript Errors</a></li>
 					</ul>
 				</li>
 

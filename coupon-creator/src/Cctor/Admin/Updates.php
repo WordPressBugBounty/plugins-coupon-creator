@@ -16,6 +16,9 @@ class Cctor__Coupon__Admin__Updates {
 	*
 	*/
 	public function admin_upgrade_version() {
+
+		$this->maybe_add_capabilities();
+
 		//Update Version Number
 		if ( get_option( Cctor__Coupon__Main::VERSION_KEY ) != Cctor__Coupon__Main::VERSION_NUM ) {
 
@@ -32,6 +35,31 @@ class Cctor__Coupon__Admin__Updates {
 
 			update_option( 'pngx_permalink_change', true );
 		}
+	}
+
+	/**
+	 * Add the coupon post-type capabilities if they were never registered.
+	 *
+	 * Capabilities are granted by Cctor__Coupon__Main::activate(), so any install
+	 * path that does not fire the activation hook leaves every role without
+	 * edit_cctor_coupons: the Coupons menu never appears and coupons cannot be
+	 * created or seen. A migrated database that already lists the plugin as
+	 * active, files restored over an active install, and staging clones all land
+	 * there — and the version-number check below cannot recover it, because the
+	 * version option is written by whatever install did run.
+	 *
+	 * Keyed off the same option add_capabilities() writes, so this is a one-time
+	 * repair, not a per-request role rewrite. A site that deliberately pruned the
+	 * capabilities keeps that option and is left alone.
+	 *
+	 * @since 3.6.1
+	 */
+	public function maybe_add_capabilities() {
+		if ( get_option( Cctor__Coupon__Main::POSTTYPE . '_capabilities_register' ) ) {
+			return;
+		}
+
+		( new Pngx__Add_Capabilities() )->add_capabilities( Cctor__Coupon__Main::POSTTYPE );
 	}
 
 	/*

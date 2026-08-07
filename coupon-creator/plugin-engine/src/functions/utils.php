@@ -659,7 +659,7 @@ if ( ! function_exists( 'pngx_get_class_instance' ) ) {
 	 *
 	 * @since 3.2.0
 	 *
-	 * @see   \tad_DI52_Container::isBound()
+	 * @see   \Pngx\Vendor\lucatume\DI52\Container::isBound()
 	 * @see   \pngx()
 	 *
 	 * @param string|object $class The plugin class' singleton name, class name, or instance.

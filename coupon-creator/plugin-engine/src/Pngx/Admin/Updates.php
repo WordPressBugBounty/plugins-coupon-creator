@@ -57,6 +57,24 @@ class Pngx__Admin__Updates {
 		}
 	}
 
+	/**
+	 * Get the update API endpoint url.
+	 *
+	 * Mirrors Pngx__Admin__EDD_License::get_update_url() so a single
+	 * `pngx_update_url` filter moves BOTH halves of the licensing wire:
+	 * the license activate/check/deactivate GETs, and the get_version POST
+	 * that drives plugin updates. Without this the update path was the only
+	 * unfilterable one, so relocating the store meant shipping a new release
+	 * to every installed site before updates could follow.
+	 *
+	 * @since 4.0.8
+	 *
+	 * @return string
+	 */
+	public function get_update_url() {
+		return apply_filters( 'pngx_update_url', $this->store_url );
+	}
+
 	/*
 	 * Setup Automatic Updater for Pro Using EDD
 	 *
@@ -66,7 +84,7 @@ class Pngx__Admin__Updates {
 		//Check if the License has changed and deactivate
 		if ( ( isset( $this->license['key'] ) && '' != $this->license['key'] ) && ( isset( $this->license['status'] ) && 'valid' == $this->license['status'] ) ) {
 
-			$edd_updater = new Pngx__Admin__EDD_Plugin_Updater( $this->store_url, $this->plugin_path, array(
+			$edd_updater = new Pngx__Admin__EDD_Plugin_Updater( $this->get_update_url(), $this->plugin_path, array(
 				'version'   => get_option( $this->version_key ),
 				'license'   => trim( $this->license['key'] ),
 				'item_name' => $this->plugin_name,

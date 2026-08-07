@@ -2,7 +2,7 @@
 /**
  * @license MIT
  *
- * Modified by Jessee Productions using {@see https://github.com/BrianHenryIE/strauss}.
+ * Modified by Artifex Routing Co using {@see https://github.com/BrianHenryIE/strauss}.
  */
 
 declare(strict_types=1);
