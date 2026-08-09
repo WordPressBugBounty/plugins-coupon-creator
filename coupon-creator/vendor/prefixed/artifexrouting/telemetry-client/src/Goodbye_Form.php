@@ -50,10 +50,21 @@ class Goodbye_Form {
 		}
 
 		if ( isset( $links['deactivate'] ) ) {
-			$slug                = esc_attr( $this->config->slug );
+			$slug = esc_attr( $this->config->slug );
+
+			// Add the hook the form binds to, and nothing else.
+			//
+			// This used to also stamp onclick="javascript:event.preventDefault();" onto the
+			// anchor, which made the link inert the moment WordPress rendered it and relied
+			// on render_form()'s inline jQuery to give it a purpose again. Anything that kept
+			// that script from running -- a JS error from another plugin earlier on the page,
+			// jQuery missing, scripting switched off -- left Deactivate permanently dead, with
+			// no way to switch the plugin off from the Plugins screen at all. The handler now
+			// calls preventDefault() itself, so a link that never gets enhanced stays a link
+			// that deactivates.
 			$links['deactivate'] = str_replace(
 				'<a ',
-				'<div class="atx-telemetry-goodbye-wrapper"><span class="atx-telemetry-goodbye-form" id="atx-telemetry-goodbye-form-' . $slug . '"></span></div><a onclick="javascript:event.preventDefault();" id="atx-telemetry-goodbye-link-' . $slug . '" ',
+				'<div class="atx-telemetry-goodbye-wrapper"><span class="atx-telemetry-goodbye-form" id="atx-telemetry-goodbye-form-' . $slug . '"></span></div><a id="atx-telemetry-goodbye-link-' . $slug . '" ',
 				$links['deactivate']
 			);
 		}
@@ -254,7 +265,10 @@ class Goodbye_Form {
 		</style>
 		<script>
 			jQuery( function ( $ ) {
-				$( "#atx-telemetry-goodbye-link-<?php echo $slug; ?>" ).on( "click", function () {
+				$( "#atx-telemetry-goodbye-link-<?php echo $slug; ?>" ).on( "click", function ( e ) {
+					// Held here rather than in an onclick attribute on the link itself: if this
+					// script never runs, Deactivate has to keep working.
+					e.preventDefault();
 					var url = document.getElementById( "atx-telemetry-goodbye-link-<?php echo $slug; ?>" );
 					$( 'body' ).toggleClass( 'atx-telemetry-form-active' );
 					$( "#atx-telemetry-goodbye-form-<?php echo $slug; ?>" ).fadeIn();

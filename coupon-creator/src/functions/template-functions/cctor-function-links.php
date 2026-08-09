@@ -59,7 +59,7 @@ function cctor_show_link( $coupon_id ) {
 
 		?>
 		<div class='cctor_opencoupon cctor-opencoupon'>
-		<a class="print-link" <?php echo $rel_attr; ?> href='<?php echo esc_url( get_permalink( $coupon_id ) ); ?>' <?php echo $target_attr; ?>><?php echo __( 'Click to Open in Print View', 'coupon-creator' ); ?></a>
+		<a class="print-link" <?php echo $rel_attr; ?> href='<?php echo esc_url( get_permalink( $coupon_id ) ); ?>' <?php echo $target_attr; ?>><?php echo esc_html__( 'Click to Open in Print View', 'coupon-creator' ); ?></a>
 		</div><!--end .opencoupon --><?php
 
 	} else {
@@ -75,7 +75,7 @@ function cctor_show_link( $coupon_id ) {
 function cctor_show_print_click( $coupon_id ) {
 	?>
 	<div class="cctor_opencoupon cctor-opencoupon"> <!-- We Need a Click to Print Button -->
-		<button type="button" class="print-link" data-cctor-print="1" aria-label="<?php esc_attr_e( 'Print this coupon', 'coupon-creator' ); ?>"><?php echo __( 'Click to Print', 'coupon-creator' ); ?></button>
+		<button type="button" class="print-link" data-cctor-print="1" aria-label="<?php esc_attr_e( 'Print this coupon', 'coupon-creator' ); ?>"><?php echo esc_html__( 'Click to Print', 'coupon-creator' ); ?></button>
 
 	</div> <!--end .opencoupon -->
 	<script>

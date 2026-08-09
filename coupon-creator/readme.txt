@@ -5,7 +5,7 @@ Plugin URI: https://artifexrouting.com/wordpress-plugins/coupon-creator/
 Tags: coupon, shortcode, print, lead generation, marketing
 Requires at least: 6.5
 Tested up to: 7.0.2
-Stable tag: 3.6.1
+Stable tag: 3.6.2
 Requires PHP: 8.2
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
@@ -155,6 +155,18 @@ You can add custom css in the options and it will modify both the shortcode coup
 6. Coupon Creator options
 
 == Changelog ==
+
+= 3.6.2 August 9th 2026 =
+
+* Fix - A Coupon Creator Pro or Add-ons that was switched off for being out of date could no longer be updated from the Plugins screen, so the only way to bring it back was to upload the new version by hand. Update checks now keep running for a switched-off extension, and the update appears where you expect it.
+* Fix - If you had opted into usage tracking, the Deactivate link on the Plugins screen could stop responding whenever another plugin's JavaScript failed first, leaving no way to switch Coupon Creator off. Deactivate now works whether or not that script runs.
+* Performance - Coupon admin screens no longer contact Google to fetch a stylesheet before loading. The check ran on every visit and could stall the page on sites where that request is slow or blocked; the same stylesheet already ships with the plugin.
+* Privacy - Removed the last request to a third party from the WordPress admin.
+* Tweak - The editor's coupon inserter no longer loads every coupon you have into its dropdown, which made the button slow to open on large sites.
+* Tweak - The "switched off" notice for an out-of-date Pro or Add-ons now links straight to the Plugins screen.
+* Feature - Added a "Check for updates" link to the Coupon Creator row on the Plugins screen, and to the notice about a switched-off extension. WordPress checks for plugin updates at most every 12 hours and the licence store's answer is cached for 3 hours on top of that, so a release you know is out can take most of a day to appear. This asks for it now.
+* Tweak - Added a Coupon Creator section to Tools > Site Health > Info listing your versions, licence status, and last update check, so a support request can start with the facts.
+* Tweak - Expiration dates and coupon titles are now escaped everywhere they are printed, including the expiration message in the coupon editor.
 
 = 3.6.1 August 7th 2026 =
 
@@ -465,6 +477,9 @@ You can add custom css in the options and it will modify both the shortcode coup
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
+= 3.6.2 =
+Fixes updates for a Pro or Add-ons that 3.6.1 switched off for being out of date. If you are stuck on that, update Coupon Creator first and the Pro and Add-ons updates will appear on the Plugins screen.
+
 = 3.6.1 =
 Coupon Creator 3.6 requires Coupon Creator Pro and Add-ons 3.6 or later. Please update those too. If they are older they will be switched off with a notice until you do, so your site keeps working. Your coupons and settings are not affected.
 

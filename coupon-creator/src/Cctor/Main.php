@@ -44,7 +44,7 @@ class Cctor__Coupon__Main {
 	protected $min_php = '8.2';
 
 	const VERSION_KEY              = 'cctor_coupon_version';
-	const VERSION_NUM              = '3.6.1';
+	const VERSION_NUM              = '3.6.2';
 	const MIN_PNGX_VERSION         = '4.0.2';
 	// Minimum add-on versions this core is compatible with — enforced by
 	// gate_outdated_extensions(), which unhooks anything below them rather than
@@ -66,7 +66,7 @@ class Cctor__Coupon__Main {
 	const OPTIONS_ID               = 'coupon_creator_options';
 
 	public $VERSION_KEY              = 'cctor_coupon_version';
-	public $VERSION_NUM              = '3.6.1';
+	public $VERSION_NUM              = '3.6.2';
 	public $MIN_PNGX_VERSION         = '4.0.2';
 	public $WP_PLUGIN_URL            = 'https://wordpress.org/plugins/coupon-creator/';
 	public $COUPON_CREATOR_STORE_URL = 'https://artifexrouting.com/edd-api/';
@@ -361,12 +361,22 @@ class Cctor__Coupon__Main {
 
 		$extensions = array(
 			'Cctor__Coupon__Pro__Main'    => array(
-				'min'    => self::MIN_PRO_VERSION,
-				'action' => 'coupon_creator_pro_init',
+				'min'         => self::MIN_PRO_VERSION,
+				'action'      => 'coupon_creator_pro_init',
+				'name'        => 'Coupon Creator Pro',
+				'file'        => 'coupon-creator-pro/coupon-creator-pro.php',
+				'license'     => 'cctor_pro_license',
+				'version_key' => 'cctor_coupon_pro_version',
+				'status'      => 'cctor_pro_license_status',
 			),
 			'Cctor__Coupon__Addons__Main' => array(
-				'min'    => self::MIN_ADDONS_VERSION,
-				'action' => 'coupon_creator_addons_init',
+				'min'         => self::MIN_ADDONS_VERSION,
+				'action'      => 'coupon_creator_addons_init',
+				'name'        => 'Coupon Creator Add-ons',
+				'file'        => 'coupon-creator-add-ons/coupon-creator-add-ons.php',
+				'license'     => 'cctor_addons_license',
+				'version_key' => 'cctor_coupon_addons_version',
+				'status'      => 'cctor_addon_license_status',
 			),
 		);
 
@@ -390,6 +400,10 @@ class Cctor__Coupon__Main {
 
 			remove_action( 'pngx_engine_loaded', $extension['action'], 10 );
 
+			// Switching the extension off takes its updater with it, so core has to
+			// put one back. See enable_gated_extension_updates().
+			$this->enable_gated_extension_updates( $extension );
+
 			// Keyed by main class, not by name — the label is a display concern and
 			// cannot be resolved this early. See the note above.
 			$this->outdated_extensions[ $main_class ] = $version;
@@ -401,6 +415,60 @@ class Cctor__Coupon__Main {
 
 		add_action( 'admin_notices', array( $this, 'outdated_extension_msg' ), 50 );
 		add_action( 'network_admin_notices', array( $this, 'outdated_extension_msg' ), 50 );
+	}
+
+	/**
+	 * Register the update path for an extension the gate just switched off.
+	 *
+	 * Without this the gate is a trap. Pro and Add-ons build their licensing from
+	 * inside coupon_creator_{pro,addons}_init(), so unhooking that init also
+	 * unhooks pre_set_site_transient_update_plugins — the site can never be told a
+	 * compatible version exists, and the only way out is a manual zip upload. A
+	 * customer who lets wordpress.org auto-update core lands there with no way
+	 * back, which is exactly the audience least likely to upload a zip.
+	 *
+	 * The update path is deliberately kept independent of whether the extension is
+	 * allowed to run: this rebuilds it from core's own copy of the option names,
+	 * so it works for any released 3.x, including versions whose init would never
+	 * have reached their own dependency-failure fallback.
+	 *
+	 * Version comes from the plugin header rather than the dependency registry.
+	 * Pngx__Admin__Updates writes whatever it is handed into the version option
+	 * and then sends that to EDD as the installed version, so a stale or absent
+	 * registry entry would either suppress the update or offer one that is already
+	 * installed.
+	 *
+	 * MUST NOT translate anything, for the reason given on gate_outdated_extensions().
+	 *
+	 * @since 3.6.2
+	 *
+	 * @param array $extension The extension's entry from gate_outdated_extensions().
+	 *
+	 * @return void
+	 */
+	protected function enable_gated_extension_updates( $extension ) {
+
+		$path = $this->plugins_path . $extension['file'];
+
+		if ( ! file_exists( $path ) ) {
+			return;
+		}
+
+		$headers = get_file_data( $path, array( 'Version' => 'Version' ) );
+
+		if ( empty( $headers['Version'] ) ) {
+			return;
+		}
+
+		new Cctor__Coupon__Admin__License_Setup(
+			$extension['name'],
+			$extension['license'],
+			$extension['version_key'],
+			$headers['Version'],
+			$path,
+			$extension['file'],
+			$extension['status']
+		);
 	}
 
 	/**
@@ -433,6 +501,26 @@ class Cctor__Coupon__Main {
 				esc_html( $version ? $version : __( 'installed', 'coupon-creator' ) ),
 				esc_html( self::VERSION_NUM )
 			);
+
+			// Point at the update rather than leaving "update it" as an instruction with no
+			// route. Before 3.6.2 there was no route: gating an extension also removed its
+			// update check, so the Plugins screen never offered the version being asked for.
+			printf(
+				' <a href="%1$s">%2$s</a>',
+				esc_url( admin_url( 'plugins.php' ) ),
+				esc_html__( 'Update now', 'coupon-creator' )
+			);
+
+			// If the update is not on that screen yet, this is the reason: WordPress checks at
+			// most every 12 hours and the store's answer is cached for 3 on top of that. Offer
+			// the short way round rather than letting it look like the update does not exist.
+			$update_check = pngx( 'cctor.admin.update-check' )->get_link(
+				__( 'Not showing? Check for updates', 'coupon-creator' )
+			);
+
+			if ( $update_check ) {
+				echo ' ' . wp_kses( $update_check, array( 'a' => array( 'href' => array() ) ) );
+			}
 
 			echo '</p></div>';
 		}

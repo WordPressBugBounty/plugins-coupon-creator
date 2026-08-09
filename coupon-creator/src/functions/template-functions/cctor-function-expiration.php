@@ -20,7 +20,7 @@ function cctor_show_expiration( $coupon_id, $coupon_expiration = null ) {
 
 	if ( ! empty( $expiration_date ) ) {
 		?>
-		<div class="cctor_expiration core"><?php echo __( 'Expires on:', 'coupon-creator' ); ?>
+		<div class="cctor_expiration core"><?php echo esc_html__( 'Expires on:', 'coupon-creator' ); ?>
 			&nbsp;<?php echo esc_html( $expiration_date ); ?></div>
 		<?php
 	}
@@ -44,7 +44,9 @@ function cctor_show_no_coupon_comment( $coupon_id, $coupon_expiration ) {
 
 	if ( ! empty( $expiration_date ) ) {
 
-		?><!--<?php echo sprintf( '%1s %2s %3s %4s', __( 'Coupon', 'coupon-creator' ), get_the_title( $coupon_id ), __( 'expired on', 'coupon-creator' ), esc_html( $expiration_date ) ) ?>--><?php
+		// The title is escaped even though this only ever renders inside a comment: a coupon
+		// titled with "-->" would otherwise close the comment early and spill the rest onto the page.
+		?><!--<?php echo sprintf( '%1s %2s %3s %4s', esc_html__( 'Coupon', 'coupon-creator' ), esc_html( get_the_title( $coupon_id ) ), esc_html__( 'expired on', 'coupon-creator' ), esc_html( $expiration_date ) ) ?>--><?php
 
 	}
 

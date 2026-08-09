@@ -188,10 +188,25 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 
 		<hr class="wp-header-end">
 
-		<div class="javascript-conflict pngx-error"><p>' . sprintf( __( 'There maybe a javascript conflict preventing some features from working.  <a href="%s" target="_blank" >Please check this guide to narrow down the cause.</a>', 'coupon-creator' ), esc_url( $js_troubleshoot_url ) ) . '</p></div>';
+		<div class="javascript-conflict pngx-error"><p>' . wp_kses(
+			sprintf(
+				/* translators: %s: URL of the JavaScript troubleshooting guide. */
+				__( 'There maybe a javascript conflict preventing some features from working.  <a href="%s" target="_blank" >Please check this guide to narrow down the cause.</a>', 'coupon-creator' ),
+				esc_url( $js_troubleshoot_url )
+			),
+			// The link is part of the translated string, so this cannot be esc_html__(). A
+			// translator supplying different markup gets it stripped rather than rendered.
+			array(
+				'a' => array(
+					'href'   => array(),
+					'target' => array(),
+					'rel'    => array(),
+				),
+			)
+		) . '</p></div>';
 
 		if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == true ) {
-			echo '<div class="updated fade"><p>' . __( 'Coupon Creator Options updated.', 'coupon-creator' ) . '</p></div>';
+			echo '<div class="updated fade"><p>' . esc_html__( 'Coupon Creator Options updated.', 'coupon-creator' ) . '</p></div>';
 		}
 
 		$this->admin_template->template( '/components/loader', [ 'loader_classes' => [ 'pngx-loader__dots' ] ] );

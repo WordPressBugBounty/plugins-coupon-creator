@@ -60,6 +60,14 @@ class Cctor__Coupon__Admin__Main {
 			//Show Options Link
 			$plugin_links[] = '<a href="' . esc_url( get_admin_url() ) . 'edit.php?post_type=cctor_coupon&page=coupon-options">' . esc_html__( 'Options', 'coupon-creator' ) . '</a>';
 
+			// Reachable from the row itself, so someone who knows a release is out does not have
+			// to wait out WordPress's update timer to see it. Empty for users who cannot update.
+			$update_check = pngx( 'cctor.admin.update-check' )->get_link();
+
+			if ( $update_check ) {
+				$plugin_links[] = $update_check;
+			}
+
 			//Show Upgrade to Pro Link
 			if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
 				$plugin_links[] = '<a href="http://cctor.link/Abqoi">' . esc_html__( 'Coupons that expire on their own', 'coupon-creator' ) . '</a>';

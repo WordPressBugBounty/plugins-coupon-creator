@@ -3,7 +3,7 @@
 Plugin Name: Coupon Creator
 Plugin URI: https://artifexrouting.com/coupon-creator
 Description: Designed, printable coupons for WordPress. Put a real coupon on your site.
-Version: 3.6.1
+Version: 3.6.2
 Author: Artifex Routing Co
 Author URI: https://artifexrouting.com
 Text Domain: coupon-creator

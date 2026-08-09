@@ -139,6 +139,8 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 		$this->container->singleton( 'cctor.admin.meta.fields', 'Cctor__Coupon__Admin__Fields' );
 		$this->container->singleton( 'cctor.admin.columns', 'Cctor__Coupon__Admin__Columns' );
 		$this->container->singleton( 'cctor.admin.usability', 'Cctor__Coupon__Admin__Usability', array( 'hook' ) );
+		$this->container->singleton( 'cctor.admin.site-health', 'Cctor__Coupon__Admin__Site_Health', array( 'hook' ) );
+		$this->container->singleton( 'cctor.admin.update-check', 'Cctor__Coupon__Admin__Update_Check', array( 'hook' ) );
 		$this->container->singleton( Coupons::Class, Coupons::Class, [ 'hooks' ] );
 
 		//start up admin
@@ -155,6 +157,8 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 		//Meta
 		pngx( 'cctor.admin.columns' );
 		pngx( 'cctor.admin.usability' );
+		pngx( 'cctor.admin.site-health' );
+		pngx( 'cctor.admin.update-check' );
 		add_action( 'admin_init', pngx_callback( 'cctor.admin.meta', 'setup' ) );
 
 		//Core Admin Fields

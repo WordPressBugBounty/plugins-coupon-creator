@@ -186,17 +186,17 @@ class Cctor__Coupon__Assets {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'thickbox' );
 
-		// jQuery UI style with external fallback.
-		global $wp_scripts;
-
-		$jquery_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.12.3';
-		$css_file       = '//ajax.googleapis.com/ajax/libs/jqueryui/' . $jquery_version . '/themes/smoothness/jquery-ui.min.css';
-
-		if ( ! pngx( 'pngx.admin.assets' )->detect_external_asset( 'https:' . $css_file ) ) {
-			$css_file = Pngx__Main::instance()->resource_url . 'css/jquery-ui.min.css';
-		}
-
-		wp_enqueue_style( 'jquery-ui-style', esc_url( $css_file ) );
+		// jQuery UI style, served from the bundled copy.
+		//
+		// This used to prefer ajax.googleapis.com and fall back to the local file only when
+		// detect_external_asset() said the CDN was unreachable. That check is @get_headers():
+		// a blocking, uncached socket call on every one of these admin screens, made outside
+		// the WP HTTP API, so it ignores proxy configuration and WP_HTTP_BLOCK_EXTERNAL and
+		// hangs until default_socket_timeout whenever Google is slow or firewalled. A
+		// third-party request from wp-admin is also a plugin-guideline and privacy problem,
+		// and the CDN bought nothing: the same stylesheet has shipped in plugin-engine since
+		// 2022.
+		wp_enqueue_style( 'jquery-ui-style', Pngx__Main::instance()->resource_url . 'css/jquery-ui.min.css' );
 
 		// Media Manager.
 		wp_enqueue_media();

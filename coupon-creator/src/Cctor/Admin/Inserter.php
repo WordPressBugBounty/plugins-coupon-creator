@@ -46,7 +46,7 @@ class Cctor__Coupon__Admin__Inserter {
 			//the id of the container I want to show in the popup
 			$container_id = 'coupon_container';
 			//our popup's title
-			$title = '<h3>' . __( 'Insert Coupon Creator Shortcode', 'coupon-creator' ) . '</h3>';
+			$title = '<h3>' . esc_html__( 'Insert Coupon Creator Shortcode', 'coupon-creator' ) . '</h3>';
 
 			// display ui button for 3.5 and greater
 			$button = "<style>.cctor_insert_icon{
@@ -227,7 +227,26 @@ class Cctor__Coupon__Admin__Inserter {
 		<!--Start Thickbox Popup -->
 		<div id="coupon_container" style="display:none;">
 			<?php
-			$querycoupon = new WP_Query( 'post_status=publish&post_type=cctor_coupon&posts_per_page=-1' );
+			/**
+			 * Filter how many coupons the editor's inserter dropdown lists.
+			 *
+			 * This query used to run posts_per_page => -1, loading every published coupon
+			 * into a select box on the classic editor -- the same unbounded default that was
+			 * capped for the [coupon] shortcode in 3.6.0. Return -1 to list them all.
+			 *
+			 * @since 3.6.2
+			 *
+			 * @param int $total Maximum coupons offered in the inserter.
+			 */
+			$inserter_total = apply_filters( 'cctor_inserter_total_coupons', 50 );
+
+			$querycoupon = new WP_Query(
+				array(
+					'post_status'    => 'publish',
+					'post_type'      => 'cctor_coupon',
+					'posts_per_page' => (int) $inserter_total,
+				)
+			);
 			// The Coupon Loop
 			if ( $querycoupon->have_posts() ) {
 				?>
@@ -235,10 +254,10 @@ class Cctor__Coupon__Admin__Inserter {
 					<!--Create a Select Box with Coupon Titles -->
 					<div class="cctor-inserter-section-row">
 						<label
-							for="coupon_select"><?php echo __( 'Select Loop or an Individual Coupon', 'coupon-creator' ); ?></label>
+							for="coupon_select"><?php echo esc_html__( 'Select Loop or an Individual Coupon', 'coupon-creator' ); ?></label>
 						<select name="coupon_select_box" id="coupon_select" onchange="show_category()">
 							<option value=""></option>
-							<option value="loop"><?php echo __( 'Coupon Loop', 'coupon-creator' ); ?></option>
+							<option value="loop"><?php echo esc_html__( 'Coupon Loop', 'coupon-creator' ); ?></option>
 							<?php
 							while ( $querycoupon->have_posts() ) {
 								$querycoupon->the_post(); ?>
@@ -252,10 +271,10 @@ class Cctor__Coupon__Admin__Inserter {
 					<!--Create a Select Box for Categories -->
 					<div id="coupon_category_select_container" class="cctor-inserter-section-row">
 						<label
-							for="coupon_category_select"><?php echo __( 'Select a Coupon Category to use in the Loop', 'coupon-creator' ); ?></label>
+							for="coupon_category_select"><?php echo esc_html__( 'Select a Coupon Category to use in the Loop', 'coupon-creator' ); ?></label>
 						<select id="coupon_category_select" name="coupon_category_select">
 							<option value=""></option>
-							<option value=""><?php echo __( 'All Categories', 'coupon-creator' ); ?></option>
+							<option value=""><?php echo esc_html__( 'All Categories', 'coupon-creator' ); ?></option>
 							<?php
 							$cctor_cat_args = array(
 								'orderby'  => 'name',
@@ -277,30 +296,30 @@ class Cctor__Coupon__Admin__Inserter {
 					<!--Create a Select Box for Align -->
 					<div class="cctor-inserter-section-row">
 						<label
-							for="coupon_align"><?php echo __( 'Select How to Align the Coupon(s)', 'coupon-creator' ); ?></label>
+							for="coupon_align"><?php echo esc_html__( 'Select How to Align the Coupon(s)', 'coupon-creator' ); ?></label>
 						<select name="coupon_align_select_box" id="coupon_align">
-							<option value="cctor_alignnone"><?php echo __( 'None', 'coupon-creator' ); ?></option>
-							<option value="cctor_alignleft"><?php echo __( 'Align Left', 'coupon-creator' ); ?></option>
+							<option value="cctor_alignnone"><?php echo esc_html__( 'None', 'coupon-creator' ); ?></option>
+							<option value="cctor_alignleft"><?php echo esc_html__( 'Align Left', 'coupon-creator' ); ?></option>
 							<option
-								value="cctor_alignright"><?php echo __( 'Align Right', 'coupon-creator' ); ?></option>
+								value="cctor_alignright"><?php echo esc_html__( 'Align Right', 'coupon-creator' ); ?></option>
 							<option
-								value="cctor_aligncenter"><?php echo __( 'Align Center', 'coupon-creator' ); ?></option>
+								value="cctor_aligncenter"><?php echo esc_html__( 'Align Center', 'coupon-creator' ); ?></option>
 						</select> <!--End Select Box Align -->
 					</div>
 
 					<!--Create a Select Box for Orderby -->
 					<div id="coupon_orderby_select_container" class="cctor-inserter-section-row">
 						<label
-							for="coupon_orderby"><?php echo __( 'Select how to order the coupons', 'coupon-creator' ); ?></label>
+							for="coupon_orderby"><?php echo esc_html__( 'Select how to order the coupons', 'coupon-creator' ); ?></label>
 						<select id="coupon_orderby" name="coupon_orberby_select_box">
-							<option value="date"><?php echo __( 'Date (default)', 'coupon-creator' ); ?></option>
-							<option value="none"><?php echo __( 'None', 'coupon-creator' ); ?></option>
-							<option value="ID"><?php echo __( 'ID', 'coupon-creator' ); ?></option>
-							<option value="author"><?php echo __( 'Author', 'coupon-creator' ); ?></option>
-							<option value="title"><?php echo __( 'Coupon Post Title', 'coupon-creator' ); ?></option>
-							<option value="name"><?php echo __( 'Slug Name', 'coupon-creator' ); ?></option>
-							<option value="modified"><?php echo __( 'Last Modified', 'coupon-creator' ); ?></option>
-							<option value="rand"><?php echo __( 'Random', 'coupon-creator' ); ?></option>
+							<option value="date"><?php echo esc_html__( 'Date (default)', 'coupon-creator' ); ?></option>
+							<option value="none"><?php echo esc_html__( 'None', 'coupon-creator' ); ?></option>
+							<option value="ID"><?php echo esc_html__( 'ID', 'coupon-creator' ); ?></option>
+							<option value="author"><?php echo esc_html__( 'Author', 'coupon-creator' ); ?></option>
+							<option value="title"><?php echo esc_html__( 'Coupon Post Title', 'coupon-creator' ); ?></option>
+							<option value="name"><?php echo esc_html__( 'Slug Name', 'coupon-creator' ); ?></option>
+							<option value="modified"><?php echo esc_html__( 'Last Modified', 'coupon-creator' ); ?></option>
+							<option value="rand"><?php echo esc_html__( 'Random', 'coupon-creator' ); ?></option>
 						</select> <!--End Select Box Align -->
 					</div>
 
@@ -319,7 +338,7 @@ class Cctor__Coupon__Admin__Inserter {
 				</div>
 
 			<?php } else { ?>
-				<h4><?php echo __( 'No Coupons are Published', 'coupon-creator' ); ?></h4>
+				<h4><?php echo esc_html__( 'No Coupons are Published', 'coupon-creator' ); ?></h4>
 			<?php } ?>
 		</div> <!--End #coupon_container -->
 	<?php }

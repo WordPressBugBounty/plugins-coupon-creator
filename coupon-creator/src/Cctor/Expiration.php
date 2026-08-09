@@ -150,9 +150,9 @@ class Cctor__Coupon__Expiration {
 	 */
 	public function get_coupon_status() {
 		if ( $this->check_expiration() ) {
-			echo '<div class="pngx-meta-bg pngx-message"><div>' . __( 'This Coupon is Showing.', 'coupon-creator' ) . '</div></div>';
+			echo '<div class="pngx-meta-bg pngx-message"><div>' . esc_html__( 'This Coupon is Showing.', 'coupon-creator' ) . '</div></div>';
 		} else {
-			echo '<div class="pngx-meta-bg pngx-error"><div>' . __( 'This Coupon is not Showing.', 'coupon-creator' ) . '</div></div>';
+			echo '<div class="pngx-meta-bg pngx-error"><div>' . esc_html__( 'This Coupon is not Showing.', 'coupon-creator' ) . '</div></div>';
 		}
 	}
 
@@ -187,16 +187,18 @@ class Cctor__Coupon__Expiration {
 
 		if ( 1 == $this->expiration_option ) {
 
-			$this->exp_msg = __( 'Ignore Coupon Expiration is On', 'coupon-creator' );
+			$this->exp_msg = esc_html__( 'Ignore Coupon Expiration is On', 'coupon-creator' );
 
 		} elseif ( 2 == $this->expiration_option ) {
 
+			// The date is escaped here rather than where it is echoed: cctor_expiration is post
+			// meta, so whatever was saved reaches this string as-is when no date format is set.
 			if ( ! isset( $this->display_date ) ) {
-				$this->exp_msg = '<div>' . __( 'There is no Coupon Expiration Date', 'coupon-creator' ) . '</div>';
+				$this->exp_msg = '<div>' . esc_html__( 'There is no Coupon Expiration Date', 'coupon-creator' ) . '</div>';
 			} elseif ( $this->date_unix >= $this->today_unix ) {
-				$this->exp_msg = '<div>' . __( 'This Coupon Expires On ', 'coupon-creator' ) . $this->display_date . '</div>';
+				$this->exp_msg = '<div>' . esc_html__( 'This Coupon Expires On ', 'coupon-creator' ) . esc_html( $this->display_date ) . '</div>';
 			} else {
-				$this->exp_msg   = '<div>' . __( 'This Coupon Expired On ', 'coupon-creator' ) . $this->display_date . '</div>';
+				$this->exp_msg   = '<div>' . esc_html__( 'This Coupon Expired On ', 'coupon-creator' ) . esc_html( $this->display_date ) . '</div>';
 				$this->exp_class = 'pngx-error';
 			}
 
@@ -231,7 +233,7 @@ class Cctor__Coupon__Expiration {
 	 * Display the formatted expiration date
 	 */
 	public function the_display_expiration() {
-		echo $this->get_display_expiration();
+		echo esc_html( $this->get_display_expiration() );
 	}
 
 	/**
@@ -313,9 +315,9 @@ class Cctor__Coupon__Expiration {
 	public function get_admin_list_coupon_showing() {
 
 		if ( $this->check_expiration() ) {
-			return "<p style='color: #048c7f; padding-left:5px;'>" . __( 'Showing', 'coupon-creator' ) . "</p>";
+			return "<p style='color: #048c7f; padding-left:5px;'>" . esc_html__( 'Showing', 'coupon-creator' ) . "</p>";
 		} else {
-			return "<p style='color: #dd3d36; padding-left:5px;'>" . __( 'Not Showing', 'coupon-creator' ) . "</p>";
+			return "<p style='color: #dd3d36; padding-left:5px;'>" . esc_html__( 'Not Showing', 'coupon-creator' ) . "</p>";
 		}
 
 	}
