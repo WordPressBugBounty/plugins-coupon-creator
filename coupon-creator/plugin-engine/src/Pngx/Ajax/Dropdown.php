@@ -126,7 +126,7 @@ class Dropdown {
 		$args['update_post_meta_cache'] = false;
 		$args['update_post_term_cache'] = false;
 
-		$results        = new WP_Query( $args );
+		$results        = new \WP_Query( $args );
 		$has_pagination = $results->post_count < $results->found_posts;
 
 		return $this->format_posts_for_dropdown( $results->posts, $selected, $has_pagination );

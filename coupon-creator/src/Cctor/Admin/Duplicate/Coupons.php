@@ -64,7 +64,10 @@ class Coupons {
 				isset( $_GET['post'] ) ||
 				isset( $_POST['post'] ) ||
 				(
+					// Presence check + literal comparison only; no data is used.
+					// @mago-expect lint:no-request-variable
 					isset( $_REQUEST['action'] ) &&
+					// @mago-expect lint:no-request-variable
 					'pngx_duplicate_coupon' === $_REQUEST['action']
 				)
 			)

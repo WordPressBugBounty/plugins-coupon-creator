@@ -186,6 +186,13 @@
 		}
 
 		this.shown = false;
+
+		// Restore focus before hiding so focus never remains inside an
+		// aria-hidden subtree (Chrome blocks aria-hidden on a focused ancestor).
+		if (focusedBeforeDialog) {
+			focusedBeforeDialog.focus();
+		}
+
 		if (this.options.effect === 'none') {
 			this.node.setAttribute('aria-hidden', 'true');
 		}
@@ -193,12 +200,6 @@
 
 		if (this.options.bodyLock) {
 			unlock();
-		}
-
-		// If their was a focused element before the dialog was opened, restore the
-		// focus back to it
-		if (focusedBeforeDialog) {
-			focusedBeforeDialog.focus();
 		}
 
 		// Remove the focus event listener to the body element and stop listening

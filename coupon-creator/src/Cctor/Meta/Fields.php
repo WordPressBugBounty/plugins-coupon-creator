@@ -324,7 +324,7 @@ class Cctor__Coupon__Meta__Fields {
 			'priority' => 15.08,
 		);
 
-		$date_format = get_metadata( get_the_id(), $prefix . 'date_format', true );
+		$date_format = get_post_meta( (int) get_the_ID(), $prefix . 'date_format', true );
 
 		$fields[ $prefix . 'expiration' ] = array(
 			'label'     => __( 'Expiration Date', 'coupon-creator' ),

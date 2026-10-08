@@ -11,7 +11,7 @@ class Pngx__Main {
 	 *
 	 * @var string
 	 */
-	const VERSION = '4.0.8';
+	const VERSION = '4.0.9';
 
 	/**
 	 * Stores the slug for the plugin engine.

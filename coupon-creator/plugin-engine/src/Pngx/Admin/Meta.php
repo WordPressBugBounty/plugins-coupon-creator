@@ -75,9 +75,11 @@ class Pngx__Admin__Meta {
 		return $current_screen;
 	}
 
-	/*
-	* Get Post Type
-	*/
+	/**
+	 * Get the post type(s) this meta box is registered for.
+	 *
+	 * @return array<int, string>
+	 */
 	public function get_post_types() {
 		return $this->post_type;
 	}

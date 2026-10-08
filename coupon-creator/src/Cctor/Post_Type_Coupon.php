@@ -236,7 +236,7 @@ class Cctor__Coupon__Post_Type_Coupon {
 
 			new Pngx__Register_Post_Type(
 				$this->post_type,
-				__( 'Enter Coupon Admin Title', $this->text_domain )
+				__( 'Enter Coupon Admin Title', 'coupon-creator' )
 			);
 			// @formatter:on
 	}

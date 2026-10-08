@@ -143,12 +143,41 @@ class Cctor__Coupon__Admin__Meta extends Pngx__Admin__Meta {
 				);
 			}
 
+			// The one screen where a free user meets Pro's limits had no mention of Pro.
+			if ( ! class_exists( 'Cctor__Coupon__Pro__Main' ) && ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) ) {
+				add_meta_box( 'coupon_creator_pro_card', // id
+					__( 'Coupon Creator Pro', 'coupon-creator' ), // title
+					array( $this, 'show_pro_card' ), // callback
+					$this->get_post_types(), // post_type
+					'side', // context
+					'low' // priority
+				);
+			}
+
 			/**
 			 * Additional Coupons Hook
 			 */
 			do_action( 'cctor_add_meta_box', $current_screen['post'] );
 
 		}
+	}
+
+	/**
+	 * Compact Pro card in the editor sidebar (free installs only).
+	 *
+	 * @since 3.6.3
+	 */
+	public function show_pro_card() {
+		Cctor__Coupon__Admin__Field__Pro_Card::display(
+			array(
+				'link'     => 'https://artifexrouting.com/wordpress-plugins/coupon-creator/?utm_source=coupon-creator-plugin&utm_medium=referral&utm_campaign=edit-screen-card',
+				'features' => array(
+					__( 'Expiration that manages itself: end of month, days from print, or a date range', 'coupon-creator' ),
+					__( 'Redemption counters that retire the coupon at your limit', 'coupon-creator' ),
+					__( 'A filterable coupon loop, print popup, and site-wide styling', 'coupon-creator' ),
+				),
+			)
+		);
 	}
 
 	/**

@@ -129,9 +129,12 @@ function cctor_print_stylesheets_and_script() { ?>
 	//Get File Time of CSS File so that CSS Updater when changes made
 	$cctor_file  = wp_normalize_path( WP_PLUGIN_DIR );
 	$cctor_file  = $cctor_file . '/coupon-creator/build/css/coupon.css';
+	// Missing file warns; null result is handled below.
+	// @mago-expect lint:no-error-control-operator
 	$cctor_style = @filemtime( $cctor_file );
 
 	if ( $cctor_style == null ) {
+		// @mago-expect lint:no-error-control-operator
 		$cctor_style = @filemtime( mb_convert_encoding( $cctor_file, 'ISO-8859-1', 'UTF-8' ) );
 	}
 

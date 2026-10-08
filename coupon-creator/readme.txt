@@ -4,17 +4,19 @@ Plugin Name: Coupon Creator
 Plugin URI: https://artifexrouting.com/wordpress-plugins/coupon-creator/
 Tags: coupon, shortcode, print, lead generation, marketing
 Requires at least: 6.5
-Tested up to: 7.0.2
-Stable tag: 3.6.2
+Tested up to: 7.1.3
+Stable tag: 3.6.3
 Requires PHP: 8.2
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
-Designed, printable promo coupons — build one in WordPress or upload an image, set an expiration, print. Displays offers; not a store-discount engine.
+The WordPress coupon plugin for designed, printable coupons. Build one or upload an image, set an expiration, print. Twelve free templates included.
 
 == Description ==
 
-Coupon Creator makes designed, printable coupons you can drop on any page with a block or a shortcode. Build one in WordPress or upload your own image. Maintained on WordPress since 2012.
+Coupon Creator is a free WordPress coupon plugin for designed, printable coupons: the kind a visitor clips, prints, and brings in. Build one in WordPress with your own deal, terms, colors and border, or upload an image of a coupon you already have, give it an expiration date, and drop it on any page with the Coupon Block or a shortcode. Maintained on WordPress since 2012.
+
+<strong>Start from a template.</strong> [Twelve free printable coupon templates](https://artifexrouting.com/wordpress-plugins/coupon-creator/templates/?utm_source=coupon-creator-plugin&utm_medium=referral&utm_campaign=wporg-readme-templates) show every design the plugin ships with: ticket, modern, lower third, two column, highlight, image, and five border styles. Open one and print it, or install the plugin and make it your own.
 
 <strong>Maintained and shipping on WordPress since 2012.</strong>
 
@@ -155,6 +157,17 @@ You can add custom css in the options and it will modify both the shortcode coup
 6. Coupon Creator options
 
 == Changelog ==
+
+= 3.6.3 October 8th 2026 =
+
+* Fix - Deleting the plugin with CCTOR_REMOVE_ALL_DATA defined could stop with a fatal error partway through cleanup, leaving the plugin's session table behind.
+* Fix - The coupon editor's expiration date picker ignored the coupon's own Date Format setting and always used the site-wide default. The date printed on the coupon itself was unaffected.
+* Fix - Corrected a namespace slip in the bundled Plugin Engine's dropdown search that would have caused a fatal error the first time a searchable picker used it.
+* Tweak - The coupon editor shows a compact Coupon Creator Pro card in the sidebar on sites without Pro: what Pro adds, and a link to the product page. It hides itself when Pro is active, or when CCTOR_HIDE_UPGRADE is defined.
+* Tweak - The getting-started panel links to the free coupon templates page, twelve printable designs to open, print, or recreate.
+* Tweak - The plugin header's Plugin URI points at the product page instead of a short URL that redirected there.
+* Tweak - Readme: clearer description, two new FAQ entries (templates, coupon sizes), and the templates page.
+* Update - Updated the bundled Plugin Engine to 4.0.9 and confirmed compatibility with WordPress 7.1.3.
 
 = 3.6.2 August 9th 2026 =
 
@@ -477,6 +490,9 @@ You can add custom css in the options and it will modify both the shortcode coup
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
+= 3.6.3 =
+Adds a Pro card to the coupon editor sidebar and links to the free templates page. No behavior changes for existing coupons.
+
 = 3.6.2 =
 Fixes updates for a Pro or Add-ons that 3.6.1 switched off for being out of date. If you are stuck on that, update Coupon Creator first and the Pro and Add-ons updates will appear on the Plugins screen.
 
@@ -492,6 +508,12 @@ Not by itself — Coupon Creator makes the designed coupon your visitors see, no
 
 <h4>Can I use an existing coupon image, like a newspaper ad?</h4>
 Yes, and it's free: choose the Image template, upload your JPG or PNG, and set an expiration date. The image displays as the coupon and stops showing when it expires.
+
+<h4>Are there coupon templates?</h4>
+Yes. [Twelve printable coupon templates](https://artifexrouting.com/wordpress-plugins/coupon-creator/templates/?utm_source=coupon-creator-plugin&utm_medium=referral&utm_campaign=wporg-readme-faq) are free to print and free to recreate in the plugin: six coupon types and five border styles. Every one is a live coupon built with the free version.
+
+<h4>What size should a coupon be?</h4>
+Coupons built in the plugin are responsive, and the print view sizes them to a letter or A4 page. If you are designing an image coupon, the guide to [coupon sizes and dimensions](https://artifexrouting.com/kb/coupon-creator-coupon-sizes-and-dimensions/?utm_source=coupon-creator-plugin&utm_medium=referral&utm_campaign=wporg-readme-faq) lists the standard print and digital sizes.
 
 <h4>What if I have support questions?</h4>
 Please ask on the [Coupon Creator Support Forum](http://wordpress.org/support/plugin/coupon-creator) on WordPress. For Pro users, please visit [Coupon Creator Pro](http://cctor.link/JIGHR). The [Coupon Creator documentation](https://artifexrouting.com/docs/coupon-creator/) covers the css and hooks of the coupon creator as well as more answers to questions and premium tutorials as well.

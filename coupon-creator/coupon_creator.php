@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Coupon Creator
-Plugin URI: https://artifexrouting.com/coupon-creator
+Plugin URI: https://artifexrouting.com/wordpress-plugins/coupon-creator/
 Description: Designed, printable coupons for WordPress. Put a real coupon on your site.
-Version: 3.6.2
+Version: 3.6.3
 Author: Artifex Routing Co
 Author URI: https://artifexrouting.com
 Text Domain: coupon-creator
@@ -110,6 +110,7 @@ if ( ! function_exists( 'coupon_creator_start_plugin_tracking' ) ) {
 				// Per-product HMAC secret so reports are signed (server verification is
 				// off until the whole fleet ships signatures). Match this on the server
 				// via artifex_ingest_secret_coupon_creator when enforcement is enabled.
+				// @mago-expect lint:no-literal-password
 				secret: '9403bb2ecf10e174a4ee923b858a3936223b699ced23d83dc134fd0b9c72dc96',
 			)
 		);

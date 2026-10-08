@@ -2,6 +2,11 @@
 
 == Changelog ==
 
+= 4.0.9 October 8th 2026 =
+
+* Fix - Dropdown::search_posts() created WP_Query without a leading backslash inside the Pngx\Ajax namespace, which fataled the first time a searchable picker used it.
+* Tweak - Document the return type of Pngx__Admin__Meta::get_post_types() for static analysis.
+
 = 4.0.8 August 7th 2026 =
 
 * Feature - Add a V2 Color field (wp-color-picker) for widget theming.

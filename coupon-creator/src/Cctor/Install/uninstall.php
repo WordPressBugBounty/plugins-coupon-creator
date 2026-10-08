@@ -60,7 +60,7 @@ if ( defined( 'CCTOR_REMOVE_ALL_DATA' ) && true === CCTOR_REMOVE_ALL_DATA ) {
 		"{$wpdb->prefix}pngx_sessions",
 	];
 	// Drop Tables.
-	Database::drop_tables( $drop_tables );
+	\Pngx\Install\Database::drop_tables( $drop_tables );
 
 	// Clear any cached data that has been removed.
 	wp_cache_flush();
