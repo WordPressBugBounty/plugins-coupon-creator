@@ -42,6 +42,11 @@ class Post_Types extends \Pngx\Vendor\lucatume\DI52\ServiceProvider {
 		 * @param int $post_id The post id for the post type being duplicated.
 		 * @param string $post_type The name of the post type.
 		 */
+		$type = get_post_type_object( $post_type );
+		if ( ! $post || $post->post_type !== $post_type || ! $type || ! current_user_can( 'edit_post', $post_id ) || ! current_user_can( $type->cap->create_posts ) ) {
+			return;
+		}
+
 		do_action( 'pngx_before_duplicate_post_type', $post_id, $post_type );
 
 		$current_user    = wp_get_current_user();
@@ -56,14 +61,17 @@ class Post_Types extends \Pngx\Vendor\lucatume\DI52\ServiceProvider {
 			'post_name'      => $post->post_name,
 			'post_parent'    => $post->post_parent,
 			'post_password'  => $post->post_password,
-			'post_status'    => 'publish',
+			'post_status'    => current_user_can( $type->cap->publish_posts ) ? 'publish' : 'draft',
 			'post_title'     => $post->post_title,
 			'post_type'      => $post_type,
 			'to_ping'        => $post->to_ping,
 			'menu_order'     => $post->menu_order
 		);
 
-		$new_post_id = wp_insert_post( $args );
+		$new_post_id = wp_insert_post( $args, true );
+		if ( is_wp_error( $new_post_id ) || ! $new_post_id ) {
+			return;
+		}
 
 		// Add Taxonomies
 		$taxonomies = get_object_taxonomies( $post->post_type ); // returns array of taxonomy names for post type, ex array("category", "post_tag");
@@ -74,7 +82,7 @@ class Post_Types extends \Pngx\Vendor\lucatume\DI52\ServiceProvider {
 
 		// Duplicate Custom Fields
 		$post_field_keys = get_post_custom_keys( $post_id );
-		foreach ( $post_field_keys as $meta_name ) {
+		foreach ( (array) $post_field_keys as $meta_name ) {
 			$meta_value = get_post_meta( $post_id, $meta_name, true );
 			update_post_meta( $new_post_id, $meta_name, $meta_value );
 		}

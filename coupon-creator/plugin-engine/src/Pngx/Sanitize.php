@@ -265,6 +265,11 @@ class Pngx__Sanitize {
 			return sanitize_text_field( $this->input );
 		}
 
+		// A choices-only field (no `options` list) has nothing else to match against.
+		if ( empty( $this->option['options'] ) || ! is_array( $this->option['options'] ) ) {
+			return false;
+		}
+
 		$option = wp_filter_object_list(
 			$this->option['options'] ,
 			[ 'value' =>  $this->input ],

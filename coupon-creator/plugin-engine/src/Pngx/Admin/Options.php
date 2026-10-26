@@ -247,7 +247,8 @@ class Pngx__Admin__Options {
 
 				//Prevent Placeholder From Saving in Option for Text Areas
 				if ( "textarea" == $option['type'] ) {
-					if ( $input[ $id ] == $option['std'] ) {
+					// A textarea absent from the submitted input (saved from outside the options form) is not a placeholder.
+					if ( isset( $input[ $id ] ) && $input[ $id ] == $option['std'] ) {
 						$input[ $id ] = false;
 					}
 				}

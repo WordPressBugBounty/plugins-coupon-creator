@@ -18,6 +18,8 @@ class Cctor__Coupon__Admin__Inserter {
 	*/
 	public function __construct() {
 
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_search' ), 20 );
+
 		//Add Button for Coupons in Editor
 		add_action( 'media_buttons', array( $this, 'add_cc_coupon_button' ) );
 
@@ -49,7 +51,7 @@ class Cctor__Coupon__Admin__Inserter {
 			$title = '<h3>' . esc_html__( 'Insert Coupon Creator Shortcode', 'coupon-creator' ) . '</h3>';
 
 			// display ui button for 3.5 and greater
-			$button = "<style>.cctor_insert_icon{
+			$button = "<style>.select2-container--open{z-index:100100;}.cctor_insert_icon{
 								background:url('{$img}') no-repeat top left;
 								display: inline-block;
 								height: 16px;
@@ -227,26 +229,7 @@ class Cctor__Coupon__Admin__Inserter {
 		<!--Start Thickbox Popup -->
 		<div id="coupon_container" style="display:none;">
 			<?php
-			/**
-			 * Filter how many coupons the editor's inserter dropdown lists.
-			 *
-			 * This query used to run posts_per_page => -1, loading every published coupon
-			 * into a select box on the classic editor -- the same unbounded default that was
-			 * capped for the [coupon] shortcode in 3.6.0. Return -1 to list them all.
-			 *
-			 * @since 3.6.2
-			 *
-			 * @param int $total Maximum coupons offered in the inserter.
-			 */
-			$inserter_total = apply_filters( 'cctor_inserter_total_coupons', 50 );
-
-			$querycoupon = new WP_Query(
-				array(
-					'post_status'    => 'publish',
-					'post_type'      => 'cctor_coupon',
-					'posts_per_page' => (int) $inserter_total,
-				)
-			);
+			$querycoupon = new WP_Query( array( 'post_type' => 'cctor_coupon', 'post_status' => 'publish', 'posts_per_page' => 1, 'no_found_rows' => true ) );
 			// The Coupon Loop
 			if ( $querycoupon->have_posts() ) {
 				?>
@@ -258,14 +241,17 @@ class Cctor__Coupon__Admin__Inserter {
 						<select name="coupon_select_box" id="coupon_select" onchange="show_category()">
 							<option value=""></option>
 							<option value="loop"><?php echo esc_html__( 'Coupon Loop', 'coupon-creator' ); ?></option>
-							<?php
-							while ( $querycoupon->have_posts() ) {
-								$querycoupon->the_post(); ?>
-								<!--Adding the Value as ID for the Shortcode and the Title for Humans-->
-								<option value="<?php the_ID(); ?>"><?php the_title(); ?></option>
 
-							<?php } ?>
 						</select> <!--End Select Box Coupons-->
+						<script>jQuery(function ($) { $('#coupon_select').select2({ width: '100%', ajax: {
+								url: ajaxurl, type: 'POST', dataType: 'json', delay: 250,
+								data: function (params) {
+									return { action: 'pngx_dropdown', source: 'cctor_coupons', nonce: <?php echo wp_json_encode( wp_create_nonce( 'pngx-dropdown' ) ); ?>, search: params.term || '', page: params.page || 1 };
+								},
+								processResults: function (response) {
+									return response.success ? response.data : { results: [] };
+								}
+							} }); });</script>
 					</div>
 
 					<!--Create a Select Box for Categories -->
@@ -329,7 +315,7 @@ class Cctor__Coupon__Admin__Inserter {
 					<?php
 					//Show Upgrade to Pro Link
 					if ( ! defined( 'CCTOR_HIDE_UPGRADE' ) || ! CCTOR_HIDE_UPGRADE ) {
-						echo '<div class="cctor-inserter-upgrade-pro"><strong>' . esc_html__( 'Coupons that expire on their own.', 'coupon-creator' ) . '</strong> <a href="http://cctor.link/Abqoi" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Explore Coupon Creator Pro', 'coupon-creator' ) . '</a> ' . esc_html__( 'for searchable coupon selection and more.', 'coupon-creator' ) . '</div>';
+						echo '<div class="cctor-inserter-upgrade-pro"><strong>' . esc_html__( 'Coupons that expire on their own.', 'coupon-creator' ) . '</strong> <a href="http://cctor.link/Abqoi" target="_blank" rel="noopener noreferrer">' . esc_html__( 'Explore Coupon Creator Pro', 'coupon-creator' ) . '</a> ' . esc_html__( 'for advanced coupon controls.', 'coupon-creator' ) . '</div>';
 					}
 					?>
 					<!--Insert into Editor Button that Calls Script-->
@@ -344,5 +330,43 @@ class Cctor__Coupon__Admin__Inserter {
 	<?php }
 
 	/***************************************************************************/
+
+	/** Search published coupons in fixed-size pages. Never accept query args from the browser. */
+	public static function search_coupons( $data, $search, $page ) {
+		if ( ! current_user_can( 'edit_cctor_coupons' ) ) {
+			return array( 'results' => array(), 'pagination' => array( 'more' => false ) );
+		}
+		$term = is_array( $search ) ? ( $search['term'] ?? '' ) : $search;
+		$term = is_scalar( $term ) ? sanitize_text_field( wp_unslash( (string) $term ) ) : '';
+		$page = max( 1, (int) $page );
+		$query = new WP_Query( array(
+			'post_type' => 'cctor_coupon', 'post_status' => 'publish', 'posts_per_page' => 50,
+			'paged' => $page, 's' => $term, 'orderby' => array( 'date' => 'DESC', 'ID' => 'DESC' ),
+			'update_post_meta_cache' => false, 'update_post_term_cache' => false,
+		) );
+		/** @var list<WP_Post> $posts */
+		$posts = $query->posts ?? array();
+		$data = ( new \Pngx\Ajax\Dropdown() )->format_posts_for_dropdown( $posts );
+		$results = $data['posts'];
+		if ( 1 === $page && '' === $term ) {
+			$loops = class_exists( 'Cctor__Coupon__Pro__Main' )
+				? array( array( 'id' => 'proloop', 'text' => __( 'Pro Coupon Loop', 'coupon-creator' ) ), array( 'id' => 'basicloop', 'text' => __( 'Basic Coupon Loop', 'coupon-creator' ) ) )
+				: array( array( 'id' => 'loop', 'text' => __( 'Coupon Loop', 'coupon-creator' ) ) );
+			$results = array_merge( $loops, $results );
+		}
+		return array( 'results' => $results, 'pagination' => array( 'more' => $page < (int) $query->max_num_pages ) );
+	}
+
+	public static function dropdown_capability( $capability, $source ) {
+		return 'cctor_coupons' === $source ? 'edit_cctor_coupons' : $capability;
+	}
+
+	public function enqueue_search() {
+		$screen = get_current_screen();
+		if ( $screen && 'post' === $screen->base && 'cctor_coupon' !== $screen->post_type ) {
+			wp_enqueue_script( 'pngx-select2' );
+			wp_enqueue_style( 'pngx-select2-css' );
+		}
+	}
 
 }

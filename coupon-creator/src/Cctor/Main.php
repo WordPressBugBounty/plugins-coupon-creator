@@ -44,7 +44,7 @@ class Cctor__Coupon__Main {
 	protected $min_php = '8.2';
 
 	const VERSION_KEY              = 'cctor_coupon_version';
-	const VERSION_NUM              = '3.6.3';
+	const VERSION_NUM              = '3.6.4';
 	const MIN_PNGX_VERSION         = '4.0.2';
 	// Minimum add-on versions this core is compatible with — enforced by
 	// gate_outdated_extensions(), which unhooks anything below them rather than
@@ -66,7 +66,7 @@ class Cctor__Coupon__Main {
 	const OPTIONS_ID               = 'coupon_creator_options';
 
 	public $VERSION_KEY              = 'cctor_coupon_version';
-	public $VERSION_NUM              = '3.6.3';
+	public $VERSION_NUM              = '3.6.4';
 	public $MIN_PNGX_VERSION         = '4.0.2';
 	public $WP_PLUGIN_URL            = 'https://wordpress.org/plugins/coupon-creator/';
 	public $COUPON_CREATOR_STORE_URL = 'https://artifexrouting.com/edd-api/';

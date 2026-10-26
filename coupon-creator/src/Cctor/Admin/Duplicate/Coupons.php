@@ -84,7 +84,7 @@ class Coupons {
 			return;
 		}
 
-		if ( ! current_user_can( 'edit_cctor_coupons' ) ) {
+		if ( 'cctor_coupon' !== get_post_type( $post_id ) || ! current_user_can( 'edit_cctor_coupon', $post_id ) ) {
 			return;
 		}
 
@@ -100,7 +100,7 @@ class Coupons {
 	 * @return mixed
 	 */
 	public function duplicate_coupon_link( $actions, $post ) {
-		if ( ! current_user_can( 'edit_posts' ) ) {
+		if ( ! current_user_can( 'edit_cctor_coupon', $post->ID ) ) {
 			return $actions;
 		}
 

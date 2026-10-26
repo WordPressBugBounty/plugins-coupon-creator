@@ -122,12 +122,12 @@ class Dropdown {
 			}
 		}
 
-		$args['paged']                  = $page;
+		$args['paged']                  = max( 1, (int) $page );
 		$args['update_post_meta_cache'] = false;
 		$args['update_post_term_cache'] = false;
 
 		$results        = new \WP_Query( $args );
-		$has_pagination = $results->post_count < $results->found_posts;
+		$has_pagination = $args['paged'] < (int) $results->max_num_pages;
 
 		return $this->format_posts_for_dropdown( $results->posts, $selected, $has_pagination );
 	}
@@ -137,11 +137,11 @@ class Dropdown {
 	 *
 	 * @since 4.0.0
 	 *
-	 * @param array<WP_Post>    $posts
+	 * @param array<\WP_Post|int> $posts
 	 * @param null|int $selected
 	 * @param boolean  $pagination
 	 *
-	 * @return array
+	 * @return array{posts: list<array{id: int, text: string, selected: bool}>, pagination: bool}
 	 */
 	public function format_posts_for_dropdown( array $posts, $selected = null, $pagination = false ) {
 		$data = [
@@ -164,10 +164,11 @@ class Dropdown {
 				continue;
 			}
 
-			// Prep for Select2.
+			// Read optional attached properties without triggering WP_Post's meta lookup.
+			$properties = get_object_vars( $post );
 			$data['posts'][] = [
 				'id'       => $post->ID,
-				'text'     => ! empty( $post->post_title_formatted ) ? $post->post_title_formatted : $post->post_title,
+				'text'     => ! empty( $properties['post_title_formatted'] ) ? $properties['post_title_formatted'] : $post->post_title,
 				'selected' => ! empty( $selected ) && (int) $post->ID === (int) $selected,
 			];
 		}

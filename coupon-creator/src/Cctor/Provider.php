@@ -58,6 +58,8 @@ class Cctor__Coupon__Provider extends \Pngx\Vendor\lucatume\DI52\ServiceProvider
 	 *
 	 */
 	protected function hook() {
+		add_filter( 'pngx_dropdown_cctor_coupons', array( 'Cctor__Coupon__Admin__Inserter', 'search_coupons' ), 10, 3 );
+		add_filter( 'pngx_dropdown_capability', array( 'Cctor__Coupon__Admin__Inserter', 'dropdown_capability' ), 10, 2 );
 		add_action( 'init', pngx_callback( 'cctor.post_menu', 'register' ), 5 );
 		add_action( 'init',  pngx_callback( 'Pngx__Cron_20', 'filter_cron_schedules' ) );
 		add_action( 'pre_get_posts', pngx_callback( 'cctor.search', 'remove_coupon_from_search' ) );

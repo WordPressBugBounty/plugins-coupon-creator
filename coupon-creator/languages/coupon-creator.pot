@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Coupon Creator 3.6.3\n"
+"Project-Id-Version: Coupon Creator 3.6.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/coupon-creator\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-08T02:45:09+00:00\n"
+"POT-Creation-Date: 2026-10-25T15:02:45+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: coupon-creator\n"
@@ -202,7 +202,7 @@ msgstr ""
 
 #: src/Cctor/Admin/Field/Pro_Card.php:33
 #: src/Cctor/Admin/Field/Pro_Link.php:25
-#: src/Cctor/Admin/Inserter.php:332
+#: src/Cctor/Admin/Inserter.php:318
 msgid "Coupons that expire on their own."
 msgstr ""
 
@@ -211,7 +211,7 @@ msgid "Set the rules once, then let Pro expire, renew, and enforce coupon limits
 msgstr ""
 
 #: src/Cctor/Admin/Field/Pro_Card.php:42
-#: src/Cctor/Admin/Inserter.php:332
+#: src/Cctor/Admin/Inserter.php:318
 msgid "Explore Coupon Creator Pro"
 msgstr ""
 
@@ -223,85 +223,94 @@ msgstr ""
 msgid "See how Coupon Creator Pro handles the features listed above."
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:49
+#: src/Cctor/Admin/Inserter.php:51
 msgid "Insert Coupon Creator Shortcode"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:257
+#: src/Cctor/Admin/Inserter.php:240
 msgid "Select Loop or an Individual Coupon"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:260
+#: src/Cctor/Admin/Inserter.php:243
+#: src/Cctor/Admin/Inserter.php:354
 msgid "Coupon Loop"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:274
+#: src/Cctor/Admin/Inserter.php:260
 msgid "Select a Coupon Category to use in the Loop"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:277
+#: src/Cctor/Admin/Inserter.php:263
 msgid "All Categories"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:299
+#: src/Cctor/Admin/Inserter.php:285
 msgid "Select How to Align the Coupon(s)"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:301
-#: src/Cctor/Admin/Inserter.php:316
+#: src/Cctor/Admin/Inserter.php:287
+#: src/Cctor/Admin/Inserter.php:302
 msgid "None"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:302
+#: src/Cctor/Admin/Inserter.php:288
 msgid "Align Left"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:304
+#: src/Cctor/Admin/Inserter.php:290
 msgid "Align Right"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:306
+#: src/Cctor/Admin/Inserter.php:292
 msgid "Align Center"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:313
+#: src/Cctor/Admin/Inserter.php:299
 msgid "Select how to order the coupons"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:315
+#: src/Cctor/Admin/Inserter.php:301
 msgid "Date (default)"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:317
+#: src/Cctor/Admin/Inserter.php:303
 msgid "ID"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:318
+#: src/Cctor/Admin/Inserter.php:304
 msgid "Author"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:319
+#: src/Cctor/Admin/Inserter.php:305
 msgid "Coupon Post Title"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:320
+#: src/Cctor/Admin/Inserter.php:306
 msgid "Slug Name"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:321
+#: src/Cctor/Admin/Inserter.php:307
 msgid "Last Modified"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:322
+#: src/Cctor/Admin/Inserter.php:308
 msgid "Random"
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:332
-msgid "for searchable coupon selection and more."
+#: src/Cctor/Admin/Inserter.php:318
+msgid "for advanced coupon controls."
 msgstr ""
 
-#: src/Cctor/Admin/Inserter.php:341
+#: src/Cctor/Admin/Inserter.php:327
 msgid "No Coupons are Published"
+msgstr ""
+
+#: src/Cctor/Admin/Inserter.php:353
+msgid "Pro Coupon Loop"
+msgstr ""
+
+#: src/Cctor/Admin/Inserter.php:353
+msgid "Basic Coupon Loop"
 msgstr ""
 
 #: src/Cctor/Admin/License_Setup.php:47

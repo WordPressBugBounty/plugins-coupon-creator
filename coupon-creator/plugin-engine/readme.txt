@@ -2,6 +2,16 @@
 
 == Changelog ==
 
+= 4.0.11 (Unreleased) =
+
+* Fix - Duplicate\Post_Types::duplicate() now requires edit permission on the source and create permission on the target post type, and saves the copy as a draft when the user cannot publish.
+* Fix - Dropdown::search_posts() final-page detection now uses max_num_pages, and optional formatted titles no longer run a metadata query per result.
+
+= 4.0.10 October 20th 2026 =
+
+* Fix - Options::validate_options() read every registered textarea from the submitted array even when the field was absent, which logged an undefined-key warning on every save from a partial form such as a setup wizard.
+* Fix - Sanitize::sanitize_enum() warned on a select field that declared no option list; it now rejects the value instead of comparing against nothing.
+
 = 4.0.9 October 8th 2026 =
 
 * Fix - Dropdown::search_posts() created WP_Query without a leading backslash inside the Pngx\Ajax namespace, which fataled the first time a searchable picker used it.
