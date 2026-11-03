@@ -24,6 +24,11 @@ if ( ! class_exists( 'Cctor__Coupon__Main' ) ) {
  * @return string Absolute URL to the guide, trailing-slashed.
  */
 function cctor_guide_url( $slug ) {
+	/**
+	 * Filters the base URL of the Artifex documentation site.
+	 *
+	 * @param string $base Documentation base URL, trailing-slashed.
+	 */
 	$base = apply_filters( 'cctor_docs_base_url', 'https://artifexrouting.com/docs/' );
 
 	return trailingslashit( trailingslashit( $base ) . ltrim( $slug, '/' ) );
@@ -41,6 +46,12 @@ function cctor_guide_url( $slug ) {
  * @return bool true if this post is an Coupon post type
  */
 function cctor_is_coupon( $postId = null ) {
+	/**
+	 * Filters whether a post is a coupon.
+	 *
+	 * @param bool     $is_coupon Whether the post is a coupon post type.
+	 * @param int|null $postId    Post ID being checked, or null for the current post.
+	 */
 	return apply_filters( 'cctor_is_coupon', pngx( 'cctor' )->is_coupon( $postId ), $postId );
 }
 
@@ -53,6 +64,11 @@ function cctor_is_coupon_category() {
 	global $wp_query;
 	$cctor_is_coupon_category = ! empty( $wp_query->cctor_is_coupon_category );
 
+	/**
+	 * Filters whether the current page is a coupon category page.
+	 *
+	 * @param bool $cctor_is_coupon_category Whether the main query flagged a coupon category.
+	 */
 	return apply_filters( 'cctor_query_is_coupon_category', $cctor_is_coupon_category );
 }
 
@@ -65,6 +81,11 @@ function cctor_is_coupon_query() {
 	global $wp_query;
 	$cctor_is_coupon_query = ! empty( $wp_query->cctor_is_coupon_query );
 
+	/**
+	 * Filters whether the current page displays a coupon query.
+	 *
+	 * @param bool $cctor_is_coupon_query Whether the main query flagged a coupon query.
+	 */
 	return apply_filters( 'cctor_query_is_coupon_query', $cctor_is_coupon_query );
 }
 
@@ -78,6 +99,11 @@ if ( ! function_exists( 'cctor_is_coupon_taxonomy' ) ) {
 		global $wp_query;
 		$cctor_is_coupon_taxonomy = ! empty( $wp_query->cctor_is_coupon_taxonomy );
 
+		/**
+		 * Filters whether the current page displays a coupon taxonomy.
+		 *
+		 * @param bool $cctor_is_coupon_taxonomy Whether the main query flagged a coupon taxonomy.
+		 */
 		return apply_filters( 'cctor_query_is_coupon_taxonomy', $cctor_is_coupon_taxonomy );
 	}
 }

@@ -117,21 +117,24 @@ class Cctor__Coupon__Expiration {
 	public function check_expiration() {
 
 		/**
-		 * Filter whether a coupon is expired
+		 * Filters whether a coupon is current and may show.
 		 *
-		 * @param bool $ignore_expiration a boolean value
-		 * @param int  $coupon_id         an integer
+		 * Return true to show a coupon that is outside its start and expiration
+		 * dates, or false to hide one that is current. Add-ons use this to hide
+		 * a dynamic-code coupon once its codes are used up.
 		 *
+		 * @param bool $show_coupon Whether the coupon is within its start and expiration dates.
+		 * @param int  $coupon_id   Coupon post ID.
 		 */
-
 		$this->show_coupon = apply_filters( 'cctor_filter_ignore_expiration', $this->show_coupon, $this->coupon_id );
 
 		/**
-		 * Filter Additional Restriction on whether the coupon should show
+		 * Filters whether a coupon is hidden by an extra restriction.
 		 *
+		 * Return true to hide a coupon that is otherwise current.
 		 *
-		 * @param boolean $show_coupon_check true or false a coupon should show.
-		 *
+		 * @param bool $coupon_hidden Whether the coupon is hidden. False by default.
+		 * @param int  $coupon_id     Coupon post ID.
 		 */
 		$this->coupon_hidden = apply_filters( 'cctor_filter_meta_show_coupon_check', $this->coupon_hidden, $this->coupon_id );
 

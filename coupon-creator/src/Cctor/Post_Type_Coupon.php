@@ -72,9 +72,11 @@ class Cctor__Coupon__Post_Type_Coupon {
 	public function get_coupon_slug() {
 
 		/**
-		 * Provides an opportunity to modify the coupon slug.
+		 * Filters the coupon post type slug.
 		 *
-		 * @var string
+		 * @param string $slug The sanitized coupon slug from the options page.
+		 *
+		 * @psalm-var string
 		 */
 		return apply_filters( 'cctor_coupon_slug', sanitize_title( cctor_options( 'cctor_coupon_base', false, $this->post_type ) ) );
 	}
@@ -87,6 +89,13 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	public function get_coupon_label_singular() {
+		/**
+		 * Filters the singular label for coupons.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $label Translated label, 'Coupon' by default.
+		 */
 		return apply_filters( 'cctor_coupon_label_singular', esc_html__( 'Coupon', $this->text_domain ) );
 	}
 
@@ -100,6 +109,13 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	function get_coupon_label_singular_lowercase() {
+		/**
+		 * Filters the lowercase singular label for coupons.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $label Translated label, 'coupon' by default.
+		 */
 		return apply_filters( 'cctor_coupon_label_singular_lowercase', esc_html__( 'coupon', $this->text_domain ) );
 	}
 
@@ -111,6 +127,13 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	public function get_coupon_label_plural() {
+		/**
+		 * Filters the plural label for coupons.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $label Translated label, 'Coupons' by default.
+		 */
 		return apply_filters( 'cctor_coupon_label_plural', esc_html__( 'Coupons', $this->text_domain ) );
 	}
 
@@ -124,6 +147,13 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	function get_coupon_label_plural_lowercase() {
+		/**
+		 * Filters the lowercase plural label for coupons.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $label Translated label, 'coupons' by default.
+		 */
 		return apply_filters( 'cctor_coupon_label_plural_lowercase', esc_html__( 'coupons', $this->text_domain ) );
 	}
 
@@ -135,6 +165,13 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	public function get_coupon_category_label_singular() {
+		/**
+		 * Filters the singular label for coupon categories.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $label Translated label, 'Coupon Category' by default.
+		 */
 		return apply_filters( 'cctor_coupon_category_label_singular', esc_html__( 'Coupon Category', $this->text_domain ) );
 	}
 
@@ -144,6 +181,11 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	public function get_coupon_category_label_singular_lowercase() {
+		/**
+		 * Filters the lowercase singular label for coupon categories.
+		 *
+		 * @param string $label Translated label, 'coupon category' by default.
+		 */
 		return apply_filters( 'cctor_coupon_category_label_singular_lowercase', esc_html__( 'coupon category', $this->text_domain ) );
 	}
 
@@ -155,6 +197,13 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	public function get_coupon_category_label_plural() {
+		/**
+		 * Filters the plural label for coupon categories.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $label Translated label, 'Coupon Categories' by default.
+		 */
 		return apply_filters( 'cctor_coupon_category_plural', esc_html__( 'Coupon Categories', $this->text_domain ) );
 	}
 
@@ -166,6 +215,13 @@ class Cctor__Coupon__Post_Type_Coupon {
 	 * @return string
 	 */
 	public function get_coupon_category_label_plural_lowercase() {
+		/**
+		 * Filters the lowercase plural label for coupon categories.
+		 *
+		 * @since 3.0
+		 *
+		 * @param string $label Translated label, 'coupon categories' by default.
+		 */
 		return apply_filters( 'cctor_coupon_category_plural_lowercase', esc_html__( 'coupon categories', $this->text_domain ) );
 	}
 
@@ -178,9 +234,11 @@ class Cctor__Coupon__Post_Type_Coupon {
 	public function get_category_slug() {
 
 		/**
-		 * Provides an opportunity to modify the category slug.
+		 * Filters the coupon category taxonomy slug.
 		 *
-		 * @var string
+		 * @param string $slug The sanitized category slug from the options page.
+		 *
+		 * @psalm-var string
 		 */
 		return apply_filters( 'cctor_category_slug', sanitize_title( cctor_options( 'cctor_coupon_category_base', false, 'coupon-category' ) ) );
 	}

@@ -7,7 +7,7 @@
             "dist": {
                 "type": "path",
                 "url": "../../../artifex/libs/edd-license-ui",
-                "reference": "8a2399b970f9bed988acdb4fba407e374c0c7894"
+                "reference": "382a077c3a150ceecf1fe6ece4f8b4786cdc3db3"
             },
             "require": {
                 "php": ">=8.2"

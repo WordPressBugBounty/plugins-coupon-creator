@@ -5,7 +5,7 @@ Plugin URI: https://artifexrouting.com/wordpress-plugins/coupon-creator/
 Tags: coupon, shortcode, print, lead generation, marketing
 Requires at least: 6.5
 Tested up to: 7.1.3
-Stable tag: 3.6.4
+Stable tag: 3.6.5
 Requires PHP: 8.2
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
@@ -157,6 +157,10 @@ You can add custom css in the options and it will modify both the shortcode coup
 6. Coupon Creator options
 
 == Changelog ==
+
+= 3.6.5 November 3rd 2026 =
+
+* Show when each license was last checked, and a "Check now" button, on the Licenses tab for Coupon Creator Pro and Add-ons 3.7.1. If the license server cannot be reached, the error shows there.
 
 = 3.6.4 October 25th 2026 =
 

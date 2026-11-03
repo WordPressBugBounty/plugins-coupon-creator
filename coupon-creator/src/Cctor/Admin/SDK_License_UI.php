@@ -43,6 +43,14 @@ class Cctor__Coupon__Admin__SDK_License_UI {
 	 * @return array<int, array<string, mixed>>
 	 */
 	public static function get_licenses() {
+		/**
+		 * Filters the paid-plugin licenses shown in the License card on the options page.
+		 *
+		 * Pro and Add-ons each append a descriptor with 'item_id', 'slug',
+		 * 'name', and 'status_option' keys.
+		 *
+		 * @param array[] $licenses License descriptors. Empty by default.
+		 */
 		return (array) apply_filters( 'cctor_sdk_licenses', array() );
 	}
 

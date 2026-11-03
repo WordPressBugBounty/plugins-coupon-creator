@@ -46,7 +46,8 @@ class Control {
 	/**
 	 * Render the license rows (name + status + Manage License button) for a set
 	 * of plugins. Each descriptor: [ 'item_id', 'slug', 'name', 'status_option' ]
-	 * (optional 'label' overrides the button text).
+	 * (optional 'label' overrides the button text; optional 'checked_option' adds
+	 * the "Last checked" line and "Check now" button, labelled by 'check_labels').
 	 *
 	 * @param array<int, array<string, mixed>> $licenses
 	 */
@@ -77,8 +78,82 @@ class Control {
 		return '<div class="artifex-license-control" style="margin:0 0 1.5em;padding:0 0 1em;border-bottom:1px solid #e2e4e7;">'
 			. '<strong style="display:block;margin-bottom:.25em;">' . self::esc_html( $name ) . '</strong>'
 			. '<p style="margin:.25em 0 .75em;">' . self::status( $status_option, $status_labels ) . '</p>'
+			. self::check_line( $license )
 			. self::button( $license['item_id'], (string) $license['slug'], $name, $label )
 			. '</div>';
+	}
+
+	/**
+	 * The "Last checked" line and "Check now" button for a descriptor that has a
+	 * 'checked_option' (the plugin runs a Status_Check), or ''.
+	 *
+	 * @param array<string, mixed> $license
+	 */
+	public static function check_line( array $license ): string {
+		if ( empty( $license['checked_option'] ) || empty( $license['slug'] ) ) {
+			return '';
+		}
+
+		$labels = isset( $license['check_labels'] ) && is_array( $license['check_labels'] ) ? $license['check_labels'] : [];
+
+		return '<p style="margin:-.5em 0 .75em;">'
+			. self::checked( (string) $license['checked_option'], $labels )
+			. ' ' . self::check_button( (string) $license['slug'], $labels )
+			. '</p>';
+	}
+
+	/**
+	 * When the license was last checked, and the error if that check failed.
+	 * Reads the option Status_Check writes: [ 'time' => int, 'error' => string ].
+	 *
+	 * @param array<string, string> $labels Optional overrides: checked (one %s),
+	 *        check_failed (%1$s date, %2$s error), never.
+	 */
+	public static function checked( string $checked_option, array $labels = [] ): string {
+		$labels += [
+			'checked'      => 'Last checked %s.',
+			'check_failed' => 'Last check failed %1$s: %2$s',
+			'never'        => 'Not checked yet.',
+		];
+
+		$checked = $checked_option ? get_option( $checked_option ) : false;
+		if ( ! is_array( $checked ) || empty( $checked['time'] ) ) {
+			return '<span class="artifex-license-checked">' . self::esc_html( $labels['never'] ) . '</span>';
+		}
+
+		$date  = (string) wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), (int) $checked['time'] );
+		$error = isset( $checked['error'] ) ? (string) $checked['error'] : '';
+
+		if ( '' === $error ) {
+			return '<span class="artifex-license-checked">' . self::esc_html( sprintf( $labels['checked'], $date ) ) . '</span>';
+		}
+
+		return '<span class="artifex-license-checked" style="color:#d63638;">' . self::esc_html( sprintf( $labels['check_failed'], $date, $error ) ) . '</span>';
+	}
+
+	/**
+	 * The "Check now" button. enqueue() adds the script that drives it.
+	 *
+	 * @param array<string, string> $labels Optional overrides: check_now, checking, error.
+	 */
+	public static function check_button( string $slug, array $labels = [] ): string {
+		$labels += [
+			'check_now' => 'Check now',
+			'checking'  => 'Checking…',
+			'error'     => 'The check could not run. Reload the page and try again.',
+		];
+
+		$action = Status_Check::ajax_action( $slug );
+
+		return sprintf(
+			'<button type="button" class="button-link artifex-license-check" data-action="%1$s" data-nonce="%2$s" data-label="%3$s" data-checking="%4$s" data-error="%5$s">%3$s</button>'
+			. ' <span class="artifex-license-check-result" role="status" aria-live="polite"></span>',
+			self::esc_attr( $action ),
+			self::esc_attr( wp_create_nonce( $action ) ),
+			self::esc_attr( $labels['check_now'] ),
+			self::esc_attr( $labels['checking'] ),
+			self::esc_attr( $labels['error'] )
+		);
 	}
 
 	/**
@@ -175,6 +250,45 @@ class Control {
 				'error'        => $strings['error'],
 			]
 		);
+		wp_add_inline_script( 'edd-sdk-notice', self::check_script() );
+	}
+
+	/**
+	 * Script for the "Check now" button: post the check, then reload so the
+	 * status and "Last checked" lines show the result.
+	 */
+	private static function check_script(): string {
+		return <<<'JS'
+document.addEventListener('click', function (event) {
+	var button = event.target.closest ? event.target.closest('.artifex-license-check') : null;
+	if (!button || button.disabled) {
+		return;
+	}
+	event.preventDefault();
+	var result = button.nextElementSibling;
+	var body = new FormData();
+	body.append('action', button.getAttribute('data-action'));
+	body.append('_ajax_nonce', button.getAttribute('data-nonce'));
+	button.disabled = true;
+	button.textContent = button.getAttribute('data-checking');
+	fetch(window.ajaxurl, { method: 'POST', credentials: 'same-origin', body: body })
+		.then(function (response) { return response.json(); })
+		.then(function (json) {
+			if (json && (json.success || (json.data && json.data.message))) {
+				window.location.reload();
+				return;
+			}
+			throw new Error('check failed');
+		})
+		.catch(function () {
+			button.disabled = false;
+			button.textContent = button.getAttribute('data-label');
+			if (result) {
+				result.textContent = button.getAttribute('data-error');
+			}
+		});
+});
+JS;
 	}
 
 	/**

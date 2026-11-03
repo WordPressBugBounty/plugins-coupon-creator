@@ -33,6 +33,7 @@ return array(
    'Pngx\Vendor\Artifex\Telemetry\Goodbye_Form' => $strauss_src . '/artifexrouting/telemetry-client/src/Goodbye_Form.php',
    'Pngx\Vendor\Artifex\Telemetry\Migration' => $strauss_src . '/artifexrouting/telemetry-client/src/Migration.php',
    'Pngx\Vendor\Artifex\License\Control' => $strauss_src . '/artifexrouting/edd-license-ui/src/Control.php',
+   'Pngx\Vendor\Artifex\License\Status_Check' => $strauss_src . '/artifexrouting/edd-license-ui/src/Status_Check.php',
    'Pngx\Vendor\StellarWP\Assets\Controller' => $strauss_src . '/stellarwp/assets/src/Assets/Controller.php',
    'Pngx\Vendor\StellarWP\Assets\Config' => $strauss_src . '/stellarwp/assets/src/Assets/Config.php',
    'Pngx\Vendor\StellarWP\Assets\Data' => $strauss_src . '/stellarwp/assets/src/Assets/Data.php',

@@ -160,10 +160,15 @@ class Cctor__Coupon__Admin__Options Extends Pngx__Admin__Options {
 		$docs_url            = cctor_guide_url( 'coupon-creator' );
 		$mark_url            = pngx( 'cctor' )->resource_url . 'images/coupon-creator-mark.svg';
 
-		// Consolidated version string for the header band. Core uses the constant
-		// (always accurate); active tiers append their own via the filter — see
-		// Pro's pro_version() / Add-ons' version(). Renders as
-		// "v3.6.0 · Pro 3.6.0 · Add-ons 3.6.0".
+		/**
+		 * Filters the version strings shown in the options header band.
+		 *
+		 * Core supplies its own version from the constant; active tiers append
+		 * theirs (see Pro's pro_version() and Add-ons' version()). The parts render
+		 * joined with " · ", e.g. "v3.6.0 · Pro 3.6.0 · Add-ons 3.6.0".
+		 *
+		 * @param string[] $version_parts Version strings in display order.
+		 */
 		$version_parts = apply_filters( 'cctor_options_header_versions', array( 'v' . Cctor__Coupon__Main::VERSION_NUM ) );
 		$version_line  = implode( ' · ', array_filter( (array) $version_parts ) );
 

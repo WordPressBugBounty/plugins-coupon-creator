@@ -142,10 +142,11 @@ class Cctor__Coupon__Shortcode {
 					$coupon_type = get_post_meta( $coupon_id, 'cctor_coupon_type', true );
 
 					if (
-						! in_array( $coupon_type, array( '', 'default', 'image' ), true )
+						! in_array( $coupon_type, array( '', 'default', 'image' ), true ) &&
 						// A coupon carrying an image has always rendered as an image
 						// regardless of the selected type. Keep that precedence.
-						&& ! apply_filters( 'cctor_image_url', $coupon_id, 'single_coupon' )
+						/** This filter is documented in src/Cctor/Shortcode.php */
+						! apply_filters( 'cctor_image_url', $coupon_id, 'single_coupon' )
 						&& Cctor__Coupon__Templates::type_has_view( $coupon_type )
 					) {
 
@@ -193,11 +194,12 @@ class Cctor__Coupon__Shortcode {
 
 					//Return If Not Passed Expiration Date
 					/**
-					 * Filter Individual Image Coupon URL
+					 * Filters the image URL of an image coupon.
 					 *
-					 * @param int $coupon_id
-					 * @param string (image size)
+					 * Return a non-empty URL to render the coupon as an image.
 					 *
+					 * @param int    $coupon_id Coupon post ID.
+					 * @param string $size      Image size.
 					 */
 					$couponimage = apply_filters( 'cctor_image_url', $coupon_id, 'single_coupon' );
 
@@ -272,11 +274,14 @@ class Cctor__Coupon__Shortcode {
 
 				} else {
 					/**
-					 * coupon Expired Hook
-					 * Only Shows for expired coupon
+					 * Fires in place of a coupon that is expired or hidden in the shortcode output.
 					 *
-					 * @param int    $coupon_id
-					 * @param object $coupon_expiration
+					 * Core prints an HTML comment with the expiration date, plus a visible
+					 * notice for users who may view diagnostics.
+					 *
+					 * @param int                       $coupon_id         Coupon post ID.
+					 * @param Cctor__Coupon__Expiration $coupon_expiration Expiration object for the coupon. Pro passes its own subclass.
+					 * @param string                    $coupon_align      Alignment class from the shortcode, 'cctor_alignnone' by default.
 					 */
 					do_action( 'cctor_no_show_coupon', $coupon_id, $coupon_expiration, $coupon_align );
 				}

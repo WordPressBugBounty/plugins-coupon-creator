@@ -3,7 +3,7 @@
         'name' => 'artifexrouting/coupon-creator',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'd8490295c6558043765e89bc215ff59af22aab98',
+        'reference' => 'c189aa2705c69266f2f72ca3f6e9c03b6ddb9584',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'artifexrouting/coupon-creator' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'd8490295c6558043765e89bc215ff59af22aab98',
+            'reference' => 'c189aa2705c69266f2f72ca3f6e9c03b6ddb9584',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'artifexrouting/edd-license-ui' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '8a2399b970f9bed988acdb4fba407e374c0c7894',
+            'reference' => '382a077c3a150ceecf1fe6ece4f8b4786cdc3db3',
             'type' => 'library',
             'install_path' => __DIR__ . '/../artifexrouting/edd-license-ui',
             'aliases' => array(),

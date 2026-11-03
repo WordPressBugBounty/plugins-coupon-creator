@@ -72,6 +72,7 @@ class Cctor__Coupon__Admin__Columns extends WP_List_Table {
 
 		$mark_url      = pngx( 'cctor' )->resource_url . 'images/coupon-creator-mark.svg';
 		$docs_url      = cctor_guide_url( 'coupon-creator' );
+		/** This filter is documented in src/Cctor/Admin/Options.php */
 		$version_parts = apply_filters( 'cctor_options_header_versions', array( 'v' . Cctor__Coupon__Main::VERSION_NUM ) );
 		$version_line  = implode( ' · ', array_filter( (array) $version_parts ) );
 

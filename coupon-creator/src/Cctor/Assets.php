@@ -212,7 +212,12 @@ class Cctor__Coupon__Assets {
 		// Our admin script (registered in register_assets()).
 		wp_enqueue_script( 'cctor_admin_js' );
 
-		// Hook to Load New Styles and Scripts
+		/**
+		 * Fires after Coupon Creator enqueues its admin styles and scripts.
+		 *
+		 * Runs only on the coupon edit screens and the options pages. Add-ons
+		 * use it to enqueue the WooCommerce meta box assets.
+		 */
 		do_action( 'cctor_admin_assets' );
 	}
 
