@@ -31,7 +31,7 @@ function cctor_show_img_coupon( $coupon_id, $couponimage ) {
 		</a><?php
 	} else {
 		//No Links for Image Coupon or Click to Print
-		?><img class='cctor_coupon_image' src='<?php echo esc_url( $couponimage ); ?>' alt='<?php echo get_the_title( $coupon_id ); ?>' title='<?php echo get_the_title( $coupon_id ); ?>'><?php
+		?><img class='cctor_coupon_image' src='<?php echo esc_url( $couponimage ); ?>' alt='<?php echo esc_attr( get_the_title( $coupon_id ) ); ?>' title='<?php echo esc_attr( get_the_title( $coupon_id ) ); ?>'><?php
 	}
 
 }

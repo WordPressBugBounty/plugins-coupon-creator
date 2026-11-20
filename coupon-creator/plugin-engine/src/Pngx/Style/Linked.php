@@ -31,15 +31,15 @@ class Pngx__Style__Linked {
 			foreach ( $field['styles'] as $type => $field_name ) {
 
 				if ( 'font-color' === $type && $color = get_post_meta( $post_id, $field_name, true ) ) {
-					$style .= 'color:' . $color . '; ';
+					$style .= 'color:' . self::css_value( $color ) . '; ';
 				}
 
 				if ( 'background-color' === $type && $color = get_post_meta( $post_id, $field_name, true ) ) {
-					$style .= 'background-color:' . $color . '; ';
+					$style .= 'background-color:' . self::css_value( $color ) . '; ';
 				}
 
 				if ( 'background-color:hover' === $type && $color = get_post_meta( $post_id, $field_name, true ) ) {
-					$style .= 'background-color:hover ' . $color . '; ';
+					$style .= 'background-color:hover ' . self::css_value( $color ) . '; ';
 				}
 
 			}
@@ -51,18 +51,18 @@ class Pngx__Style__Linked {
 			foreach ( $field['styles'] as $type => $field_name ) {
 
 				if ( 'font-color' === $type && $color = get_post_meta( $post_id, $field_name, true ) ) {
-					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . '{ color:' . esc_attr( $color ) . '; }';
+					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . '{ color:' . self::css_value( $color ) . '; }';
 				}
 
 				if ( 'background-color' === $type && $color = get_post_meta( $post_id, $field_name, true ) ) {
-					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . '{ background-color:' . esc_attr( $color ) . '; }';
+					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . '{ background-color:' . self::css_value( $color ) . '; }';
 				}
 
 				//todo create a filter here and modify the output using that instead of adding specific styling
 				if ( 'background-color-fold' === $type && $color = get_post_meta( $post_id, $field['styles']['background-color'], true ) ) {
 					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . ':after { 
-							border-left: solid 6px' . esc_attr( $color ) . '; 
-							border-top: solid 6px' . esc_attr( $color ) . '; 
+							border-left: solid 6px' . self::css_value( $color ) . '; 
+							border-top: solid 6px' . self::css_value( $color ) . '; 
 						}';
 
 					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . '.revealed:after { 
@@ -73,7 +73,7 @@ class Pngx__Style__Linked {
 				}
 
 				if ( 'background-color:hover' === $type && $color = get_post_meta( $post_id, $field_name, true ) ) {
-					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . ':hover' . '{ background-color:' . esc_attr( $color ) . '; }';
+					$style .= '.' . esc_attr( $target['wrap'] ) . absint( $post_id ) . ' .' . esc_attr( $target['selector'] ) . ':hover' . '{ background-color:' . self::css_value( $color ) . '; }';
 				}
 
 			}
@@ -83,6 +83,26 @@ class Pngx__Style__Linked {
 
 		return $style;
 
+	}
+
+	/**
+	 * Returns a stored color only when it is a plain CSS color value.
+	 *
+	 * The values are post meta that end up inside a style attribute or a
+	 * <style> block. Letters, digits, `#`, `(`, `)`, `,`, `.`, `%` and spaces
+	 * cover hex, rgb(a), hsl(a) and named colors, and leave no way to close the
+	 * attribute (`"`), the rule (`;` `}`) or the tag (`<`).
+	 *
+	 * @since 4.0.12
+	 *
+	 * @param mixed $value Stored color.
+	 *
+	 * @return string The color, or an empty string.
+	 */
+	protected static function css_value( $value ) {
+		$value = trim( (string) $value );
+
+		return preg_match( '/^[#a-zA-Z0-9(),.%\s]+$/', $value ) ? $value : '';
 	}
 
 }

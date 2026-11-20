@@ -14,7 +14,7 @@ function cctor_print_head_and_meta() { ?>
 	if ( cctor_options( 'cctor_nofollow_print_template', true, 1 ) == 1 ) { ?>
 		<meta name="robots" content="noindex,nofollow"/>
 	<?php } ?>
-	<title><?php echo get_the_title(); ?></title>
+	<title><?php echo esc_html( get_the_title() ); ?></title>
 	<link rel="profile" href="http://gmpg.org/xfn/11"/>
 
 	<!--Make Background White to Print Coupon -->

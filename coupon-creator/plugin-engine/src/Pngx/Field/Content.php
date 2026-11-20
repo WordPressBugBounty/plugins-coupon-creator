@@ -52,7 +52,7 @@ class Pngx__Field__Content {
 
 		?>
 		<div class="pngx-content <?php echo esc_attr( $class ); ?>" <?php echo wp_strip_all_tags( $style ); ?>>
-			<?php echo strip_tags( $meta,  apply_filters( 'pngx_filter_content_allowed_tags', Pngx__Allowed_Tags::$tags() ) ); ?>
+			<?php echo Pngx__Allowed_Tags::kses( $meta, apply_filters( 'pngx_filter_content_allowed_tags', Pngx__Allowed_Tags::$tags() ) ); ?>
 		</div>
 		<?php
 	}

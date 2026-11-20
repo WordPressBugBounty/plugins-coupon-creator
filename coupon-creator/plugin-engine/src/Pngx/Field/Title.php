@@ -32,7 +32,7 @@ class Pngx__Field__Title {
 
 		<?php echo $wrap ? '<' . esc_attr( $wrap ) . ' class="' . esc_attr( $class ) . '" ' . wp_strip_all_tags( $style ) . '>' : ''; ?>
 
-		<?php echo strip_tags( $meta, Pngx__Allowed_Tags::$tags() ); ?>
+		<?php echo Pngx__Allowed_Tags::kses( $meta, Pngx__Allowed_Tags::$tags() ); ?>
 
 		<?php echo $wrap ? '</' . esc_attr( $wrap ) . '>' : ''; ?>
 

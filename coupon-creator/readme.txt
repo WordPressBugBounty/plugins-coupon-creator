@@ -5,7 +5,7 @@ Plugin URI: https://artifexrouting.com/wordpress-plugins/coupon-creator/
 Tags: coupon, shortcode, print, lead generation, marketing
 Requires at least: 6.5
 Tested up to: 7.1.3
-Stable tag: 3.6.5
+Stable tag: 3.6.6
 Requires PHP: 8.2
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
@@ -157,6 +157,12 @@ You can add custom css in the options and it will modify both the shortcode coup
 6. Coupon Creator options
 
 == Changelog ==
+
+= 3.6.6 November 20th 2026 =
+
+* Security: fix stored cross-site scripting in the Coupons list Expiration column and in the image coupon when Print View is disabled. Thanks to the Wordfence researchers who reported these.
+* Security: coupon settings can no longer be changed through the WordPress Custom Fields box. Only the coupon editor saves them, with its own checks.
+* Security: coupon titles, colors and content are escaped or filtered in more places, and a coupon type can only load a template from the plugin or theme coupon folders.
 
 = 3.6.5 November 3rd 2026 =
 

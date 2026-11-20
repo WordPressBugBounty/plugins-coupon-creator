@@ -223,7 +223,7 @@ class Cctor__Coupon__Admin__Columns extends WP_List_Table {
 					esc_html_e( 'No expiration', 'coupon-creator' );
 				} else {
 					$display_expiration = $coupon_expiration->get_display_expiration();
-					echo $display_expiration ? $display_expiration : '&mdash;';
+					echo $display_expiration ? esc_html( (string) $display_expiration ) : '&mdash;';
 				}
 
 				break;

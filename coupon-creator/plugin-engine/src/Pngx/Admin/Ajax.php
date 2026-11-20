@@ -234,6 +234,22 @@ class Pngx__Admin__Ajax {
 
 		$post_id = absint( $_POST['post_id'] );
 
+		/*
+		 * The nonce proves intent, not permission. An existing post needs edit_post.
+		 * A new post is saved as published, so it needs publish_posts on its type.
+		 * Protected (underscore and cctor_) keys are never written from here.
+		 */
+		$post_type_object = get_post_type_object( sanitize_key( wp_unslash( $_POST['post_type'] ) ) );
+		if ( $post_id ) {
+			$can_save = current_user_can( 'edit_post', $post_id );
+		} else {
+			$can_save = $post_type_object && current_user_can( $post_type_object->cap->publish_posts );
+		}
+
+		if ( ! $can_save || is_protected_meta( (string) wp_unslash( $_POST['field_name'] ), 'post' ) ) {
+			wp_send_json_error( __( 'Permission Error has occurred. Please save, reload, and try again.', 'plugin-engine' ) );
+		}
+
 		if ( empty( $post_id ) || ! empty( $_POST['title_field'] ) ) {
 
 			$menu_item = array(

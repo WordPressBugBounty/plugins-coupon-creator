@@ -262,6 +262,31 @@ class Cctor__Coupon__Post_Type_Coupon {
 	}
 
 	/**
+	 * Marks every `cctor_` post meta key as protected.
+	 *
+	 * The coupon post type supports 'custom-fields', so without this any user who
+	 * can edit a coupon could write these keys raw through core's Custom Fields box
+	 * (admin-ajax add-meta / update-meta), skipping the coupon meta box sanitizers.
+	 * Protected keys are hidden from that box and refused by those requests. The
+	 * plugin's own saves use update_post_meta() directly and are not affected.
+	 *
+	 * @since 3.6.6
+	 *
+	 * @param bool        $protected Whether the key is protected.
+	 * @param string      $meta_key  Meta key.
+	 * @param string|null $meta_type Object type.
+	 *
+	 * @return bool
+	 */
+	public function protect_coupon_meta( $protected, $meta_key, $meta_type = null ) {
+		if ( 'post' === $meta_type && is_string( $meta_key ) && 0 === strpos( $meta_key, 'cctor_' ) ) {
+			return true;
+		}
+
+		return $protected;
+	}
+
+	/**
 	 * Register the post types.
 	 *
 	 * @since 3.0

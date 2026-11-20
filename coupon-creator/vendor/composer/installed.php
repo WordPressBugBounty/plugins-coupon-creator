@@ -3,7 +3,7 @@
         'name' => 'artifexrouting/coupon-creator',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'c189aa2705c69266f2f72ca3f6e9c03b6ddb9584',
+        'reference' => 'e961c8a796ec8651fe610f0135e3fa8d1ed02e58',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'artifexrouting/coupon-creator' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'c189aa2705c69266f2f72ca3f6e9c03b6ddb9584',
+            'reference' => 'e961c8a796ec8651fe610f0135e3fa8d1ed02e58',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

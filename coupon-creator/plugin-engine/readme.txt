@@ -2,6 +2,13 @@
 
 == Changelog ==
 
+= 4.0.12 November 20th 2026 =
+
+* Security - Image field: escape the post title in the alt and title attributes.
+* Security - Title and Content fields: filter with the new Allowed_Tags::kses() instead of strip_tags(), which kept every attribute (such as onerror) on an allowed tag.
+* Security - Style__Linked: only plain CSS color values reach the style attribute or style block.
+* Security - pngx_repeatable Ajax: check edit_post (existing post) or publish_posts (new post), and refuse protected meta keys.
+
 = 4.0.11 (Unreleased) =
 
 * Fix - Duplicate\Post_Types::duplicate() now requires edit permission on the source and create permission on the target post type, and saves the copy as a draft when the user cannot publish.

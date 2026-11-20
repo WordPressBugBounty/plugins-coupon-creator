@@ -64,6 +64,11 @@ class Cctor__Coupon__Templates {
 			$template .= '.php';
 		}
 
+		// The type name comes from post meta: never let it leave the views folders.
+		if ( 0 !== validate_file( $template ) ) {
+			return false;
+		}
+
 		$file = false;
 
 		// Theme override: [your-theme]/cctor-coupons/type/<type>.php

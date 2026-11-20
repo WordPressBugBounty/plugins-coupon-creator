@@ -8,9 +8,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Allowed Tags in Fields
  *
- *  Used with strip_tags();
+ *  Used with kses();
  */
 class Pngx__Allowed_Tags {
+
+	/**
+	 * Filters HTML down to an allowed-tags string such as `<p><img><a>`.
+	 *
+	 * Replaces strip_tags( $content, $tags ): strip_tags keeps every attribute
+	 * on an allowed tag, so `<img onerror=...>` got through. This keeps the same
+	 * tags, with the attributes and URL protocols wp_kses_post() allows for each
+	 * one. A tag outside that list, such as `<style>`, is kept with no attributes.
+	 *
+	 * @since 4.0.12
+	 *
+	 * @param mixed $content HTML to filter.
+	 * @param mixed $tags    Allowed tags, as a string of `<tag>` names.
+	 *
+	 * @return string
+	 */
+	public static function kses( $content, $tags ) {
+		$post_tags = wp_kses_allowed_html( 'post' );
+		$allowed   = array();
+
+		preg_match_all( '/<([a-z][a-z0-9]*)>/i', is_string( $tags ) ? $tags : '', $matches );
+
+		foreach ( $matches[1] as $tag ) {
+			$tag             = strtolower( $tag );
+			$allowed[ $tag ] = isset( $post_tags[ $tag ] ) ? $post_tags[ $tag ] : array();
+		}
+
+		return wp_kses( (string) $content, $allowed );
+	}
 
 	/*
 	* Allowed Tags for content without links support
